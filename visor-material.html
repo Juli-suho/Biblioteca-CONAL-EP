@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Material del maestro | Biblioteca CONALEP</title>
+
+    <style>
+        :root {
+            --forest: #183d32;
+            --forest-deep: #102d25;
+            --green: #4daa80;
+            --ivory: #f3eedf;
+            --paper: #fbf9f2;
+            --gold: #c5a66a;
+            --ink: #263b32;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--ivory);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--forest-deep);
+            color: white;
+            padding: 22px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .brand span {
+            color: var(--gold);
+        }
+
+        .back-button {
+            color: white;
+            text-decoration: none;
+            border: 1px solid var(--gold);
+            padding: 10px 18px;
+            border-radius: 7px;
+            transition: .3s;
+        }
+
+        .back-button:hover {
+            background: var(--gold);
+            color: var(--forest-deep);
+        }
+
+        main {
+            width: min(1200px, 94%);
+            margin: 35px auto;
+        }
+
+        .document-info {
+            background: var(--paper);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--gold);
+        }
+
+        .document-info small {
+            color: var(--green);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            margin: 10px 0;
+            font-size: clamp(22px, 4vw, 30px);
+            color: var(--forest);
+        }
+
+        .document-info p {
+            line-height: 1.6;
+            color: #65736b;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .download {
+            background: var(--forest);
+            color: white;
+        }
+
+        .download:hover {
+            background: var(--green);
+        }
+
+        .viewer-container {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 5px 20px #183d3215;
+        }
+
+        .viewer-container iframe {
+            display: block;
+            width: 100%;
+            height: 75vh;
+            min-height: 550px;
+            border: none;
+            border-radius: 7px;
+        }
+
+        .notice {
+            text-align: center;
+            padding: 20px;
+            color: #68756d;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #68756d;
+            font-size: 13px;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .action-button {
+                text-align: center;
+            }
+
+            .viewer-container iframe {
+                min-height: 450px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand">
+            BIBLIOTECA <span>CONALEP</span>
+        </div>
+
+        <a href="areas.html?carrera=inteligencia-artificial"
+           class="back-button">
+            ← Volver a la materia
+        </a>
+    </header>
+
+    <main>
+
+        <section class="document-info">
+
+            <small>MATERIAL ACADÉMICO · CONCIENCIA HISTÓRICA</small>
+
+            <h1>
+                Causas internas y externas que generaron la Independencia
+            </h1>
+
+            <p>
+                Material proporcionado por el maestro para complementar
+                el aprendizaje de los alumnos.
+            </p>
+
+            <div class="actions">
+
+                <a
+                    href="materiales/RA1.1-Causas-Internas-y-Externas-Independencia.pptx"
+                    class="action-button download"
+                    download>
+                    ↓ Descargar PowerPoint
+                </a>
+
+                <a
+                    href="materiales/RA1.1-Causas-Internas-y-Externas-Independencia.pdf"
+                    class="action-button download"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    Ver PDF por separado
+                </a>
+
+            </div>
+
+        </section>
+
+        <section class="viewer-container">
+
+            <iframe
+                src="materiales/RA1.1-Causas-Internas-y-Externas-Independencia.pdf"
+                title="Visor del material académico">
+            </iframe>
+
+        </section>
+
+        <p class="notice">
+            Puedes consultar el documento directamente desde la biblioteca
+            o descargar la presentación original para revisarla sin conexión.
+        </p>
+
+    </main>
+
+    <footer>
+        Biblioteca Virtual CONALEP · Material de apoyo académico
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+
+[
+  {
+    "titulo": "Álgebra básica",
+    "autor": "Autor de ejemplo",
+    "categoria": "Matemáticas",
+    "descripcion": "Introducción a los conceptos fundamentales del álgebra.",
+    "portada": "recursos/portadas/algebra.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/algebra-basica.pdf" },
+      { "tipo": "DOCX", "ruta": "recursos/libros/algebra-basica.docx" },
+      { "tipo": "PPTX", "ruta": "recursos/libros/algebra-basica.pptx" }
+    ]
+  },
+  {
+    "titulo": "Informática",
+    "autor": "Autor de ejemplo",
+    "categoria": "Informática",
+    "descripcion": "Conoce los fundamentos de la informática, el hardware y el software.",
+    "portada": "recursos/portadas/informatica.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/informatica-basica.pdf" },
+      { "tipo": "PPTX", "ruta": "recursos/libros/informatica-basica.pptx" }
+    ]
+  },
+  {
+    "titulo": "El mundo de la lectura",
+    "autor": "Autor de ejemplo",
+    "categoria": "Literatura",
+    "descripcion": "Descubre la lectura, los géneros literarios y el mundo de los libros.",
+    "portada": "recursos/portadas/lectura.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/literatura.pdf" }
+    ]
+  },
+  {
+    "titulo": "Ciencia para todos",
+    "autor": "Autor de ejemplo",
+    "categoria": "Ciencias",
+    "descripcion": "Explora curiosidades científicas y desarrolla el pensamiento científico.",
+    "portada": "recursos/portadas/datos.jpg",
+    "archivos": []
+  },
+  {
+    "titulo": "Álgebra básica - Colección 2",
+    "autor": "Autor de ejemplo",
+    "categoria": "Matemáticas",
+    "descripcion": "Material de consulta de álgebra básica.",
+    "portada": "recursos/portadas/algebra.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/algebra-basica.pdf" },
+      { "tipo": "DOCX", "ruta": "recursos/libros/algebra-basica.docx" },
+      { "tipo": "PPTX", "ruta": "recursos/libros/algebra-basica.pptx" }
+    ]
+  },
+  {
+    "titulo": "Introducción a la informática - Colección 2",
+    "autor": "Autor de ejemplo",
+    "categoria": "Informática",
+    "descripcion": "Material de consulta de informática.",
+    "portada": "recursos/portadas/informatica.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/informatica-basica.pdf" },
+      { "tipo": "PPTX", "ruta": "recursos/libros/informatica-basica.pptx" }
+    ]
+  },
+  {
+    "titulo": "El mundo de la lectura - Colección 2",
+    "autor": "Autor de ejemplo",
+    "categoria": "Literatura",
+    "descripcion": "Material de consulta de literatura y lectura.",
+    "portada": "recursos/portadas/lectura.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/literatura.pdf" }
+    ]
+  },
+  {
+    "titulo": "Álgebra básica - Colección 3",
+    "autor": "Autor de ejemplo",
+    "categoria": "Matemáticas",
+    "descripcion": "Material adicional de matemáticas.",
+    "portada": "recursos/portadas/algebra.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/algebra-basica.pdf" },
+      { "tipo": "DOCX", "ruta": "recursos/libros/algebra-basica.docx" },
+      { "tipo": "PPTX", "ruta": "recursos/libros/algebra-basica.pptx" }
+    ]
+  },
+  {
+    "titulo": "Introducción a la informática - Colección 3",
+    "autor": "Autor de ejemplo",
+    "categoria": "Informática",
+    "descripcion": "Material adicional de informática.",
+    "portada": "recursos/portadas/informatica.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/informatica-basica.pdf" },
+      { "tipo": "PPTX", "ruta": "recursos/libros/informatica-basica.pptx" }
+    ]
+  },
+  {
+    "titulo": "El mundo de la lectura - Colección 3",
+    "autor": "Autor de ejemplo",
+    "categoria": "Literatura",
+    "descripcion": "Material adicional de lectura.",
+    "portada": "recursos/portadas/lectura.jpg",
+    "archivos": [
+      { "tipo": "PDF", "ruta": "recursos/libros/literatura.pdf" }
+    ]
+  },
+ 
+  {
+    "titulo": "Perspectivas del México Antiguo en los contextos globales",
+    "autor": "Maria del Rosario  Vidaca Montenegro",
+    "editorial": "Primera Ediccón",
+    "anio": "Noviembre 2024",
+    "categoria": "Historia",
+    "descripcion": "Material de consulta sobre las perspectivas del México Antiguo y su relación con los contextos globales.",
+    "palabrasClave": [
+      "México Antiguo",
+      "Historia de México",
+      "Contextos globales",
+      "Historia"
+    ],
+    "portada": "recursos/portadas/perspectivas-mexico-antiguo.png",
+    "archivos": [
+      {
+        "tipo": "PDF",
+        "ruta": "recursos/libros/perspectivas-mexico-antiguo.pdf"
+      }
+    ]
+  },
+  {
+    "titulo": "Conciencia Histórica I",
+    "autor": "Paola Martínez Ávila",
+    "editorial": "Pendiente de verificar",
+    "anio": "Pendiente de verificar",
+    "categoria": "Historia",
+    "descripcion": "Libro de consulta para el estudio y desarrollo de la conciencia histórica.",
+    "palabrasClave": [
+      "Conciencia Histórica",
+      "Historia I",
+      "Historia de México",
+      "Bachillerato"
+    ],
+    "portada": "recursos/portadas/conciencia-historica-1.png",
+    "archivos": [
+      {
+        "tipo": "PDF",
+        "ruta": "recursos/libros/conciencia-historica-1.pdf"
+      }
+    ]
+  },
+  {
+    "titulo": "México durante el Expansionismo Capitalista",
+    "autor": "Maria del Rosarlo Heras Torres Y Maria del Rosarlo Vidaca Montenegro",
+    "editorial": "Pendiente de verificar",
+    "anio": "Pendiente de verificar",
+    "categoria": "Historia",
+    "descripcion": "Material de consulta sobre México durante el proceso de expansión del capitalismo.",
+    "palabrasClave": [
+      "México",
+      "Expansionismo Capitalista",
+      "Capitalismo",
+      "Historia de México"
+    ],
+    "portada": "recursos/portadas/mexico-expansionismo-capitalista.png",
+    "archivos": [
+      {
+        "tipo": "PDF",
+        "ruta": "recursos/libros/mexico-expansionismo-capitalista.pdf"
+      }
+    ]
+  },
+  {
+    "titulo": "Conciencia Histórica II",
+    "autor": "Ana Paola Martinez Ávila",
+    "editorial": "Pendiente de verificar",
+    "anio": "Pendiente de verificar",
+    "categoria": "Historia",
+    "descripcion": "Libro de consulta para profundizar en el análisis y comprensión de los procesos históricos.",
+    "palabrasClave": [
+      "Conciencia Histórica",
+      "Historia II",
+      "Procesos históricos",
+      "Historia de México"
+    ],
+    "portada": "recursos/portadas/conciencia-historica-2.png",
+    "archivos": [
+      {
+        "tipo": "PDF",
+        "ruta": "recursos/libros/conciencia-historica-2.pdf"
+      }
+    ]
+  }
+]

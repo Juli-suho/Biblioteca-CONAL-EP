@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bibliocarreras CONALEP: explora proyectos y áreas de formación técnica.">
+  <title>Bibliocarreras | Biblioteca CONALEP</title>
+  <link rel="stylesheet" href="estilos.css">
+
+  <style>
+    /* =====================================
+       BIBLIOCARRERAS
+    ===================================== */
+
+    .career-page {
+      min-height: 100vh;
+      background: var(--ivory, #f3eedf);
+      color: var(--ink, #263b32);
+    }
+
+    .career-topbar {
+      padding: 16px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: var(--forest, #183d32);
+      color: white;
+    }
+
+    .career-brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .career-brand img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .career-back {
+      color: #e6d5a9;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .career-hero {
+      padding: 60px 7% 45px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 0%, #dce5d9 0, transparent 55%),
+        var(--ivory, #f3eedf);
+    }
+
+    .career-kicker {
+      color: #987a43;
+      font-size: 11px;
+      letter-spacing: .22em;
+      font-weight: 700;
+    }
+
+    .career-hero h1 {
+      margin: 15px 0;
+      font: 400 clamp(34px, 5vw, 57px)/1.2 var(--serif, Georgia, serif);
+      color: var(--forest, #183d32);
+    }
+
+    .career-hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #667368;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+
+    /* CONTENIDO */
+
+    .career-content {
+      max-width: 1150px;
+      padding: 20px 5% 75px;
+      margin: auto;
+    }
+
+    /* TARJETAS */
+
+    .career-page .career-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .career-page .career-card {
+      display: grid;
+      grid-template-columns: 155px minmax(0, 1fr);
+      align-items: stretch;
+      min-height: 0;
+      padding: 0;
+      position: relative;
+      background: #fffefa;
+      border: 1px solid #deded2;
+      box-shadow: 0 12px 35px #183d3210;
+      overflow: hidden;
+      cursor: default;
+      transition: .25s;
+    }
+
+    .career-page .career-card:hover {
+      transform: translateY(-5px);
+      border-color: #c5a66a;
+      box-shadow: 0 18px 40px #183d3220;
+    }
+
+    /* IMÁGENES MÁS PEQUEÑAS */
+
+    .career-page .career-card img {
+      width: 155px;
+      height: 100%;
+      min-height: 190px;
+      max-height: 230px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      padding: 8px;
+      background: #dce5d9;
+    }
+
+    /* INFORMACIÓN DE CADA CARRERA */
+
+    .career-card-body {
+      min-width: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .career-card-body span {
+      color: #a1844e;
+      font-size: 10px;
+      letter-spacing: .16em;
+      font-weight: 700;
+    }
+
+    .career-card-body h2 {
+      font: 400 22px/1.3 var(--serif, Georgia, serif);
+      color: #183d32;
+      margin: 9px 0;
+    }
+
+    .career-card-body p {
+      color: #718075;
+      line-height: 1.7;
+      font-size: 12px;
+      margin: 0 0 15px;
+      min-height: 0;
+    }
+
+    .career-card-body button,
+    .project-back,
+    .project-resource a {
+      border: 0;
+      background: #183d32;
+      color: white;
+      padding: 11px 15px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: .2s;
+    }
+
+    .career-card-body button:hover,
+    .project-back:hover,
+    .project-resource a:hover {
+      background: #4daa80;
+      color: #102d25;
+    }
+
+    /* PANEL DE PROYECTOS */
+
+    .project-panel {
+      display: none;
+      margin-top: 35px;
+      padding: 35px;
+      background: #fffefa;
+      border: 1px solid #deded2;
+      box-shadow: 0 15px 35px #183d3210;
+    }
+
+    .project-panel.active {
+      display: block;
+    }
+
+    .project-panel h2 {
+      font: 400 32px/1.3 var(--serif, Georgia, serif);
+      color: #183d32;
+      margin: 10px 0;
+    }
+
+    .project-description {
+      color: #718075;
+      line-height: 1.8;
+      font-size: 13px;
+    }
+
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+      margin: 25px 0;
+    }
+
+    .project-item {
+      background: #f3eedf;
+      border-left: 3px solid #c5a66a;
+      padding: 17px;
+      color: #263b32;
+      font-size: 13px;
+    }
+
+    .project-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .project-item small {
+      color: #788078;
+      line-height: 1.6;
+    }
+
+    .project-resource {
+      margin-top: 25px;
+      padding: 20px;
+      background: #eef2e9;
+      border: 1px solid #dce5d9;
+    }
+
+    .project-resource h3 {
+      color: #183d32;
+      font: 400 19px var(--serif, Georgia, serif);
+      margin: 0 0 10px;
+    }
+
+    .project-resource p {
+      color: #667368;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .project-resource a {
+      margin: 5px 8px 5px 0;
+    }
+
+    .project-empty {
+      background: #f3eedf;
+      padding: 20px;
+      color: #667368;
+      line-height: 1.8;
+      font-size: 13px;
+    }
+
+    /* PIE DE PÁGINA */
+
+    .career-footer {
+      padding: 25px;
+      text-align: center;
+      background: #102d25;
+      color: #dce5d9;
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+
+    /* TABLETAS */
+
+    @media(max-width: 900px) {
+      .career-page .career-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .career-page .career-card {
+        grid-template-columns: 170px minmax(0, 1fr);
+      }
+
+      .career-page .career-card img {
+        width: 170px;
+      }
+    }
+
+    /* CELULARES */
+
+    @media(max-width: 620px) {
+      .career-topbar {
+        padding: 13px 5%;
+      }
+
+      .career-brand {
+        font-size: 11px;
+      }
+
+      .career-brand img {
+        width: 38px;
+        height: 38px;
+      }
+
+      .career-back {
+        font-size: 9px;
+      }
+
+      .career-hero {
+        padding: 45px 6% 35px;
+      }
+
+      .career-hero p {
+        font-size: 12px;
+      }
+
+      .career-content {
+        padding: 15px 5% 55px;
+      }
+
+      .career-page .career-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .career-page .career-card {
+        grid-template-columns: 115px minmax(0, 1fr);
+      }
+
+      .career-page .career-card img {
+        width: 115px;
+        min-height: 180px;
+        max-height: 220px;
+      }
+
+      .career-card-body {
+        padding: 14px;
+      }
+
+      .career-card-body h2 {
+        font-size: 18px;
+      }
+
+      .career-card-body p {
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .career-card-body button {
+        padding: 10px;
+        font-size: 9px;
+      }
+
+      .project-panel {
+        padding: 20px;
+      }
+
+      .project-panel h2 {
+        font-size: 25px;
+      }
+
+      .project-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body class="career-page">
+
+  <header class="career-topbar">
+    <a class="career-brand" href="index.html">
+      <img src="recursos/logo.png" alt="Logo CONALEP">
+      <span>BIBLIOTECA CONALEP</span>
+    </a>
+
+    <a class="career-back" href="index.html">← REGRESAR AL INICIO</a>
+  </header>
+
+  <main>
+
+    <section class="career-hero">
+      <span class="career-kicker">CONOCIMIENTO · INNOVACIÓN · FORMACIÓN</span>
+
+      <h1>Bibliocarreras</h1>
+
+      <p>
+        Explora las diferentes áreas de formación técnica, descubre ideas
+        de proyectos y consulta materiales de apoyo relacionados con cada carrera.
+      </p>
+    </section>
+
+    <section class="career-content">
+
+      <div class="career-grid" id="career-grid">
+
+        <!-- INTELIGENCIA ARTIFICIAL -->
+        <article class="career-card">
+          <img
+            src="recursos/carreras/inteligencia-artificial.png"
+            alt="Inteligencia artificial"
+            loading="lazy">
+
+          <div class="career-card-body">
+            <span>01 · TECNOLOGÍA</span>
+            <h2>Inteligencia Artificial</h2>
+
+            <p>
+              Explora la automatización, los sistemas inteligentes y el desarrollo
+              de soluciones tecnológicas.
+            </p>
+
+            <button type="button" data-career="inteligencia-artificial">
+              EXPLORAR PROYECTOS →
+            </button>
+          </div>
+        </article>
+
+        <!-- INFORMÁTICA -->
+        <article class="career-card">
+          <img
+            src="recursos/carreras/informatica.png"
+            alt="Informática y componentes electrónicos"
+            loading="lazy">
+
+          <div class="career-card-body">
+            <span>02 · SISTEMAS</span>
+            <h2>Informática</h2>
+
+            <p>
+              Conoce el desarrollo de software, las redes, las bases de datos
+              y la seguridad digital.
+            </p>
+
+            <button type="button" data-career="informatica">
+              EXPLORAR PROYECTOS →
+            </button>
+          </div>
+        </article>
+
+        <!-- ELECTRICIDAD INDUSTRIAL -->
+        <article class="career-card">
+          <img
+            src="recursos/carreras/electricidad-industrial.png"
+            alt="Instalaciones eléctricas industriales"
+            loading="lazy">
+
+          <div class="career-card-body">
+            <span>03 · INDUSTRIA</span>
+            <h2>Electricidad Industrial</h2>
+
+            <p>
+              Descubre los circuitos, las instalaciones, el control y la
+              automatización industrial.
+            </p>
+
+            <button type="button" data-career="electricidad-industrial">
+              EXPLORAR PROYECTOS →
+            </button>
+          </div>
+        </article>
+
+        <!-- REFRIGERACIÓN -->
+        <article class="career-card">
+          <img
+            src="recursos/carreras/refrigeracion.png"
+            alt="Sistemas de refrigeración y climatización"
+            loading="lazy">
+
+          <div class="career-card-body">
+            <span>04 · CLIMATIZACIÓN</span>
+            <h2>Refrigeración</h2>
+
+            <p>
+              Explora los sistemas de refrigeración, el aire acondicionado
+              y su mantenimiento.
+            </p>
+
+            <button type="button" data-career="refrigeracion">
+              EXPLORAR PROYECTOS →
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <section class="project-panel" id="project-panel" aria-live="polite">
+
+        <button class="project-back" id="project-back" type="button">
+          ← VOLVER A LAS CARRERAS
+        </button>
+
+        <div id="project-content"></div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <footer class="career-footer">
+    BIBLIOTECA CONALEP · ESPACIO DE APRENDIZAJE Y FORMACIÓN
+  </footer>
+
+  <script src="js/bibliocarreras.js"></script>
+
+</body>
+</html>

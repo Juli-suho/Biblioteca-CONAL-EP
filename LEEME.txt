@@ -1,0 +1,22 @@
+BIBLIOTECA CONALEP — VERSIÓN RENOVADA
+
+Contenido:
+- index.html: página principal renovada.
+- estilos.css: diseño adaptable verde bosque, marfil y dorado suave.
+- js/catalogo.js: buscador, filtros, tarjetas, fichas, lector PDF y descargas.
+- datos/libros.json: catálogo original conservado con rutas corregidas.
+- recursos/: portadas y documentos originales.
+
+PUBLICACIÓN EN GITHUB PAGES
+1. Descomprime el ZIP.
+2. Abre la carpeta Biblioteca_CONALEP_renovada.
+3. Sube el CONTENIDO de esa carpeta al repositorio, reemplazando los archivos anteriores.
+4. Conserva la estructura de carpetas: datos, js y recursos.
+5. En GitHub, espera a que Pages termine el despliegue y abre tu sitio.
+
+IMPORTANTE
+- Los registros originales y sus textos se conservaron; algunos autores aparecen como "Autor de ejemplo" en el catálogo original.
+- Se corrigieron las rutas de los archivos de Informática para que coincidan con los nombres reales incluidos en el ZIP.
+- La colección contiene materiales de ejemplo/repetidos del catálogo original; no se inventaron títulos, autores ni documentos nuevos.
+- El lector integrado funciona con archivos PDF. DOCX y PPTX se ofrecen para descarga.
+- Para probar fetch() correctamente en tu computadora, utiliza Live Server o un servidor local; no abras index.html directamente con doble clic.

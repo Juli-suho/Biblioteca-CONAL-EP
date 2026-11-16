@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Áreas del conocimiento y materiales académicos de Biblioteca CONALEP.">
+  <title>Áreas del conocimiento | Biblioteca CONALEP</title>
+  <link rel="stylesheet" href="estilos.css">
+
+  <style>
+    .areas-page {
+      min-height: 100vh;
+      background: #f3eedf;
+      color: #263b32;
+    }
+
+    .areas-header {
+      background: #183d32;
+      padding: 17px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      color: white;
+    }
+
+    .areas-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .areas-brand img {
+      width: 43px;
+      height: 43px;
+      object-fit: contain;
+    }
+
+    .areas-back {
+      color: #e6d5a9;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .areas-hero {
+      padding: 65px 6% 45px;
+      text-align: center;
+      background: radial-gradient(circle at top, #dce5d9, transparent 65%);
+    }
+
+    .areas-kicker {
+      color: #987a43;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+    }
+
+    .areas-hero h1 {
+      color: #183d32;
+      font: 400 clamp(32px, 5vw, 54px)/1.2 Georgia, serif;
+      margin: 15px 0;
+    }
+
+    .areas-hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #718075;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .areas-container {
+      max-width: 1250px;
+      margin: auto;
+      padding: 20px 5% 80px;
+    }
+
+    .areas-career-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .areas-career-card {
+      overflow: hidden;
+      background: #fffefa;
+      border: 1px solid #deded2;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .areas-career-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px #183d321c;
+    }
+
+    .areas-career-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #dce5d9;
+    }
+
+    .areas-career-card div {
+      padding: 22px;
+    }
+
+    .areas-career-card span {
+      color: #a1844e;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .15em;
+    }
+
+    .areas-career-card h2 {
+      color: #183d32;
+      font: 400 24px Georgia, serif;
+      margin: 10px 0;
+    }
+
+    .areas-career-card p {
+      color: #718075;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .areas-career-card button,
+    .syllabus-button,
+    .semester-button,
+    .subject-button,
+    .detail-close {
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: .08em;
+      font-size: 10px;
+      transition: .2s;
+    }
+
+    .areas-career-card button {
+      background: #183d32;
+      color: white;
+      padding: 13px 18px;
+    }
+
+    .areas-career-card button:hover,
+    .semester-button:hover,
+    .subject-button:hover {
+      background: #4daa80;
+      color: #102d25;
+    }
+
+    .career-detail {
+      display: none;
+      background: #fffefa;
+      border: 1px solid #deded2;
+      box-shadow: 0 15px 40px #183d3210;
+    }
+
+    .career-detail.active {
+      display: block;
+    }
+
+    .career-detail-cover {
+      position: relative;
+      height: 310px;
+      background: #183d32;
+      overflow: hidden;
+    }
+
+    .career-detail-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .career-detail-cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #102d25b8, transparent);
+    }
+
+    .career-cover-title {
+      position: absolute;
+      z-index: 1;
+      left: 6%;
+      bottom: 35px;
+      color: white;
+      max-width: 80%;
+    }
+
+    .career-cover-title span {
+      color: #e6d5a9;
+      font-size: 10px;
+      letter-spacing: .2em;
+      font-weight: 700;
+    }
+
+    .career-cover-title h2 {
+      font: 400 clamp(28px, 4vw, 43px) Georgia, serif;
+      margin: 10px 0 0;
+    }
+
+    .career-detail-body {
+      padding: 35px;
+      text-align: center;
+    }
+
+    .career-detail-body > p {
+      max-width: 750px;
+      margin: 0 auto 25px;
+      color: #718075;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .syllabus-button {
+      background: #c5a66a;
+      color: #102d25;
+      padding: 18px 30px;
+      min-width: 260px;
+    }
+
+    .syllabus-button:hover {
+      background: #dfc995;
+      transform: translateY(-2px);
+    }
+
+    .syllabus-area {
+      display: none;
+      padding: 30px;
+      background: #f3eedf;
+      border-top: 1px solid #deded2;
+    }
+
+    .syllabus-area.active {
+      display: block;
+    }
+
+    .syllabus-area h3 {
+      text-align: center;
+      font: 400 27px Georgia, serif;
+      color: #183d32;
+      margin: 0 0 10px;
+    }
+
+    .syllabus-intro {
+      max-width: 720px;
+      margin: 0 auto 25px;
+      text-align: center;
+      color: #718075;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .semester-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .semester-button {
+      padding: 17px 8px;
+      background: #183d32;
+      color: white;
+    }
+
+    .semester-button.active {
+      background: #c5a66a;
+      color: #102d25;
+    }
+
+    .semester-content {
+      display: none;
+      margin-top: 25px;
+      padding: 25px;
+      background: #fffefa;
+      border: 1px solid #deded2;
+    }
+
+    .semester-content.active {
+      display: block;
+    }
+
+    .semester-content h3 {
+      font: 400 25px Georgia, serif;
+      color: #183d32;
+      text-align: left;
+    }
+
+    .semester-content > p {
+      color: #718075;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .subject-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .subject-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 17px;
+      background: #f3eedf;
+      border-left: 3px solid #c5a66a;
+    }
+
+    .subject-row strong {
+      display: block;
+      color: #183d32;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .subject-row small {
+      color: #788078;
+      font-size: 11px;
+    }
+
+    .subject-button {
+      flex-shrink: 0;
+      background: #183d32;
+      color: white;
+      padding: 12px 15px;
+    }
+
+    .example-note {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f0db;
+      border-left: 3px solid #c5a66a;
+      color: #705c36;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .subject-detail {
+      display: none;
+      margin-top: 25px;
+      padding: 28px;
+      background: #fffefa;
+      border: 1px solid #deded2;
+    }
+
+    .subject-detail.active {
+      display: block;
+    }
+
+    .subject-detail h3 {
+      font: 400 27px Georgia, serif;
+      color: #183d32;
+      margin: 0 0 8px;
+    }
+
+    .subject-detail .subject-code {
+      color: #987a43;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .1em;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .detail-data {
+      padding: 14px;
+      background: #f3eedf;
+    }
+
+    .detail-data span {
+      display: block;
+      color: #788078;
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+
+    .detail-data strong {
+      color: #183d32;
+      font-size: 12px;
+    }
+
+    .detail-section {
+      border-top: 1px solid #deded2;
+      padding: 18px 0;
+    }
+
+    .detail-section h4 {
+      color: #183d32;
+      font: 400 19px Georgia, serif;
+      margin: 0 0 10px;
+    }
+
+    .detail-section p,
+    .detail-section li {
+      color: #667368;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .detail-section ul {
+      padding-left: 20px;
+    }
+
+    .detail-close {
+      background: #183d32;
+      color: white;
+      padding: 13px 20px;
+      margin-top: 15px;
+    }
+
+    .detail-close:hover {
+      background: #4daa80;
+      color: #102d25;
+    }
+
+    .areas-footer {
+      background: #102d25;
+      padding: 25px;
+      text-align: center;
+      color: #dce5d9;
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+
+    @media(max-width: 800px) {
+      .semester-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .detail-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width: 600px) {
+      .areas-career-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .career-detail-body,
+      .syllabus-area,
+      .semester-content,
+      .subject-detail {
+        padding: 20px;
+      }
+
+      .semester-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .subject-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .career-detail-cover {
+        height: 230px;
+      }
+    }
+  </style>
+</head>
+
+<body class="areas-page">
+
+  <header class="areas-header">
+    <a href="index.html" class="areas-brand">
+      <img src="recursos/logo.png" alt="Logo CONALEP">
+      <span>BIBLIOTECA CONALEP</span>
+    </a>
+    <a href="index.html" class="areas-back">← VOLVER AL INICIO</a>
+  </header>
+
+  <main>
+    <section class="areas-hero">
+      <span class="areas-kicker">FORMACIÓN ACADÉMICA · APRENDIZAJE</span>
+      <h1>Áreas del conocimiento</h1>
+      <p>
+        Selecciona una carrera para conocer sus áreas de formación,
+        consultar los semestres y explorar las fichas académicas
+        y materiales de apoyo disponibles.
+      </p>
+    </section>
+
+    <section class="areas-container">
+
+      <div class="areas-career-grid" id="areas-career-grid">
+
+        <article class="areas-career-card">
+          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1000&q=85" alt="Inteligencia Artificial" loading="lazy">
+          <div>
+            <span>01 · TECNOLOGÍA</span>
+            <h2>Inteligencia Artificial</h2>
+            <p>Explora el análisis de datos, la automatización y los sistemas inteligentes.</p>
+            <button type="button" data-area-career="inteligencia-artificial">CONSULTAR CARRERA →</button>
+          </div>
+        </article>
+
+        <article class="areas-career-card">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85" alt="Informática" loading="lazy">
+          <div>
+            <span>02 · SISTEMAS</span>
+            <h2>Informática</h2>
+            <p>Conoce el desarrollo de software, las redes y la administración de datos.</p>
+            <button type="button" data-area-career="informatica">CONSULTAR CARRERA →</button>
+          </div>
+        </article>
+
+        <article class="areas-career-card">
+          <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1000&q=85" alt="Electricidad Industrial" loading="lazy">
+          <div>
+            <span>03 · INDUSTRIA</span>
+            <h2>Electricidad Industrial</h2>
+            <p>Consulta temas relacionados con circuitos, instalaciones y control eléctrico.</p>
+            <button type="button" data-area-career="electricidad-industrial">CONSULTAR CARRERA →</button>
+          </div>
+        </article>
+
+        <article class="areas-career-card">
+          <img src="https://tse1.mm.bing.net/th/id/OIP._0-5SqGJ1CR68n2Nv32DBgAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Refrigeración" loading="lazy">
+          <div>
+            <span>04 · CLIMATIZACIÓN</span>
+            <h2>Refrigeración</h2>
+            <p>Explora sistemas de refrigeración, climatización y mantenimiento.</p>
+            <button type="button" data-area-career="refrigeracion">CONSULTAR CARRERA →</button>
+          </div>
+        </article>
+
+      </div>
+
+      <section class="career-detail" id="career-detail">
+        <div class="career-detail-cover">
+          <img id="career-image" src="" alt="">
+          <div class="career-cover-title">
+            <span id="career-kicker">ÁREA DE FORMACIÓN</span>
+            <h2 id="career-title">Carrera seleccionada</h2>
+          </div>
+        </div>
+
+        <div class="career-detail-body">
+          <p id="career-description"></p>
+          <button class="syllabus-button" id="syllabus-toggle" type="button">
+            SYLLABUS Y MATERIALES
+          </button>
+        </div>
+
+        <section class="syllabus-area" id="syllabus-area">
+          <h3>Plan de formación por semestres</h3>
+          <p class="syllabus-intro">
+            Selecciona un semestre para consultar las materias de ejemplo,
+            sus docentes por confirmar y las fichas académicas disponibles.
+            Los contenidos demostrativos deben sustituirse por el plan oficial
+            correspondiente antes de publicar el sitio como fuente institucional.
+          </p>
+
+          <div class="semester-grid" id="semester-grid">
+            <button class="semester-button" data-semester="1">SEMESTRE 1</button>
+            <button class="semester-button" data-semester="2">SEMESTRE 2</button>
+            <button class="semester-button" data-semester="3">SEMESTRE 3</button>
+            <button class="semester-button" data-semester="4">SEMESTRE 4</button>
+            <button class="semester-button" data-semester="5">SEMESTRE 5</button>
+            <button class="semester-button" data-semester="6">SEMESTRE 6</button>
+          </div>
+
+          <div class="semester-content" id="semester-content"></div>
+          <div class="subject-detail" id="subject-detail"></div>
+        </section>
+      </section>
+
+    </section>
+  </main>
+
+  <footer class="areas-footer">
+    BIBLIOTECA CONALEP · ÁREAS DEL CONOCIMIENTO
+  </footer>
+
+  <script src="js/areas.js"></script>
+</body>
+</html>
+
