@@ -39,6 +39,112 @@
 .career-area-card:hover .area-icon.area-image img {
   transform: scale(1.08);
 }
+
+
+    /* ==========================================
+       CARRUSEL DE IMÁGENES - INTRODUCCIÓN
+       BIBLIOTECA CONALEP
+    ========================================== */
+    .intro-carousel-section { overflow: hidden; }
+    .intro-carousel-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: center;
+      gap: 55px;
+    }
+    .intro-copy { min-width: 0; }
+    .intro-copy h2 { margin-top: 12px; }
+    .intro-copy p { max-width: 520px; line-height: 1.8; }
+    .study-carousel { width: 100%; min-width: 0; position: relative; }
+    .study-carousel-track {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #183d32;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.17);
+    }
+    .study-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.9s ease, visibility 0.9s ease;
+    }
+    .study-slide.active { opacity: 1; visibility: visible; z-index: 1; }
+    .study-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 5s ease;
+    }
+    .study-slide.active img { transform: scale(1.06); }
+    .study-caption {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 55px 28px 25px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: linear-gradient(to top, rgba(5, 24, 17, 0.92), rgba(5, 24, 17, 0.45), transparent);
+    }
+    .study-caption span {
+      color: #e4c77d;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .study-caption strong {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(15px, 1.7vw, 21px);
+      line-height: 1.45;
+      font-weight: 700;
+    }
+    .study-carousel-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      margin-top: 18px;
+    }
+    .study-carousel-controls > button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(24, 61, 50, 0.3);
+      background: transparent;
+      color: #183d32;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .study-carousel-controls > button:hover { background: #183d32; color: #fff; }
+    .study-dots { display: flex; align-items: center; gap: 9px; }
+    .study-dots button {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: #b9b9a9;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .study-dots button.active { width: 25px; border-radius: 10px; background: #b3914d; }
+    @media (max-width: 850px) {
+      .intro-carousel-grid { grid-template-columns: 1fr; gap: 30px; }
+      .study-carousel { max-width: 650px; margin: 0 auto; }
+    }
+    @media (max-width: 520px) {
+      .study-carousel-track { aspect-ratio: 4 / 3; border-radius: 13px; }
+      .study-caption { padding: 40px 17px 17px; }
+      .study-caption strong { font-size: 15px; }
+      .study-carousel-controls { margin-top: 13px; }
+    }
   </style>
 </head>
 
@@ -141,19 +247,85 @@
       </div>
     </section>
 
-    <!-- INTRODUCCIÓN -->
-    <section class="intro-strip">
-      <div class="wrap intro-grid">
-        <div>
+    <!-- INTRODUCCIÓN CON CARRUSEL -->
+    <section class="intro-strip intro-carousel-section">
+      <div class="wrap intro-grid intro-carousel-grid">
+
+        <div class="intro-copy">
           <span class="section-kicker">EXPLORA · APRENDE · CRECE</span>
           <h2>Una biblioteca para<br>cada curiosidad.</h2>
+          <p>
+            Encuentra materiales de consulta organizados por áreas de
+            conocimiento. Accede a documentos digitales y recursos de
+            apoyo para tus actividades académicas.
+          </p>
         </div>
 
-        <p>
-          Encuentra materiales de consulta organizados por áreas de
-          conocimiento. Accede a documentos digitales y recursos de
-          apoyo para tus actividades académicas.
-        </p>
+        <div class="study-carousel" id="study-carousel">
+          <div class="study-carousel-track">
+
+            <div class="study-slide active">
+              <img
+                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=85"
+                alt="Estudiantes trabajando y aprendiendo en equipo"
+                fetchpriority="high"
+              >
+              <div class="study-caption">
+                <span>01 / APRENDIZAJE</span>
+                <strong>Ideas que se convierten en conocimiento.</strong>
+              </div>
+            </div>
+
+            <div class="study-slide">
+              <img
+                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85"
+                alt="Estudiantes trabajando con tecnología"
+                loading="lazy"
+              >
+              <div class="study-caption">
+                <span>02 / TECNOLOGÍA</span>
+                <strong>Innovación y desarrollo de nuevas ideas.</strong>
+              </div>
+            </div>
+
+            <div class="study-slide">
+              <img
+                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=85"
+                alt="Equipo colaborando en un proyecto"
+                loading="lazy"
+              >
+              <div class="study-caption">
+                <span>03 / PROYECTOS</span>
+                <strong>El talento estudiantil crea nuevas oportunidades.</strong>
+              </div>
+            </div>
+
+            <div class="study-slide">
+              <img
+                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=85"
+                alt="Comunidad estudiantil en un entorno académico"
+                loading="lazy"
+              >
+              <div class="study-caption">
+                <span>04 / EDUCACIÓN</span>
+                <strong>Preparación para construir el futuro.</strong>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="study-carousel-controls">
+            <button type="button" id="study-prev" aria-label="Imagen anterior">&#8592;</button>
+            <div class="study-dots" id="study-dots">
+              <button type="button" class="active" aria-label="Mostrar imagen 1"></button>
+              <button type="button" aria-label="Mostrar imagen 2"></button>
+              <button type="button" aria-label="Mostrar imagen 3"></button>
+              <button type="button" aria-label="Mostrar imagen 4"></button>
+            </div>
+            <button type="button" id="study-next" aria-label="Imagen siguiente">&#8594;</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -458,6 +630,57 @@
   </dialog>
 
   <script src="js/catalogo.js" defer></script>
+
+  <!-- FUNCIONAMIENTO DEL CARRUSEL -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const carousel = document.getElementById('study-carousel');
+      if (!carousel) return;
+
+      const slides = carousel.querySelectorAll('.study-slide');
+      const dots = carousel.querySelectorAll('.study-dots button');
+      const prev = document.getElementById('study-prev');
+      const next = document.getElementById('study-next');
+
+      if (!slides.length || !prev || !next) return;
+
+      let current = 0;
+      let autoplay;
+
+      function showSlide(index) {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      }
+
+      function startAutoplay() {
+        clearInterval(autoplay);
+        autoplay = setInterval(() => showSlide(current + 1), 4500);
+      }
+
+      next.addEventListener('click', () => {
+        showSlide(current + 1);
+        startAutoplay();
+      });
+
+      prev.addEventListener('click', () => {
+        showSlide(current - 1);
+        startAutoplay();
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          showSlide(index);
+          startAutoplay();
+        });
+      });
+
+      // El carrusel avanza automáticamente cada 3.5 segundos.
+      // No se detiene cuando el cursor está encima de las imágenes.
+      showSlide(0);
+      startAutoplay();
+    });
+  </script>
 
 </body>
 </html>
