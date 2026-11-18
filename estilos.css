@@ -1918,3 +1918,74 @@ img {
     padding: 35px 20px;
   }
 }
+/* ==========================================
+   AROS GIRATORIOS SIN MOVER LA IMAGEN
+========================================== */
+
+/* El contenedor conserva su posición original */
+.hero-ornament {
+    animation: none !important;
+}
+
+/* La imagen conserva su tamaño y posición */
+.hero-logo {
+    animation: none !important;
+    transform: none !important;
+}
+
+/* Aro exterior */
+.hero-ornament::before {
+    content: "";
+    position: absolute;
+    width: 108%;
+    height: 108%;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    border-top-color: #d5b66f;
+    border-right-color: rgba(213, 182, 111, 0.65);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: aroExterior 14s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Aro interior */
+.hero-ornament::after {
+    content: "";
+    position: absolute;
+    width: 103%;
+    height: 103%;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    border: 1px solid rgba(213, 182, 111, 0.25);
+    border-left-color: #d5b66f;
+    border-bottom-color: rgba(213, 182, 111, 0.55);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: aroInterior 20s linear infinite reverse;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Animaciones independientes */
+@keyframes aroExterior {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes aroInterior {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
