@@ -1,0 +1,685 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Biblioteca CONALEP: consulta y explora materiales educativos digitales.">
+  <meta name="theme-color" content="#183d32">
+  <title>Biblioteca CONALEP | Conocimiento abierto</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="estilos.css">
+
+  <style>
+    /* IMÁGENES DE LAS ÁREAS DEL CONOCIMIENTO */
+
+    .career-area-card .area-icon.area-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 155px;
+  margin: 12px 0;
+  font-size: 0;
+}
+
+.career-area-card .area-icon.area-image img {
+  display: block;
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 12px;
+  transition: transform .3s ease;
+}
+
+.career-area-card:hover .area-icon.area-image img {
+  transform: scale(1.08);
+}
+
+
+    /* ==========================================
+       CARRUSEL DE IMÁGENES - INTRODUCCIÓN
+       BIBLIOTECA CONALEP
+    ========================================== */
+    .intro-carousel-section { overflow: hidden; }
+    .intro-carousel-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: center;
+      gap: 55px;
+    }
+    .intro-copy { min-width: 0; }
+    .intro-copy h2 { margin-top: 12px; }
+    .intro-copy p { max-width: 520px; line-height: 1.8; }
+    .study-carousel { width: 100%; min-width: 0; position: relative; }
+    .study-carousel-track {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #183d32;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.17);
+    }
+    .study-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.9s ease, visibility 0.9s ease;
+    }
+    .study-slide.active { opacity: 1; visibility: visible; z-index: 1; }
+    .study-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 5s ease;
+    }
+    .study-slide.active img { transform: scale(1.06); }
+    .study-caption {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 55px 28px 25px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: linear-gradient(to top, rgba(5, 24, 17, 0.92), rgba(5, 24, 17, 0.45), transparent);
+    }
+    .study-caption span {
+      color: #e4c77d;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .study-caption strong {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(15px, 1.7vw, 21px);
+      line-height: 1.45;
+      font-weight: 700;
+    }
+    .study-carousel-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      margin-top: 18px;
+    }
+    .study-carousel-controls > button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(24, 61, 50, 0.3);
+      background: transparent;
+      color: #183d32;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .study-carousel-controls > button:hover { background: #183d32; color: #fff; }
+    .study-dots { display: flex; align-items: center; gap: 9px; }
+    .study-dots button {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: #b9b9a9;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .study-dots button.active { width: 25px; border-radius: 10px; background: #b3914d; }
+    @media (max-width: 850px) {
+      .intro-carousel-grid { grid-template-columns: 1fr; gap: 30px; }
+      .study-carousel { max-width: 650px; margin: 0 auto; }
+    }
+    @media (max-width: 520px) {
+      .study-carousel-track { aspect-ratio: 4 / 3; border-radius: 13px; }
+      .study-caption { padding: 40px 17px 17px; }
+      .study-caption strong { font-size: 15px; }
+      .study-carousel-controls { margin-top: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="utility-bar">
+    <div class="wrap utility-inner">
+      <span>PLATAFORMA EDUCATIVA DIGITAL</span>
+      <div>
+        <a href="#acerca">Acerca de la biblioteca</a>
+        <a href="#ayuda">Ayuda y orientación</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="masthead wrap">
+    <a class="brand" href="#inicio" aria-label="Biblioteca CONALEP, inicio">
+      <img class="brand-logo" src="recursos/logo.png" alt="Logotipo de la Biblioteca CONALEP">
+      <span class="brand-copy">
+        <strong>CONALEP</strong>
+        <small>BIBLIOTECA DIGITAL</small>
+      </span>
+    </a>
+
+    <div class="masthead-note">
+      <span>EDUCACIÓN · CULTURA · CONOCIMIENTO</span>
+      <strong>Un espacio para aprender y descubrir</strong>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Navegación principal">
+    <div class="wrap nav-inner">
+      <a class="nav-link active" href="#inicio">Inicio</a>
+      <a class="nav-link" href="#colecciones">Bibliocarreras</a>
+      <a class="nav-link" href="#areas">Áreas del conocimiento</a>
+      <a class="nav-link" href="#acerca">La biblioteca</a>
+      <a class="nav-link" href="#ayuda">Ayuda</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- PORTADA -->
+    <section class="hero" id="inicio">
+      <div class="wrap hero-content">
+
+        <div class="eyebrow">
+          <span></span>
+          BIBLIOTECA DIGITAL CONALEP
+        </div>
+
+        <h1>
+          El conocimiento<br>
+          <em>está a tu alcance.</em>
+        </h1>
+
+        <p>
+          Explora materiales educativos, consulta recursos digitales
+          y encuentra nuevas ideas para continuar aprendiendo.
+        </p>
+
+        <form class="search-panel" id="search-form" role="search">
+          <label for="main-search">¿Qué deseas consultar?</label>
+
+          <div class="search-row">
+            <span class="search-symbol" aria-hidden="true">⌕</span>
+
+            <input
+              id="main-search"
+              type="search"
+              placeholder="Busca por título, autor, tema o área..."
+              autocomplete="off"
+            >
+
+            <button type="submit">
+              Buscar <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="search-hint">
+            Ejemplos: Álgebra, Informática, Literatura, Ciencias
+          </div>
+
+          <div class="quick-results" id="quick-results" hidden></div>
+        </form>
+
+        <div class="hero-meta">
+          <span>ACCESO A RECURSOS EDUCATIVOS</span>
+          <span class="meta-line"></span>
+          <span>CONSULTA Y APRENDIZAJE</span>
+        </div>
+      </div>
+
+      <div class="hero-ornament">
+        <img
+          class="hero-logo"
+          src="recursos/logo.png"
+          alt="Emblema de la Biblioteca Virtual CONALEP"
+        >
+      </div>
+    </section>
+
+    <!-- INTRODUCCIÓN CON CARRUSEL -->
+    <section class="intro-strip intro-carousel-section">
+      <div class="wrap intro-grid intro-carousel-grid">
+
+        <div class="intro-copy">
+          <span class="section-kicker">EXPLORA · APRENDE · CRECE</span>
+          <h2>UNA GALERIA DE PROYECTOS. <br></h2>
+          <p>
+            Encuentra materiales de consulta organizados por áreas de
+            conocimiento. 
+          </p>
+        </div>
+
+        <div class="study-carousel" id="study-carousel">
+          <div class="study-carousel-track">
+
+            <div class="study-slide active">
+              <img
+                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=85"
+                alt="Estudiantes trabajando y aprendiendo en equipo"
+                fetchpriority="high"
+              >
+              <div class="study-caption">
+                <span>01 / APRENDIZAJE</span>
+                <strong>Ideas que se convierten en conocimiento.</strong>
+              </div>
+            </div>
+
+            <div class="study-slide">
+              <img
+                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85"
+                alt="Estudiantes trabajando con tecnología"
+                loading="lazy"
+              >
+              <div class="study-caption">
+                <span>02 / TECNOLOGÍA</span>
+                <strong>Innovación y desarrollo de nuevas ideas.</strong>
+              </div>
+            </div>
+
+            <div class="study-slide">
+              <img
+                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=85"
+                alt="Equipo colaborando en un proyecto"
+                loading="lazy"
+              >
+              <div class="study-caption">
+                <span>03 / PROYECTOS</span>
+                <strong>El talento estudiantil crea nuevas oportunidades.</strong>
+              </div>
+            </div>
+
+            <div class="study-slide">
+              <img
+                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=85"
+                alt="Comunidad estudiantil en un entorno académico"
+                loading="lazy"
+              >
+              <div class="study-caption">
+                <span>04 / EDUCACIÓN</span>
+                <strong>Preparación para construir el futuro.</strong>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="study-carousel-controls">
+            <button type="button" id="study-prev" aria-label="Imagen anterior">&#8592;</button>
+            <div class="study-dots" id="study-dots">
+              <button type="button" class="active" aria-label="Mostrar imagen 1"></button>
+              <button type="button" aria-label="Mostrar imagen 2"></button>
+              <button type="button" aria-label="Mostrar imagen 3"></button>
+              <button type="button" aria-label="Mostrar imagen 4"></button>
+            </div>
+            <button type="button" id="study-next" aria-label="Imagen siguiente">&#8594;</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BIBLIOCARRERAS -->
+    <section class="section wrap bibliocarreras-section" id="colecciones">
+
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">CONALEP · ESPECIALIDADES</span>
+          <h2>Bibliocarreras</h2>
+          <p>
+            Un espacio para explorar proyectos, trabajos y recursos
+            relacionados con cada especialidad.
+          </p>
+        </div>
+      </div>
+
+      <div class="bibliocarreras-access">
+        <div class="bibliocarreras-access-copy">
+          <span class="section-kicker">CONOCE · EXPLORA · DESCUBRE</span>
+          <h3>El conocimiento de cada carrera en un solo lugar.</h3>
+          <p>
+            Ingresa a Bibliocarreras para descubrir las especialidades,
+            explorar sus temas y consultar los materiales disponibles.
+          </p>
+        </div>
+
+        <a
+          class="bibliocarreras-button"
+          href="bibliocarreras.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          IR AL SITIO <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ÁREAS DEL CONOCIMIENTO -->
+    <section class="areas-band" id="areas">
+      <div class="wrap section">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">CONOCE TU ESPECIALIDAD</span>
+            <h2>Áreas del conocimiento</h2>
+            <p>
+              Selecciona una carrera para conocer su descripción,
+              plan de estudios y materiales académicos.
+            </p>
+          </div>
+        </div>
+
+        <div class="area-grid career-area-grid">
+
+          <!-- INTELIGENCIA ARTIFICIAL -->
+          <a class="area-card career-area-card" href="areas.html?carrera=inteligencia-artificial">
+            <span class="area-number">01</span>
+
+            <span class="area-icon area-image">
+              <img
+                src="imagenes/inteligencia-artificial.png"
+                alt="Imagen de Inteligencia Artificial"
+                loading="lazy"
+              >
+            </span>
+
+            <strong>Inteligencia Artificial</strong>
+            <small>Innovación, automatización y tecnología</small>
+            <span class="area-arrow">↗</span>
+          </a>
+
+          <!-- INFORMÁTICA -->
+          <a class="area-card career-area-card" href="areas.html?carrera=informatica">
+            <span class="area-number">02</span>
+
+            <span class="area-icon area-image">
+              <img
+                src="imagenes/informatica.png"
+                alt="Imagen de Informática"
+                loading="lazy"
+              >
+            </span>
+
+            <strong>Informática</strong>
+            <small>Desarrollo de sistemas y aplicaciones</small>
+            <span class="area-arrow">↗</span>
+          </a>
+
+          <!-- ELECTRICIDAD INDUSTRIAL -->
+          <a class="area-card career-area-card" href="areas.html?carrera=electricidad-industrial">
+            <span class="area-number">03</span>
+
+            <span class="area-icon area-image">
+              <img
+                src="imagenes/electricidad-industrial.png"
+                alt="Imagen de Electricidad Industrial"
+                loading="lazy"
+              >
+            </span>
+
+            <strong>Electricidad Industrial</strong>
+            <small>Instalaciones y sistemas eléctricos</small>
+            <span class="area-arrow">↗</span>
+          </a>
+
+          <!-- REFRIGERACIÓN -->
+          <a class="area-card career-area-card" href="areas.html?carrera=refrigeracion">
+            <span class="area-number">04</span>
+
+            <span class="area-icon area-image">
+              <img
+                src="imagenes/refrigeracion.png"
+                alt="Imagen de Refrigeración"
+                loading="lazy"
+              >
+            </span>
+
+            <strong>Refrigeración</strong>
+            <small>Climatización y mantenimiento</small>
+            <span class="area-arrow">↗</span>
+          </a>
+
+        </div>
+
+        <div class="areas-more">
+          <p>
+            Consulta la información de cada carrera, sus semestres,
+            materias y recursos académicos.
+          </p>
+          <a href="areas.html" class="areas-more-link">
+            EXPLORAR TODAS LAS CARRERAS <span>→</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section class="section wrap catalog-section" id="catalogo">
+
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">BIBLIOTECA CONALEP</span>
+          <h2>Explora los materiales</h2>
+          <p>
+            Busca en el catálogo o filtra los resultados por categoría.
+          </p>
+        </div>
+      </div>
+
+      <div class="catalog-tools">
+
+        <label class="catalog-search">
+          <span>⌕</span>
+          <input
+            id="catalog-search"
+            type="search"
+            placeholder="Escribe un título, autor o palabra clave..."
+          >
+        </label>
+
+        <label class="filter-label">
+          Filtrar por área
+
+          <select id="category-filter">
+            <option value="Todos">Todas las áreas</option>
+          </select>
+        </label>
+
+      </div>
+
+      <div class="results-line">
+        <span id="results-count">Cargando catálogo...</span>
+        <button id="clear-filters" type="button">Limpiar filtros</button>
+      </div>
+
+      <div class="book-grid" id="book-grid" aria-live="polite"></div>
+
+    </section>
+
+    <!-- ACERCA DE -->
+    <section class="about-band" id="acerca">
+      <div class="wrap about-grid">
+
+        <div>
+          <span class="section-kicker">Biblioteca</span>
+          <h2>Aprender también<br>es descubrir.</h2>
+        </div>
+
+        <div>
+          <p>
+            La Biblioteca CONALEP es un espacio digital de consulta que
+            reúne materiales educativos para apoyar el aprendizaje,
+            la investigación y el desarrollo académico.
+          </p>
+
+          <p>
+            Su propósito es facilitar el acceso organizado a recursos
+            de distintas áreas del conocimiento y promover el hábito
+            de la lectura y la búsqueda de información.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- AYUDA -->
+    <section class="section wrap help-section" id="ayuda">
+
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">¿NECESITAS ORIENTACIÓN?</span>
+          <h2>¿Cómo utilizar la biblioteca?</h2>
+        </div>
+      </div>
+
+      <div class="help-grid">
+
+        <article>
+          <span>01</span>
+          <h3>Busca</h3>
+          <p>
+            Escribe el título, autor, tema o palabra clave en el buscador.
+          </p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Explora</h3>
+          <p>
+            Revisa los resultados y selecciona el material que te interese.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Consulta</h3>
+          <p>
+            Abre el documento disponible o descarga el archivo para leerlo.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="footer">
+
+    <div class="wrap footer-main">
+
+      <div class="footer-brand">
+        <strong>CONALEP</strong>
+        <span>BIBLIOTECA DIGITAL</span>
+        <p>Un espacio para descubrir, consultar y aprender.</p>
+      </div>
+
+      <div>
+        <b>Explora</b>
+        <a href="#colecciones">Bibliocarreras</a>
+        <a href="#areas">Áreas del conocimiento</a>
+        <a href="#catalogo">Catálogo</a>
+      </div>
+
+      <div>
+        <b>Información</b>
+        <a href="#acerca">Acerca de la biblioteca</a>
+        <a href="#ayuda">Centro de ayuda</a>
+        <a href="#inicio">Volver al inicio ↑</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="wrap">
+        <span>© 2026 Biblioteca CONALEP · Proyecto educativo</span>
+        <span>Conocimiento que transforma</span>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- VENTANA DE DETALLES DE LIBROS -->
+  <dialog class="detail-dialog" id="detail-dialog">
+    <button class="dialog-close" id="dialog-close" aria-label="Cerrar">×</button>
+    <div id="detail-content"></div>
+  </dialog>
+
+  <!-- LECTOR PDF -->
+  <dialog class="reader-dialog" id="reader-dialog">
+
+    <div class="reader-top">
+      <strong id="reader-title">Lector digital</strong>
+      <button id="reader-close" aria-label="Cerrar lector">Cerrar ×</button>
+    </div>
+
+    <iframe id="pdf-frame" title="Visor de documento PDF"></iframe>
+
+  </dialog>
+
+  <script src="js/catalogo.js" defer></script>
+
+  <!-- FUNCIONAMIENTO DEL CARRUSEL -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const carousel = document.getElementById('study-carousel');
+      if (!carousel) return;
+
+      const slides = carousel.querySelectorAll('.study-slide');
+      const dots = carousel.querySelectorAll('.study-dots button');
+      const prev = document.getElementById('study-prev');
+      const next = document.getElementById('study-next');
+
+      if (!slides.length || !prev || !next) return;
+
+      let current = 0;
+      let autoplay;
+
+      function showSlide(index) {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      }
+
+      function startAutoplay() {
+        clearInterval(autoplay);
+        autoplay = setInterval(() => showSlide(current + 1), 4500);
+      }
+
+      next.addEventListener('click', () => {
+        showSlide(current + 1);
+        startAutoplay();
+      });
+
+      prev.addEventListener('click', () => {
+        showSlide(current - 1);
+        startAutoplay();
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          showSlide(index);
+          startAutoplay();
+        });
+      });
+
+      // El carrusel avanza automáticamente cada 3.5 segundos.
+      // No se detiene cuando el cursor está encima de las imágenes.
+      showSlide(0);
+      startAutoplay();
+    });
+  </script>
+
+</body>
+</html>
