@@ -1,0 +1,1583 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECONOCEDOR AI | Intelligent Vision</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+    --navy: #050d1b;
+    --blue: #092440;
+    --cyan: #00e5ff;
+    --gold: #d8b76d;
+    --silver: #c7d5e5;
+    --white: #f4f8ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+}
+
+/* FONDO */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background:
+        radial-gradient(ellipse at 50% 45%, #10395a 0%, transparent 45%),
+        radial-gradient(ellipse at 10% 90%, #142c4b 0%, transparent 40%),
+        linear-gradient(135deg, #030914, #081b30, #030914);
+}
+
+.grid-background {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+        linear-gradient(rgba(0,229,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,.035) 1px, transparent 1px);
+    background-size: 45px 45px;
+    mask-image: linear-gradient(to bottom, transparent, black 30%, black 80%, transparent);
+}
+
+#particles {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ENCABEZADO */
+
+header {
+    text-align: center;
+    padding: 35px 15px 15px;
+}
+
+.brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(23px, 4vw, 43px);
+    letter-spacing: 5px;
+    color: var(--white);
+    text-shadow: 0 0 20px rgba(0,229,255,.5);
+}
+
+.brand span {
+    color: var(--gold);
+}
+
+.subtitle {
+    margin-top: 12px;
+    color: #92b5d1;
+    font-size: 16px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.header-line {
+    width: 180px;
+    height: 2px;
+    margin: 20px auto;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--gold), transparent);
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+/* ESTADO */
+
+.top-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #9eb6cb;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.online-dot {
+    width: 8px;
+    height: 8px;
+    background: #00f5a0;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #00f5a0;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .3; transform: scale(.7); }
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+.main-container {
+    max-width: 1150px;
+    margin: 15px auto 50px;
+    padding: 15px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 25px;
+}
+
+.panel {
+    background: linear-gradient(145deg, rgba(17,43,69,.88), rgba(5,17,32,.94));
+    border: 1px solid rgba(0,229,255,.2);
+    border-radius: 17px;
+    box-shadow: 0 15px 50px rgba(0,0,0,.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--gold), transparent);
+}
+
+/* NÚCLEO DE INTELIGENCIA */
+
+.ai-panel {
+    padding: 25px 15px;
+    text-align: center;
+}
+
+.section-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+}
+
+.core {
+    width: 210px;
+    height: 210px;
+    margin: 35px auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid transparent;
+}
+
+.ring-one {
+    width: 100%;
+    height: 100%;
+    border-top-color: var(--cyan);
+    border-bottom-color: rgba(0,229,255,.3);
+    animation: rotate 7s linear infinite;
+    box-shadow: 0 0 12px rgba(0,229,255,.15);
+}
+
+.ring-two {
+    width: 82%;
+    height: 82%;
+    border-left-color: var(--gold);
+    border-right-color: rgba(216,183,109,.2);
+    animation: rotateReverse 5s linear infinite;
+}
+
+.ring-three {
+    width: 65%;
+    height: 65%;
+    border-top: 2px dashed var(--silver);
+    border-bottom: 2px dashed var(--silver);
+    animation: rotate 12s linear infinite;
+}
+
+.ring-four {
+    width: 47%;
+    height: 47%;
+    border: 1px solid rgba(0,229,255,.5);
+    animation: pulseCore 2s infinite alternate;
+}
+
+.core-center {
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, #174f71, #06182d);
+    border: 1px solid var(--cyan);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(0,229,255,.4);
+    z-index: 2;
+    font-size: 30px;
+    animation: coreGlow 3s infinite alternate;
+}
+
+@keyframes rotate {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rotateReverse {
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes pulseCore {
+    from { transform: scale(.92); opacity: .5; }
+    to { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes coreGlow {
+    to { box-shadow: 0 0 45px rgba(0,229,255,.8); }
+}
+
+.core-label {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--cyan);
+    font-size: 13px;
+    letter-spacing: 3px;
+}
+
+.core-description {
+    color: #819db5;
+    margin-top: 9px;
+    font-size: 15px;
+}
+
+/* INDICADORES */
+
+.indicators {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.indicator {
+    margin-top: 17px;
+}
+
+.indicator-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #c4d7e8;
+    margin-bottom: 7px;
+}
+
+.bar {
+    width: 100%;
+    height: 5px;
+    background: #132c44;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--gold));
+    box-shadow: 0 0 12px var(--cyan);
+    transition: width 1s;
+}
+
+/* PANEL DE IMAGEN */
+
+.image-panel {
+    padding: 25px;
+    min-height: 590px;
+}
+
+.image-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.image-heading h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--silver);
+}
+
+.image-heading span {
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* ZONA DE CARGA */
+
+.upload-area {
+    min-height: 390px;
+    border: 1px dashed rgba(0,229,255,.45);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0,15,30,.45);
+    transition: .4s;
+}
+
+.upload-area:hover {
+    border-color: var(--gold);
+    background: rgba(0,229,255,.04);
+    box-shadow: inset 0 0 35px rgba(0,229,255,.08);
+}
+
+.upload-icon {
+    font-size: 65px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 15px rgba(0,229,255,.5));
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    50% { transform: translateY(-12px); }
+}
+
+.upload-area h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 2px;
+}
+
+.upload-area p {
+    margin-top: 12px;
+    color: #8ea9c1;
+    font-size: 15px;
+}
+
+.upload-area .format {
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-top: 25px;
+}
+
+#fileInput {
+    display: none;
+}
+
+/* IMAGEN */
+
+.preview-area {
+    display: none;
+    position: relative;
+    min-height: 390px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,8,18,.65);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.image-container {
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+    line-height: 0;
+}
+
+#preview {
+    display: block;
+    max-width: 100%;
+    max-height: 410px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+#canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* ESCANEO */
+
+.scanning-line {
+    display: none;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--cyan);
+    box-shadow: 0 0 15px var(--cyan), 0 0 35px var(--cyan);
+    animation: scan 2.5s linear infinite;
+}
+
+.scanning-line::after {
+    content: "";
+    position: absolute;
+    top: -30px;
+    width: 100%;
+    height: 35px;
+    background: linear-gradient(to top, rgba(0,229,255,.2), transparent);
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+.scanning .scanning-line {
+    display: block;
+}
+
+.scanning .image-container {
+    box-shadow: 0 0 25px rgba(0,229,255,.3);
+}
+
+/* BOTONES */
+
+.controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 13px;
+    margin-top: 23px;
+}
+
+button {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 15px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.primary-btn {
+    border: 1px solid var(--cyan);
+    color: #001522;
+    background: linear-gradient(120deg, var(--cyan), #8eeeff);
+    box-shadow: 0 0 18px rgba(0,229,255,.18);
+}
+
+.primary-btn:hover:not(:disabled) {
+    transform: translateY(-4px);
+    box-shadow: 0 0 28px rgba(0,229,255,.6);
+}
+
+.secondary-btn {
+    color: var(--gold);
+    border: 1px solid rgba(216,183,109,.5);
+    background: transparent;
+}
+
+.secondary-btn:hover {
+    background: rgba(216,183,109,.12);
+    transform: translateY(-3px);
+}
+
+button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+/* ESTADO DE ANÁLISIS */
+
+.status-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 50px;
+    margin-top: 20px;
+    color: #9cb5c9;
+    font-size: 15px;
+    text-align: center;
+}
+
+.loader {
+    display: none;
+    width: 17px;
+    height: 17px;
+    border: 2px solid #244761;
+    border-top-color: var(--cyan);
+    border-radius: 50%;
+    animation: rotate 1s linear infinite;
+}
+
+/* RESULTADOS */
+
+.result {
+    display: none;
+    margin-top: 25px;
+    border: 1px solid rgba(216,183,109,.4);
+    background: linear-gradient(135deg, rgba(216,183,109,.08), rgba(0,229,255,.05));
+    border-radius: 12px;
+    padding: 22px;
+    animation: resultAppear .7s ease;
+}
+
+@keyframes resultAppear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result h2 {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 3px;
+}
+
+.result-main {
+    text-align: center;
+    padding: 25px 5px;
+}
+
+.result-emoji {
+    font-size: 55px;
+    filter: drop-shadow(0 0 15px rgba(0,229,255,.4));
+}
+
+.result-category {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--cyan);
+    font-size: 23px;
+    margin-top: 13px;
+}
+
+.result-description {
+    color: #a6bdd0;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.detected-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.detected-item {
+    padding: 14px;
+    background: rgba(0,10,22,.6);
+    border: 1px solid rgba(0,229,255,.15);
+    border-radius: 8px;
+    animation: resultAppear .5s ease both;
+}
+
+.detected-item strong {
+    display: block;
+    color: var(--white);
+    font-size: 16px;
+}
+
+.detected-item span {
+    color: var(--gold);
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+.result-note {
+    color: #829bb1;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 17px;
+}
+
+/* BARRA INFERIOR */
+
+.bottom-bar {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    color: #708da6;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.audio-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    border: 1px solid rgba(216,183,109,.5);
+    background: rgba(5,20,36,.9);
+    color: var(--gold);
+    border-radius: 50px;
+    padding: 12px 16px;
+    font-size: 12px;
+}
+
+.audio-btn:hover {
+    box-shadow: 0 0 15px rgba(216,183,109,.4);
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #526e86;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 800px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-panel {
+        padding: 20px;
+    }
+
+    .core {
+        width: 150px;
+        height: 150px;
+        margin: 22px auto;
+    }
+
+    .indicators {
+        max-width: 400px;
+        margin: 25px auto 0;
+    }
+
+    .image-panel {
+        padding: 15px;
+    }
+
+    .upload-area {
+        min-height: 300px;
+    }
+
+    .audio-btn {
+        top: 10px;
+        right: 10px;
+        padding: 9px 12px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="grid-background"></div>
+<canvas id="particles"></canvas>
+
+<button class="audio-btn" id="audioBtn">♫ ACTIVAR AUDIO</button>
+
+<header>
+    <h1 class="brand">RECONOCEDOR <span>AI</span></h1>
+    <p class="subtitle">Intelligent Vision System</p>
+    <div class="header-line"></div>
+
+    <div class="top-status">
+        <span class="online-dot"></span>
+        <span id="systemStatus">INICIALIZANDO SISTEMA</span>
+    </div>
+</header>
+
+<main class="main-container">
+
+<div class="dashboard">
+
+    <!-- PANEL DE INTELIGENCIA -->
+
+    <section class="panel ai-panel">
+
+        <div class="section-label">ARTIFICIAL INTELLIGENCE</div>
+
+        <div class="core">
+
+            <div class="ring ring-one"></div>
+            <div class="ring ring-two"></div>
+            <div class="ring ring-three"></div>
+            <div class="ring ring-four"></div>
+
+            <div class="core-center">✧</div>
+
+        </div>
+
+        <div class="core-label">AI CORE</div>
+        <p class="core-description" id="coreDescription">
+            Sistema preparado
+        </p>
+
+        <div class="indicators">
+
+            <div class="indicator">
+                <div class="indicator-header">
+                    <span>PERSONAS</span>
+                    <span id="personPercent">0%</span>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="personBar"></div>
+                </div>
+            </div>
+
+            <div class="indicator">
+                <div class="indicator-header">
+                    <span>ANIMALES</span>
+                    <span id="animalPercent">0%</span>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="animalBar"></div>
+                </div>
+            </div>
+
+            <div class="indicator">
+                <div class="indicator-header">
+                    <span>OBJETOS</span>
+                    <span id="objectPercent">0%</span>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="objectBar"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PANEL DE RECONOCIMIENTO -->
+
+    <section class="panel image-panel">
+
+        <div class="image-heading">
+            <h2>VISUAL SCANNER</h2>
+            <span>● IMAGE RECOGNITION</span>
+        </div>
+
+        <label class="upload-area" id="uploadArea" for="fileInput">
+
+            <div class="upload-icon">⬡</div>
+
+            <h3>INSERTAR IMAGEN</h3>
+
+            <p>Selecciona una fotografía de tu galería</p>
+
+            <p class="format">JPG · PNG · WEBP</p>
+
+        </label>
+
+        <input type="file" id="fileInput" accept="image/*">
+
+        <div class="preview-area" id="previewArea">
+
+            <div class="scanning-line" id="scanningLine"></div>
+
+            <div class="image-container">
+                <img id="preview" alt="Fotografía seleccionada">
+                <canvas id="canvas"></canvas>
+            </div>
+
+        </div>
+
+        <div class="controls">
+
+            <button class="primary-btn" id="analyzeBtn" disabled>
+                ✧ INICIAR ANÁLISIS
+            </button>
+
+            <button class="secondary-btn" id="changeBtn">
+                ↻ CAMBIAR IMAGEN
+            </button>
+
+        </div>
+
+        <div class="status-box">
+            <div class="loader" id="loader"></div>
+            <span id="status">Cargando inteligencia artificial...</span>
+        </div>
+
+        <!-- RESULTADOS -->
+
+        <div class="result" id="result">
+
+            <h2>ANÁLISIS COMPLETADO</h2>
+
+            <div class="result-main">
+                <div class="result-emoji" id="resultEmoji">🧠</div>
+                <div class="result-category" id="resultCategory">
+                    RESULTADO
+                </div>
+                <p class="result-description" id="resultDescription"></p>
+            </div>
+
+            <div class="detected-list" id="detectedList"></div>
+
+            <p class="result-note">
+                Los porcentajes representan la confianza estimada del modelo.
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+<div class="bottom-bar">
+    <span>RECOGNITION ENGINE · COCO-SSD</span>
+    <span>INTELLIGENT VISION TECHNOLOGY</span>
+    <span>VERSION 2.0</span>
+</div>
+
+</main>
+
+<footer>
+    RECONOCEDOR AI © 2026 · SISTEMA DE VISIÓN ARTIFICIAL
+</footer>
+
+<script>
+
+// ==========================================
+// ELEMENTOS
+// ==========================================
+
+const fileInput = document.getElementById("fileInput");
+const preview = document.getElementById("preview");
+const previewArea = document.getElementById("previewArea");
+const uploadArea = document.getElementById("uploadArea");
+const analyzeBtn = document.getElementById("analyzeBtn");
+const changeBtn = document.getElementById("changeBtn");
+const status = document.getElementById("status");
+const result = document.getElementById("result");
+const canvas = document.getElementById("canvas");
+const loader = document.getElementById("loader");
+
+let model = null;
+let imageReady = false;
+let audioContext = null;
+let musicTimer = null;
+let audioEnabled = false;
+let currentObjectURL = null;
+
+// ==========================================
+// CLASES DEL MODELO
+// ==========================================
+
+const animals = [
+    "bird", "cat", "dog", "horse", "sheep",
+    "cow", "elephant", "bear", "zebra", "giraffe"
+];
+
+const translations = {
+    person: "Persona",
+    bird: "Ave",
+    cat: "Gato",
+    dog: "Perro",
+    horse: "Caballo",
+    sheep: "Oveja",
+    cow: "Vaca",
+    elephant: "Elefante",
+    bear: "Oso",
+    zebra: "Cebra",
+    giraffe: "Jirafa",
+    car: "Automóvil",
+    bicycle: "Bicicleta",
+    motorcycle: "Motocicleta",
+    airplane: "Avión",
+    bus: "Autobús",
+    train: "Tren",
+    truck: "Camión",
+    boat: "Barco",
+    traffic_light: "Semáforo",
+    fire_hydrant: "Hidrante",
+    stop_sign: "Señal de alto",
+    parking_meter: "Parquímetro",
+    bench: "Banca",
+    backpack: "Mochila",
+    umbrella: "Paraguas",
+    handbag: "Bolso",
+    tie: "Corbata",
+    suitcase: "Maleta",
+    frisbee: "Frisbee",
+    skis: "Esquís",
+    snowboard: "Tabla de snowboard",
+    sports_ball: "Pelota",
+    kite: "Cometa",
+    baseball_bat: "Bate",
+    baseball_glove: "Guante",
+    skateboard: "Patineta",
+    surfboard: "Tabla de surf",
+    tennis_racket: "Raqueta",
+    bottle: "Botella",
+    wine_glass: "Copa",
+    cup: "Taza",
+    fork: "Tenedor",
+    knife: "Cuchillo",
+    spoon: "Cuchara",
+    bowl: "Tazón",
+    banana: "Plátano",
+    apple: "Manzana",
+    sandwich: "Sándwich",
+    orange: "Naranja",
+    broccoli: "Brócoli",
+    carrot: "Zanahoria",
+    hot_dog: "Hot dog",
+    pizza: "Pizza",
+    donut: "Dona",
+    cake: "Pastel",
+    chair: "Silla",
+    couch: "Sofá",
+    potted_plant: "Planta",
+    bed: "Cama",
+    dining_table: "Mesa",
+    toilet: "Inodoro",
+    tv: "Televisor",
+    laptop: "Computadora portátil",
+    mouse: "Ratón",
+    remote: "Control remoto",
+    keyboard: "Teclado",
+    cell_phone: "Teléfono celular",
+    microwave: "Microondas",
+    oven: "Horno",
+    toaster: "Tostadora",
+    sink: "Lavabo",
+    refrigerator: "Refrigerador",
+    book: "Libro",
+    clock: "Reloj",
+    vase: "Florero",
+    scissors: "Tijeras",
+    teddy_bear: "Oso de peluche",
+    hair_drier: "Secadora",
+    toothbrush: "Cepillo de dientes"
+};
+
+// ==========================================
+// PARTICULAS ANIMADAS
+// ==========================================
+
+const particleCanvas = document.getElementById("particles");
+const particleCtx = particleCanvas.getContext("2d");
+
+let particles = [];
+
+function resizeParticles() {
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+
+    particles = Array.from({length: 75}, () => ({
+        x: Math.random() * particleCanvas.width,
+        y: Math.random() * particleCanvas.height,
+        size: Math.random() * 2 + .5,
+        speed: Math.random() * .45 + .15,
+        opacity: Math.random() * .5 + .15
+    }));
+}
+
+function animateParticles() {
+
+    particleCtx.clearRect(
+        0, 0,
+        particleCanvas.width,
+        particleCanvas.height
+    );
+
+    particles.forEach(p => {
+
+        p.y -= p.speed;
+
+        if (p.y < 0) {
+            p.y = particleCanvas.height;
+            p.x = Math.random() * particleCanvas.width;
+        }
+
+        particleCtx.beginPath();
+
+        particleCtx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI * 2
+        );
+
+        particleCtx.fillStyle = `rgba(0,229,255,${p.opacity})`;
+        particleCtx.fill();
+
+    });
+
+    requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener("resize", resizeParticles);
+
+resizeParticles();
+animateParticles();
+
+// ==========================================
+// SISTEMA DE AUDIO ORIGINAL
+// ==========================================
+
+// Genera una melodía ambiental electrónica
+// sin utilizar canciones comerciales.
+
+function getAudioContext() {
+
+    if (!audioContext) {
+        audioContext = new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+    }
+
+    return audioContext;
+}
+
+function playTone(frequency, duration, volume = 0.035, type = "sine") {
+
+    if (!audioEnabled) return;
+
+    const ctx = getAudioContext();
+
+    if (ctx.state === "suspended") {
+        ctx.resume();
+    }
+
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    oscillator.type = type;
+    oscillator.frequency.value = frequency;
+
+    gain.gain.setValueAtTime(volume, ctx.currentTime);
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        ctx.currentTime + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+
+    oscillator.start();
+    oscillator.stop(ctx.currentTime + duration);
+}
+
+function playEffect(type) {
+
+    if (!audioEnabled) return;
+
+    if (type === "select") {
+        playTone(650, .15, .06);
+        setTimeout(() => playTone(950, .2, .04), 100);
+    }
+
+    if (type === "scan") {
+        playTone(350, .35, .05);
+        setTimeout(() => playTone(550, .4, .04), 200);
+        setTimeout(() => playTone(800, .3, .035), 400);
+    }
+
+    if (type === "success") {
+        playTone(523, .35, .06);
+        setTimeout(() => playTone(659, .35, .06), 130);
+        setTimeout(() => playTone(784, .5, .06), 260);
+    }
+}
+
+// Melodía ambiental propia
+const notes = [130.81, 164.81, 196, 246.94, 196, 164.81];
+
+let noteIndex = 0;
+
+function startMusic() {
+
+    if (musicTimer) return;
+
+    musicTimer = setInterval(() => {
+
+        if (!audioEnabled) return;
+
+        const note = notes[noteIndex % notes.length];
+
+        playTone(note, 1.5, .018, "sine");
+
+        if (noteIndex % 3 === 0) {
+            playTone(note * 2, 1, .009, "triangle");
+        }
+
+        noteIndex++;
+
+    }, 1000);
+}
+
+function stopMusic() {
+    clearInterval(musicTimer);
+    musicTimer = null;
+}
+
+document.getElementById("audioBtn").addEventListener("click", async () => {
+
+    const btn = document.getElementById("audioBtn");
+
+    if (!audioEnabled) {
+
+        audioEnabled = true;
+
+        const ctx = getAudioContext();
+
+        if (ctx.state === "suspended") {
+            await ctx.resume();
+        }
+
+        startMusic();
+
+        btn.textContent = "♫ SILENCIAR AUDIO";
+
+        playTone(523, .3, .06);
+
+    } else {
+
+        audioEnabled = false;
+        stopMusic();
+
+        btn.textContent = "♫ ACTIVAR AUDIO";
+
+    }
+
+});
+
+// ==========================================
+// CARGAR INTELIGENCIA ARTIFICIAL
+// ==========================================
+
+async function loadModel() {
+
+    try {
+
+        status.textContent = "Descargando modelo neuronal...";
+        document.getElementById("systemStatus").textContent = "CARGANDO MODELO IA";
+
+        model = await cocoSsd.load();
+
+        status.textContent = "Sistema preparado. Esperando imagen.";
+        document.getElementById("systemStatus").textContent = "SISTEMA OPERATIVO";
+
+        document.getElementById("coreDescription").textContent =
+            "Inteligencia artificial activa";
+
+        analyzeBtn.disabled = !imageReady;
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "No se pudo cargar la IA. Revisa tu conexión a Internet.";
+
+        document.getElementById("systemStatus").textContent =
+            "ERROR DE CONEXIÓN";
+
+    }
+
+}
+
+// ==========================================
+// SELECCIONAR IMAGEN
+// ==========================================
+
+fileInput.addEventListener("change", event => {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+
+        status.textContent = "Archivo no compatible.";
+        fileInput.value = "";
+        return;
+
+    }
+
+    if (currentObjectURL) {
+        URL.revokeObjectURL(currentObjectURL);
+    }
+
+    currentObjectURL = URL.createObjectURL(file);
+
+    preview.onload = () => {
+
+        imageReady = true;
+
+        uploadArea.style.display = "none";
+        previewArea.style.display = "flex";
+
+        canvas.width = preview.naturalWidth;
+        canvas.height = preview.naturalHeight;
+
+        result.style.display = "none";
+
+        clearIndicators();
+
+        analyzeBtn.disabled = !model;
+
+        status.textContent = model
+            ? "Imagen recibida. Lista para analizar."
+            : "Imagen recibida. Esperando modelo IA.";
+
+        playEffect("select");
+
+    };
+
+    preview.onerror = () => {
+
+        status.textContent = "No se pudo abrir la fotografía.";
+
+        URL.revokeObjectURL(currentObjectURL);
+        currentObjectURL = null;
+
+    };
+
+    preview.src = currentObjectURL;
+
+});
+
+// ==========================================
+// CAMBIAR IMAGEN
+// ==========================================
+
+changeBtn.addEventListener("click", () => {
+
+    fileInput.click();
+
+});
+
+// ==========================================
+// LIMPIAR INDICADORES
+// ==========================================
+
+function clearIndicators() {
+
+    ["person", "animal", "object"].forEach(id => {
+
+        document.getElementById(id + "Bar").style.width = "0%";
+
+        document.getElementById(id + "Percent").textContent = "0%";
+
+    });
+
+}
+
+// ==========================================
+// ACTUALIZAR INDICADORES
+// ==========================================
+
+function updateIndicators(predictions) {
+
+    const scores = {
+        person: 0,
+        animal: 0,
+        object: 0
+    };
+
+    predictions.forEach(item => {
+
+        const category = item.class === "person"
+            ? "person"
+            : animals.includes(item.class)
+            ? "animal"
+            : "object";
+
+        scores[category] = Math.max(
+            scores[category],
+            Math.round(item.score * 100)
+        );
+
+    });
+
+    Object.keys(scores).forEach(key => {
+
+        document.getElementById(key + "Percent").textContent =
+            scores[key] + "%";
+
+        document.getElementById(key + "Bar").style.width =
+            scores[key] + "%";
+
+    });
+
+}
+
+// ==========================================
+// ANALIZAR FOTOGRAFÍA
+// ==========================================
+
+analyzeBtn.addEventListener("click", async () => {
+
+    if (!model || !imageReady) return;
+
+    analyzeBtn.disabled = true;
+
+    result.style.display = "none";
+
+    loader.style.display = "block";
+
+    status.textContent = "Escaneando contenido visual...";
+
+    previewArea.classList.add("scanning");
+
+    document.getElementById("coreDescription").textContent =
+        "Analizando información visual";
+
+    playEffect("scan");
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    try {
+
+        const predictions = await model.detect(preview);
+
+        const validPredictions = predictions.filter(
+            item => item.score >= 0.50
+        );
+
+        previewArea.classList.remove("scanning");
+
+        loader.style.display = "none";
+
+        if (validPredictions.length === 0) {
+
+            clearIndicators();
+
+            showResult(
+                "❓",
+                "SIN IDENTIFICACIÓN",
+                "No se encontraron elementos reconocibles con suficiente confianza."
+            );
+
+            status.textContent = "Análisis finalizado.";
+
+            document.getElementById("coreDescription").textContent =
+                "Escaneo finalizado";
+
+            return;
+
+        }
+
+        updateIndicators(validPredictions);
+
+        const hasPerson = validPredictions.some(
+            item => item.class === "person"
+        );
+
+        const hasAnimal = validPredictions.some(
+            item => animals.includes(item.class)
+        );
+
+        const hasObject = validPredictions.some(
+            item =>
+                item.class !== "person" &&
+                !animals.includes(item.class)
+        );
+
+        let categories = [];
+
+        if (hasPerson) categories.push("PERSONA");
+        if (hasAnimal) categories.push("ANIMAL");
+        if (hasObject) categories.push("OBJETO");
+
+        let emoji = "🧠";
+        let description = "Se identificaron elementos en la fotografía.";
+
+        if (categories.length === 1) {
+
+            if (hasPerson) {
+                emoji = "👤";
+                description = "El sistema detectó una o más personas.";
+            }
+
+            if (hasAnimal) {
+                emoji = "🐾";
+                description = "El sistema detectó uno o más animales.";
+            }
+
+            if (hasObject) {
+                emoji = "📦";
+                description = "El sistema detectó uno o más objetos.";
+            }
+
+        }
+
+        showResult(
+            emoji,
+            categories.join(" + "),
+            description
+        );
+
+        // DIBUJAR DETECCIONES
+
+        validPredictions.forEach(item => {
+
+            const [x, y, width, height] = item.bbox;
+
+            const isPerson = item.class === "person";
+            const isAnimal = animals.includes(item.class);
+
+            const color = isPerson
+                ? "#00f5a0"
+                : isAnimal
+                ? "#00d9ff"
+                : "#e5c16e";
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = Math.max(3, canvas.width / 250);
+
+            ctx.strokeRect(x, y, width, height);
+
+            const name = translations[item.class] || item.class;
+
+            const label = name + " " +
+                Math.round(item.score * 100) + "%";
+
+            const fontSize = Math.max(15, canvas.width / 45);
+
+            ctx.font = `bold ${fontSize}px Arial`;
+
+            const textWidth = ctx.measureText(label).width;
+
+            const labelY = Math.max(y, fontSize + 10);
+
+            ctx.fillStyle = color;
+
+            ctx.fillRect(
+                x,
+                labelY - fontSize - 8,
+                textWidth + 14,
+                fontSize + 13
+            );
+
+            ctx.fillStyle = "#041321";
+
+            ctx.fillText(
+                label,
+                x + 7,
+                labelY - 3
+            );
+
+        });
+
+        // LISTA DE RESULTADOS
+
+        const detectedList = document.getElementById("detectedList");
+
+        detectedList.innerHTML = "";
+
+        validPredictions.forEach((item, index) => {
+
+            const element = document.createElement("div");
+
+            element.className = "detected-item";
+
+            element.style.animationDelay = (index * .08) + "s";
+
+            const name = translations[item.class] || item.class;
+
+            const nameElement = document.createElement("strong");
+            nameElement.textContent = name;
+
+            const scoreElement = document.createElement("span");
+
+            scoreElement.textContent =
+                "Confianza: " + Math.round(item.score * 100) + "%";
+
+            element.appendChild(nameElement);
+            element.appendChild(scoreElement);
+
+            detectedList.appendChild(element);
+
+        });
+
+        status.textContent = "✓ Reconocimiento completado.";
+
+        document.getElementById("coreDescription").textContent =
+            "Análisis completado correctamente";
+
+        playEffect("success");
+
+    } catch (error) {
+
+        console.error(error);
+
+        previewArea.classList.remove("scanning");
+
+        status.textContent = "Error durante el reconocimiento.";
+
+        document.getElementById("coreDescription").textContent =
+            "Error de procesamiento";
+
+    } finally {
+
+        loader.style.display = "none";
+
+        analyzeBtn.disabled = !model || !imageReady;
+
+    }
+
+});
+
+// ==========================================
+// MOSTRAR RESULTADOS
+// ==========================================
+
+function showResult(emoji, category, description) {
+
+    document.getElementById("resultEmoji").textContent = emoji;
+
+    document.getElementById("resultCategory").textContent = category;
+
+    document.getElementById("resultDescription").textContent =
+        description;
+
+    result.style.display = "block";
+
+}
+
+// ==========================================
+// INICIAR SISTEMA
+// ==========================================
+
+loadModel();
+
+</script>
+
+</body>
+</html>
