@@ -700,18 +700,24 @@ function showCareer(careerId, updateURL = true) {
   selectedCareer = careerId;
   selectedSemester = null;
 
-  careerGrid.style.display = "none";
-  careerDetail.classList.add("active");
+  if (careerGrid) careerGrid.style.display = "none";
+  if (careerDetail) careerDetail.classList.add("active");
 
-  careerImage.src = career.image;
-  careerImage.alt = career.name;
-  careerTitle.textContent = career.name;
-  careerKicker.textContent = "ÁREA DE FORMACIÓN";
-  careerDescription.textContent = career.description;
+  if (careerImage) {
+    careerImage.src = career.image;
+    careerImage.alt = career.name;
+  }
 
-  syllabusArea.classList.remove("active");
-  semesterContent.classList.remove("active");
-  subjectDetail.classList.remove("active");
+  if (careerTitle) careerTitle.textContent = career.name;
+  if (careerKicker) careerKicker.textContent = "ÁREA DE FORMACIÓN";
+  if (careerDescription) careerDescription.textContent = career.description;
+
+  if (syllabusArea) syllabusArea.classList.remove("active");
+  if (semesterContent) semesterContent.classList.remove("active");
+  if (subjectDetail) {
+    subjectDetail.classList.remove("active");
+    subjectDetail.innerHTML = "";
+  }
 
   document.querySelectorAll(".semester-button").forEach(button => {
     button.classList.remove("active");
@@ -723,17 +729,19 @@ function showCareer(careerId, updateURL = true) {
     history.replaceState({}, "", url);
   }
 
-  careerDetail.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+  if (careerDetail) {
+    careerDetail.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
 }
 
 /* =========================================
    ABRIR SYLLABUS
 ========================================= */
 
-if (syllabusToggle) {
+if (syllabusToggle && syllabusArea) {
   syllabusToggle.addEventListener("click", () => {
     syllabusArea.classList.toggle("active");
 
@@ -751,7 +759,7 @@ if (syllabusToggle) {
 ========================================= */
 
 function showSemester(semesterNumber) {
-  if (!selectedCareer) return;
+  if (!selectedCareer || !semesterContent || !subjectDetail) return;
 
   const career = areasCareers[selectedCareer];
   const subjects = career.semesters[semesterNumber];
@@ -856,7 +864,6 @@ function showSemester(semesterNumber) {
 
 /* =========================================
    CREAR TABLA DE APOYO ACADÉMICO
-   SIN COLUMNA DE ACTIVIDAD
 ========================================= */
 
 function createAcademicSupportTable(subjectName, careerId, semesterNumber, subjectIndex) {
@@ -875,46 +882,108 @@ function createAcademicSupportTable(subjectName, careerId, semesterNumber, subje
     `;
   }
 
-  const isIndependenceSubject =
+  /* =========================================
+     PROYECTO INTERACTIVO
+     RECONOCIMIENTO DE PATRONES
+  ========================================= */
+
+  const isPatternRecognition =
+    careerId === "inteligencia-artificial" &&
+    Number(semesterNumber) === 5 &&
+    Number(subjectIndex) === 2;
+
+  const interactiveProject = isPatternRecognition ? `
+    <div class="detail-section interactive-project">
+      <h4>Proyecto interactivo</h4>
+
+      <p>
+        Explora una aplicación de inteligencia artificial capaz de analizar
+        imágenes e identificar personas, animales y diferentes objetos.
+      </p>
+
+      <div class="interactive-project-card">
+        <div class="interactive-project-info">
+          <span class="subject-code">DEMOSTRACIÓN PRÁCTICA</span>
+
+          <h3>RECONOCEDOR AI</h3>
+
+          <p>
+            Sistema de reconocimiento visual desarrollado con TensorFlow.js
+            y COCO-SSD. Selecciona una imagen para analizar su contenido
+            y visualizar los objetos identificados.
+          </p>
+
+          <a
+            class="subject-button"
+            href="aplicaciones/reconocedor-ai/index.html"
+            target="_blank"
+            rel="noopener noreferrer">
+            ABRIR RECONOCEDOR AI →
+          </a>
+        </div>
+      </div>
+    </div>
+  ` : "";
+
+  const isHistorySubject =
     careerId === "inteligencia-artificial" &&
     Number(semesterNumber) === 5 &&
     Number(subjectIndex) === 3;
 
   const rows = sections.map(section => {
     const topicRows = section.topics.map(topic => {
-      const isTargetTopic =
-        isIndependenceSubject &&
-        String(topic.number).trim().startsWith("1.1");
+      const unitMatch = String(topic.number).match(/\d+\.\d+/);
+      const unit = unitMatch ? unitMatch[0] : "";
 
-      const materialCell = isTargetTopic
-        ? `
-          <a
-            class="subject-button"
-            href="visor-material.html"
-            target="_blank"
-            rel="noopener noreferrer">
-            MATERIAL DEL MAESTRO ↗
-          </a>
-        `
-        : `
-          <span class="resource-pending">
-            Material próximamente disponible.
-          </span>
-        `;
+      let projectLink = "";
+      let reportLink = "";
 
-      const projectsCell = isTargetTopic
-        ? `
-          <a
-            class="subject-button"
-            href="proyectos.html?unidad=1-1">
-            PROYECTOS DE LOS ALUMNOS →
-          </a>
-        `
-        : `
-          <span class="resource-pending">
-            No hay proyectos disponibles.
-          </span>
-        `;
+      if (isHistorySubject) {
+        if (unit === "1.1") {
+          projectLink = `
+            <a class="subject-button"
+               href="proyectos-alumnos.html?actividad=Act.1&unidad=1.1">
+              PROYECTOS →
+            </a>
+          `;
+        }
+
+        if (unit === "1.2") {
+          reportLink = `
+            <a class="subject-button"
+               href="reportes.html?actividad=Act.1&unidad=1.2">
+              REPORTES →
+            </a>
+          `;
+        }
+
+        if (unit === "2.1") {
+          projectLink = `
+            <a class="subject-button"
+               href="proyectos-alumnos.html?actividad=Act.2&unidad=2.1">
+              PROYECTOS →
+            </a>
+          `;
+        }
+
+        if (unit === "2.2") {
+          reportLink = `
+            <a class="subject-button"
+               href="reportes.html?actividad=Act.2&unidad=2.2">
+              REPORTES →
+            </a>
+          `;
+        }
+      }
+
+      const materialCell = `
+        <a class="subject-button"
+           href="visor-material.html"
+           target="_blank"
+           rel="noopener noreferrer">
+          MATERIAL DEL MAESTRO ↗
+        </a>
+      `;
 
       return `
         <tr>
@@ -925,14 +994,20 @@ function createAcademicSupportTable(subjectName, careerId, semesterNumber, subje
 
           <td>${materialCell}</td>
 
-          <td>${projectsCell}</td>
+          <td>
+            ${projectLink || '<span class="resource-pending">—</span>'}
+          </td>
+
+          <td>
+            ${reportLink || '<span class="resource-pending">—</span>'}
+          </td>
         </tr>
       `;
     }).join("");
 
     return `
       <tr class="support-group-row">
-        <td colspan="3">${section.title}</td>
+        <td colspan="4">${section.title}</td>
       </tr>
 
       ${topicRows}
@@ -944,8 +1019,8 @@ function createAcademicSupportTable(subjectName, careerId, semesterNumber, subje
       <h4>Contenido de apoyo académico</h4>
 
       <p>
-        Consulta las unidades de aprendizaje, el material proporcionado
-        por el maestro y los proyectos realizados por los alumnos.
+        Consulta el material proporcionado por el maestro,
+        las presentaciones elaboradas por los alumnos y los reportes.
       </p>
 
       <div class="academic-table-wrapper">
@@ -955,6 +1030,7 @@ function createAcademicSupportTable(subjectName, careerId, semesterNumber, subje
               <th>Unidad</th>
               <th>Material del maestro</th>
               <th>Proyectos de los alumnos</th>
+              <th>Reportes</th>
             </tr>
           </thead>
 
@@ -964,15 +1040,20 @@ function createAcademicSupportTable(subjectName, careerId, semesterNumber, subje
         </table>
       </div>
     </div>
+
+    ${interactiveProject}
   `;
 }
 
 /* =========================================
    FICHA DE UNA MATERIA GENERAL
+   CONSERVA LA ESTRUCTURA ORIGINAL
 ========================================= */
 
 function showGenericSubject(subjectName, semesterNumber, teacherName, subjectIndex) {
   const career = areasCareers[selectedCareer];
+
+  if (!career || !subjectDetail) return;
 
   const configuration = getSubjectConfiguration(
     selectedCareer,
@@ -1174,6 +1255,8 @@ function showCalculusExample() {
 ========================================= */
 
 function openSubjectDetail() {
+  if (!subjectDetail) return;
+
   subjectDetail.classList.add("active");
 
   subjectDetail.scrollIntoView({
@@ -1192,32 +1275,93 @@ function openSubjectDetail() {
 }
 
 /* =========================================
-   EVENTOS DE SEMESTRES
+   EVENTOS DE CARRERAS Y SEMESTRES
 ========================================= */
 
-document.querySelectorAll(".semester-button").forEach(button => {
-  button.addEventListener("click", () => {
-    showSemester(Number(button.dataset.semester));
-  });
-});
+// Seleccionar una carrera
+if (careerGrid) {
+  careerGrid.addEventListener("click", event => {
+    const button = event.target.closest("[data-area-career]");
 
-/* =========================================
-   EVENTOS DE CARRERAS
-========================================= */
+    if (!button) return;
 
-document.querySelectorAll("[data-area-career]").forEach(button => {
-  button.addEventListener("click", () => {
     showCareer(button.dataset.areaCareer);
   });
-});
+}
+
+// Seleccionar un semestre
+const semesterGrid = document.querySelector("#semester-grid");
+
+if (semesterGrid) {
+  semesterGrid.addEventListener("click", event => {
+    const button = event.target.closest("[data-semester]");
+
+    if (!button) return;
+
+    showSemester(Number(button.dataset.semester));
+  });
+}
+
+/* =========================================
+   BOTÓN PARA CAMBIAR DE CARRERA
+========================================= */
+
+const careerBody = document.querySelector(".career-detail-body");
+
+if (careerBody && careerGrid && careerDetail) {
+  const changeCareerButton = document.createElement("button");
+
+  changeCareerButton.type = "button";
+  changeCareerButton.className = "detail-close";
+  changeCareerButton.textContent = "← CAMBIAR DE CARRERA";
+
+  careerBody.insertBefore(changeCareerButton, careerBody.firstChild);
+
+  changeCareerButton.addEventListener("click", () => {
+    careerDetail.classList.remove("active");
+    careerGrid.style.display = "grid";
+
+    if (syllabusArea) syllabusArea.classList.remove("active");
+
+    if (semesterContent) {
+      semesterContent.classList.remove("active");
+      semesterContent.innerHTML = "";
+    }
+
+    if (subjectDetail) {
+      subjectDetail.classList.remove("active");
+      subjectDetail.innerHTML = "";
+    }
+
+    selectedCareer = null;
+    selectedSemester = null;
+
+    document.querySelectorAll(".semester-button").forEach(button => {
+      button.classList.remove("active");
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("carrera");
+    history.replaceState({}, "", url);
+
+    const hero = document.querySelector(".areas-hero");
+
+    if (hero) {
+      hero.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  });
+}
 
 /* =========================================
    ABRIR CARRERA DESDE LA URL
 ========================================= */
 
-const params = new URLSearchParams(window.location.search);
-const careerFromURL = params.get("carrera");
+const initialParams = new URLSearchParams(window.location.search);
+const initialCareer = initialParams.get("carrera");
 
-if (careerFromURL && areasCareers[careerFromURL]) {
-  showCareer(careerFromURL, false);
+if (initialCareer && areasCareers[initialCareer]) {
+  showCareer(initialCareer, false);
 }

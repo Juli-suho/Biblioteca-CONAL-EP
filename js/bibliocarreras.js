@@ -7,8 +7,10 @@
 const careerData = {
   "inteligencia-artificial": {
     title: "Inteligencia Artificial",
+
     description:
       "La inteligencia artificial estudia el desarrollo de sistemas capaces de analizar información, reconocer patrones y realizar tareas que requieren procesos inteligentes.",
+
     projects: [
       {
         title: "Robótica inteligente",
@@ -35,6 +37,7 @@ const careerData = {
         description: "Sistemas que identifican objetos y elementos visuales."
       }
     ],
+
     resources: [
       {
         title: "Álgebra básica",
@@ -47,8 +50,10 @@ const careerData = {
 
   "informatica": {
     title: "Informática",
+
     description:
       "La informática comprende el uso de computadoras, programas, redes y sistemas para procesar, almacenar y comunicar información.",
+
     projects: [
       {
         title: "Desarrollo web",
@@ -75,6 +80,7 @@ const careerData = {
         description: "Identificación de fallas y mantenimiento de computadoras."
       }
     ],
+
     resources: [
       {
         title: "Informática básica PDF",
@@ -93,8 +99,10 @@ const careerData = {
 
   "electricidad-industrial": {
     title: "Electricidad Industrial",
+
     description:
       "La electricidad industrial se relaciona con la instalación, operación y mantenimiento de sistemas eléctricos utilizados en procesos industriales.",
+
     projects: [
       {
         title: "Instalaciones eléctricas",
@@ -121,13 +129,16 @@ const careerData = {
         description: "Identificación de riesgos y medidas de prevención."
       }
     ],
+
     resources: []
   },
 
   "refrigeracion": {
     title: "Refrigeración",
+
     description:
       "La refrigeración aborda los sistemas utilizados para extraer calor, conservar temperaturas y mantener condiciones adecuadas en distintos espacios y equipos.",
+
     projects: [
       {
         title: "Aire acondicionado",
@@ -154,94 +165,305 @@ const careerData = {
         description: "Planeación y montaje de sistemas de climatización."
       }
     ],
+
     resources: []
   }
 };
+
+// =========================================
+// ELEMENTOS HTML
+// =========================================
 
 const projectPanel = document.querySelector("#project-panel");
 const projectContent = document.querySelector("#project-content");
 const projectBack = document.querySelector("#project-back");
 
-function renderCareer(careerId) {
+// =========================================
+// MOSTRAR UNA CARRERA
+// =========================================
+
+function renderCareer(careerId, selectedProjectIndex = null) {
   const career = careerData[careerId];
 
   if (!career || !projectPanel || !projectContent) {
     return;
   }
 
-  const projectHTML = career.projects.map((project, index) => `
-    <article class="project-item">
-      <strong>${index + 1}. ${project.title}</strong>
-      <small>${project.description}</small>
-    </article>
-  `).join("");
+  // =========================================
+  // ORDEN DE LOS PROYECTOS
+  // =========================================
+
+  let projectOrder = career.projects.map((_, index) => index);
+
+  if (careerId === "inteligencia-artificial") {
+    projectOrder = [2, 5, 0, 1, 3, 4];
+  }
+
+  // =========================================
+  // GENERAR OPCIONES SELECCIONABLES
+  // =========================================
+
+  const projectHTML = projectOrder.map((index, position) => {
+
+    const project = career.projects[index];
+
+    return `
+      <button
+        type="button"
+        class="project-item ${selectedProjectIndex === index ? "selected" : ""}"
+        data-project-index="${index}"
+        aria-pressed="${selectedProjectIndex === index}">
+
+        <strong>${position + 1}. ${project.title}</strong>
+
+        <small>${project.description}</small>
+
+      </button>
+    `;
+
+  }).join("");
+
+  // =========================================
+  // MATERIALES DE APOYO
+  // =========================================
 
   let resourcesHTML = "";
 
   if (career.resources.length > 0) {
+
     resourcesHTML = `
       <div class="project-resource">
+
         <h3>Materiales de apoyo disponibles</h3>
+
         <p>
           Los siguientes archivos son recursos provisionales de la biblioteca.
           Su presencia no significa que sean proyectos oficiales de esta carrera.
         </p>
+
         ${career.resources.map(resource => `
           <div style="margin: 16px 0;">
+
             <strong>${resource.title}</strong>
+
             <p>${resource.description}</p>
-            <a href="${resource.url}" target="_blank" rel="noopener noreferrer">
+
+            <a
+              href="${resource.url}"
+              target="_blank"
+              rel="noopener noreferrer">
+
               ${resource.label}
+
             </a>
+
           </div>
         `).join("")}
+
       </div>
     `;
+
   } else {
+
     resourcesHTML = `
       <div class="project-empty">
+
         <strong>Materiales y proyectos pendientes de publicación.</strong>
+
         <p>
           Todavía no hay documentos específicos cargados para esta carrera.
           Próximamente se podrán agregar proyectos, guías, prácticas y materiales.
         </p>
+
       </div>
     `;
   }
 
-  projectContent.innerHTML = `
-    <span class="career-kicker">BIBLIO CARRERAS · ÁREA DE FORMACIÓN</span>
-    <h2>${career.title}</h2>
-    <p class="project-description">${career.description}</p>
+  // =========================================
+  // PROYECTOS INTERACTIVOS
+  // =========================================
 
-    <h3 style="color:#183d32; margin-top:30px; font-family:Georgia,serif; font-weight:400;">
+  let interactiveProjectHTML = "";
+
+  // -----------------------------------------
+  // SIMULADOR DEL SISTEMA SOLAR
+  // OPCIÓN: BASES DE DATOS
+  // -----------------------------------------
+
+  if (
+    careerId === "inteligencia-artificial" &&
+    selectedProjectIndex === 2
+  ) {
+
+    interactiveProjectHTML = `
+      <div class="project-resource">
+
+        <span class="career-kicker">
+          PROYECTO INTERACTIVO · SIMULACIÓN EDUCATIVA
+        </span>
+
+        <h3 style="font-size:24px; margin-top:12px;">
+          SIMULADOR DEL SISTEMA SOLAR
+        </h3>
+
+        <p>
+          Explora una representación interactiva del Sistema Solar.
+          Observa el movimiento de los planetas, modifica la velocidad
+          de la simulación y consulta información sobre cada uno.
+        </p>
+
+        <a
+          href="aplicaciones/simulador-sistema-solar/index.html"
+          target="_blank"
+          rel="noopener noreferrer">
+
+          ABRIR SIMULADOR DEL SISTEMA SOLAR →
+
+        </a>
+
+      </div>
+    `;
+  }
+
+  // -----------------------------------------
+  // RECONOCEDOR AI
+  // OPCIÓN: RECONOCIMIENTO DE IMÁGENES
+  // -----------------------------------------
+
+  if (
+    careerId === "inteligencia-artificial" &&
+    selectedProjectIndex === 5
+  ) {
+
+    interactiveProjectHTML = `
+      <div class="project-resource">
+
+        <span class="career-kicker">
+          PROYECTO INTERACTIVO · INTELIGENCIA ARTIFICIAL
+        </span>
+
+        <h3 style="font-size:24px; margin-top:12px;">
+          RECONOCEDOR AI
+        </h3>
+
+        <p>
+          Explora una aplicación de visión artificial capaz de analizar
+          imágenes seleccionadas desde tu dispositivo e identificar personas,
+          animales y objetos.
+        </p>
+
+        <a
+          href="aplicaciones/reconocedor-ai/index.html"
+          target="_blank"
+          rel="noopener noreferrer">
+
+          ABRIR RECONOCEDOR AI →
+
+        </a>
+
+      </div>
+    `;
+  }
+
+  // =========================================
+  // CONSTRUIR EL PANEL DE LA CARRERA
+  // =========================================
+
+  projectContent.innerHTML = `
+
+    <span class="career-kicker">
+      BIBLIO CARRERAS · ÁREA DE FORMACIÓN
+    </span>
+
+    <h2>${career.title}</h2>
+
+    <p class="project-description">
+      ${career.description}
+    </p>
+
+    ${interactiveProjectHTML}
+
+    <h3 style="
+      color:#183d32;
+      margin-top:30px;
+      font-family:Georgia,serif;
+      font-weight:400;">
+
       Ideas y líneas de proyectos
+
     </h3>
+
+    <p class="project-description">
+      Selecciona una opción para explorar el proyecto relacionado.
+    </p>
 
     <div class="project-list">
       ${projectHTML}
     </div>
 
     ${resourcesHTML}
+
   `;
 
+  // Mostrar panel
   projectPanel.classList.add("active");
-  projectPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // =========================================
+  // EVENTOS DE SELECCIÓN DE PROYECTOS
+  // =========================================
+
+  projectContent
+    .querySelectorAll("[data-project-index]")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const index = Number(button.dataset.projectIndex);
+
+        renderCareer(careerId, index);
+
+      });
+
+    });
+
+  // Desplazamiento al panel
+  projectPanel.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 }
 
+// =========================================
+// SELECCIÓN DE CARRERAS
+// =========================================
+
 document.querySelectorAll("[data-career]").forEach(button => {
+
   button.addEventListener("click", () => {
+
     renderCareer(button.dataset.career);
+
   });
+
 });
 
+// =========================================
+// VOLVER A LAS CARRERAS
+// =========================================
+
 if (projectBack) {
+
   projectBack.addEventListener("click", () => {
+
     projectPanel.classList.remove("active");
+
     projectContent.innerHTML = "";
+
     document.querySelector("#career-grid")?.scrollIntoView({
       behavior: "smooth",
       block: "start"
     });
+
   });
+
 }
