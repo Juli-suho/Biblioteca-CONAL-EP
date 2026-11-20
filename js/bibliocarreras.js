@@ -179,6 +179,16 @@ const projectContent = document.querySelector("#project-content");
 const projectBack = document.querySelector("#project-back");
 
 // =========================================
+// RUTAS DE APLICACIONES INTERACTIVAS
+// =========================================
+
+
+const interactiveApps = {
+  solarSystem: "https://juli-suho.github.io/Biblioteca-CONAL-EP/carrusel/aplicaciones/simulador-sistema-solar/index.html",
+  imageRecognizer: "https://juli-suho.github.io/Biblioteca-CONAL-EP/carrusel/aplicaciones/reconocedor-ai/index.html"
+};
+
+// =========================================
 // MOSTRAR UNA CARRERA
 // =========================================
 
@@ -204,7 +214,6 @@ function renderCareer(careerId, selectedProjectIndex = null) {
   // =========================================
 
   const projectHTML = projectOrder.map((index, position) => {
-
     const project = career.projects[index];
 
     return `
@@ -220,7 +229,6 @@ function renderCareer(careerId, selectedProjectIndex = null) {
 
       </button>
     `;
-
   }).join("");
 
   // =========================================
@@ -230,7 +238,6 @@ function renderCareer(careerId, selectedProjectIndex = null) {
   let resourcesHTML = "";
 
   if (career.resources.length > 0) {
-
     resourcesHTML = `
       <div class="project-resource">
 
@@ -262,9 +269,7 @@ function renderCareer(careerId, selectedProjectIndex = null) {
 
       </div>
     `;
-
   } else {
-
     resourcesHTML = `
       <div class="project-empty">
 
@@ -294,7 +299,6 @@ function renderCareer(careerId, selectedProjectIndex = null) {
     careerId === "inteligencia-artificial" &&
     selectedProjectIndex === 2
   ) {
-
     interactiveProjectHTML = `
       <div class="project-resource">
 
@@ -313,7 +317,7 @@ function renderCareer(careerId, selectedProjectIndex = null) {
         </p>
 
         <a
-          href="aplicaciones/simulador-sistema-solar/index.html"
+          href="${interactiveApps.solarSystem}"
           target="_blank"
           rel="noopener noreferrer">
 
@@ -334,7 +338,6 @@ function renderCareer(careerId, selectedProjectIndex = null) {
     careerId === "inteligencia-artificial" &&
     selectedProjectIndex === 5
   ) {
-
     interactiveProjectHTML = `
       <div class="project-resource">
 
@@ -353,7 +356,7 @@ function renderCareer(careerId, selectedProjectIndex = null) {
         </p>
 
         <a
-          href="aplicaciones/reconocedor-ai/index.html"
+          href="${interactiveApps.imageRecognizer}"
           target="_blank"
           rel="noopener noreferrer">
 
@@ -415,15 +418,11 @@ function renderCareer(careerId, selectedProjectIndex = null) {
   projectContent
     .querySelectorAll("[data-project-index]")
     .forEach(button => {
-
       button.addEventListener("click", () => {
-
         const index = Number(button.dataset.projectIndex);
 
         renderCareer(careerId, index);
-
       });
-
     });
 
   // Desplazamiento al panel
@@ -438,13 +437,9 @@ function renderCareer(careerId, selectedProjectIndex = null) {
 // =========================================
 
 document.querySelectorAll("[data-career]").forEach(button => {
-
   button.addEventListener("click", () => {
-
     renderCareer(button.dataset.career);
-
   });
-
 });
 
 // =========================================
@@ -452,9 +447,7 @@ document.querySelectorAll("[data-career]").forEach(button => {
 // =========================================
 
 if (projectBack) {
-
   projectBack.addEventListener("click", () => {
-
     projectPanel.classList.remove("active");
 
     projectContent.innerHTML = "";
@@ -463,7 +456,5 @@ if (projectBack) {
       behavior: "smooth",
       block: "start"
     });
-
   });
-
 }
