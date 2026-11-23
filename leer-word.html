@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#183d32">
+
+    <title>Lectura digital | Biblioteca CONALEP</title>
+
+    <style>
+
+        :root {
+            --verde: #183d32;
+            --verde-oscuro: #102b24;
+            --dorado: #d6b56d;
+            --crema: #f7f5ef;
+            --blanco: #ffffff;
+            --gris: #68756e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--crema);
+            color: #26352f;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        /* ENCABEZADO */
+
+        .encabezado {
+            background: var(--verde);
+            color: white;
+            padding: 24px 7%;
+            border-bottom: 4px solid var(--dorado);
+        }
+
+        .encabezado-contenido {
+            max-width: 1400px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .marca h2 {
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .marca p {
+            color: var(--dorado);
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-top: 6px;
+        }
+
+        .boton-regresar {
+            padding: 12px 20px;
+            border: 1px solid var(--dorado);
+            border-radius: 5px;
+            color: white;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .boton-regresar:hover {
+            background: var(--dorado);
+            color: var(--verde-oscuro);
+        }
+
+        /* PRESENTACIÓN */
+
+        main {
+            width: min(1400px, 94%);
+            margin: 45px auto;
+        }
+
+        .introduccion {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .etiqueta {
+            color: #a38445;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .introduccion h1 {
+            color: var(--verde);
+            font-size: clamp(28px, 4vw, 42px);
+            margin-bottom: 14px;
+        }
+
+        .introduccion p {
+            color: var(--gris);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* VISOR */
+
+        .visor {
+            background: white;
+            border: 1px solid #e4e1d8;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(24, 61, 50, .09);
+        }
+
+        .visor-cabecera {
+            background: var(--verde);
+            color: white;
+            padding: 20px 25px;
+            border-bottom: 3px solid var(--dorado);
+        }
+
+        .visor-cabecera h2 {
+            font-size: 19px;
+            margin-bottom: 6px;
+        }
+
+        .visor-cabecera p {
+            font-size: 13px;
+            color: #dce6df;
+        }
+
+        /* BARRA DE ACCIONES */
+
+        .barra-acciones {
+            padding: 15px 20px;
+            background: #f5f7f4;
+            border-bottom: 1px solid #e7eae5;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        #estado {
+            color: var(--verde);
+            font-size: 14px;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .boton-documento {
+            display: inline-block;
+            padding: 10px 16px;
+            background: var(--verde);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: .3s;
+        }
+
+        .boton-documento:hover {
+            background: var(--verde-oscuro);
+        }
+
+        /* VISUALIZACIÓN */
+
+        .contenedor-documento {
+            width: 100%;
+            height: 85vh;
+            min-height: 650px;
+            background: #e8e8e8;
+        }
+
+        .contenedor-documento iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: none;
+            background: white;
+        }
+
+        .mensaje {
+            padding: 35px;
+            text-align: center;
+            color: var(--gris);
+            line-height: 1.8;
+        }
+
+        .mensaje strong {
+            color: var(--verde);
+        }
+
+        /* PIE DE PÁGINA */
+
+        footer {
+            margin-top: 60px;
+            padding: 25px 15px;
+            background: var(--verde-oscuro);
+            color: #dce6df;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        footer strong {
+            color: var(--dorado);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 650px) {
+
+            .encabezado {
+                padding: 20px;
+            }
+
+            .encabezado-contenido {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .boton-regresar {
+                width: 100%;
+            }
+
+            main {
+                margin: 30px auto;
+            }
+
+            .contenedor-documento {
+                height: 75vh;
+                min-height: 500px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+
+    <header class="encabezado">
+
+        <div class="encabezado-contenido">
+
+            <div class="marca">
+
+                <h2>BIBLIOTECA CONALEP</h2>
+
+                <p>ESPACIO DE APRENDIZAJE DIGITAL</p>
+
+            </div>
+
+            <button
+                class="boton-regresar"
+                onclick="regresar()"
+            >
+                ← REGRESAR A LOS REPORTES
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main>
+
+        <section class="introduccion">
+
+            <div class="etiqueta">
+                LECTURA DIGITAL · DOCUMENTOS ACADÉMICOS
+            </div>
+
+            <h1 id="tituloDocumento">
+                Documento académico
+            </h1>
+
+            <p>
+                Consulta el contenido del documento directamente
+                desde la Biblioteca CONALEP.
+            </p>
+
+        </section>
+
+
+        <!-- VISOR DEL DOCUMENTO -->
+
+        <section class="visor">
+
+            <div class="visor-cabecera">
+
+                <h2>LECTOR DE DOCUMENTOS WORD</h2>
+
+                <p>
+                    Visualización digital del reporte académico
+                </p>
+
+            </div>
+
+
+            <!-- ACCIONES -->
+
+            <div class="barra-acciones">
+
+                <span id="estado">
+                    Preparando documento...
+                </span>
+
+                <div class="acciones">
+
+                    <a
+                        id="abrirOriginal"
+                        class="boton-documento"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="display:none;"
+                    >
+                        ABRIR WORD ORIGINAL ↗
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTENEDOR DEL VISOR -->
+
+            <div
+                class="contenedor-documento"
+                id="contenedorDocumento"
+            >
+
+                <div class="mensaje">
+                    Preparando el lector...
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer>
+
+        <strong>BIBLIOTECA CONALEP</strong><br>
+
+        Plataforma digital de consulta académica.<br>
+
+        Educación · Conocimiento · Aprendizaje
+
+    </footer>
+
+
+    <!-- FUNCIONAMIENTO DEL LECTOR -->
+
+    <script>
+
+        const parametros = new URLSearchParams(
+            window.location.search
+        );
+
+        const archivo = parametros.get("archivo");
+
+        const titulo = document.getElementById(
+            "tituloDocumento"
+        );
+
+        const estado = document.getElementById(
+            "estado"
+        );
+
+        const contenedor = document.getElementById(
+            "contenedorDocumento"
+        );
+
+        const abrirOriginal = document.getElementById(
+            "abrirOriginal"
+        );
+
+
+        function cargarDocumento() {
+
+            // Comprobar que exista un archivo.
+
+            if (!archivo) {
+
+                mostrarError(
+                    "No se indicó ningún documento para consultar."
+                );
+
+                return;
+            }
+
+
+            // Validar la ruta del documento.
+
+            const rutaValida =
+                /^reportes\/Act\.[12]\/tema-\d+-reporte\.docx$/i.test(archivo);
+
+            if (!rutaValida) {
+
+                mostrarError(
+                    "La dirección del documento no es válida."
+                );
+
+                return;
+            }
+
+
+            // Obtener el número del tema.
+
+            const nombre = archivo.match(
+                /tema-(\d+)-reporte\.docx/i
+            );
+
+            titulo.textContent = nombre
+                ? `Reporte académico · Tema ${nombre[1]}`
+                : "Documento académico";
+
+
+            // DIRECCIÓN PÚBLICA DE GITHUB PAGES.
+
+            const urlDocumento =
+                "https://juli-suho.github.io/Biblioteca-CONAL-EP/" + archivo;
+
+
+            // Mostrar acceso al Word original.
+
+            abrirOriginal.href = urlDocumento;
+
+            abrirOriginal.style.display = "inline-block";
+
+
+            // DIRECCIÓN DEL VISOR DE GOOGLE DOCS.
+
+            const urlVisor =
+                "https://docs.google.com/gview?embedded=true&url=" +
+                encodeURIComponent(urlDocumento);
+
+
+            estado.textContent =
+                "Conectando con el lector de documentos...";
+
+
+            // Crear el visor.
+
+            const iframe = document.createElement("iframe");
+
+            iframe.title =
+                "Lectura digital del documento Word";
+
+            iframe.setAttribute(
+                "allowfullscreen",
+                "true"
+            );
+
+            iframe.src = urlVisor;
+
+
+            // Comprobar la carga del visor.
+
+            iframe.onload = function () {
+
+                estado.textContent =
+                    "Visor cargado. Si no aparece el contenido, comprueba que Google pueda procesar el documento.";
+
+            };
+
+
+            // Mostrar el documento.
+
+            contenedor.innerHTML = "";
+
+            contenedor.appendChild(iframe);
+
+        }
+
+
+        // MOSTRAR ERRORES.
+
+        function mostrarError(mensaje) {
+
+            estado.textContent = mensaje;
+
+            contenedor.innerHTML = `
+                <div class="mensaje">
+                    <strong>No se pudo abrir el documento.</strong>
+                    <p>${mensaje}</p>
+                </div>
+            `;
+
+        }
+
+
+        // REGRESAR A LOS REPORTES.
+
+        function regresar() {
+
+            if (window.history.length > 1) {
+
+                window.history.back();
+
+            } else {
+
+                window.location.href = "reportes.html";
+
+            }
+
+        }
+
+
+        // INICIAR EL LECTOR.
+
+        cargarDocumento();
+
+    </script>
+
+</body>
+
+</html>
+
