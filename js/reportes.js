@@ -75,7 +75,6 @@
 
     try {
 
-      // Primer intento: método HEAD.
       const respuesta = await fetch(ruta, {
         method: "HEAD",
         cache: "no-store"
@@ -85,7 +84,6 @@
         return true;
       }
 
-      // Segundo intento: método GET.
       const segundoIntento = await fetch(ruta, {
         method: "GET",
         cache: "no-store"
@@ -116,7 +114,6 @@
       return;
     }
 
-    // Comprobar que la actividad exista.
     if (!listaTemas) {
 
       grid.innerHTML = `
@@ -133,14 +130,22 @@
     // ENCABEZADOS
     // ========================================
 
-    document.querySelector("#page-title").textContent =
-      "Reportes académicos";
+    const pageTitle = document.querySelector("#page-title");
+    const pageDescription = document.querySelector("#page-description");
+    const sectionTitle = document.querySelector("#section-title");
 
-    document.querySelector("#page-description").textContent =
-      `Documentos elaborados por los alumnos. Actividad ${actividad.replace("Act.", "")}, unidad ${unidad}.`;
+    if (pageTitle) {
+      pageTitle.textContent = "Reportes académicos";
+    }
 
-    document.querySelector("#section-title").textContent =
-      `Reportes ${actividad}`;
+    if (pageDescription) {
+      pageDescription.textContent =
+        `Documentos elaborados por los alumnos. Actividad ${actividad.replace("Act.", "")}, unidad ${unidad}.`;
+    }
+
+    if (sectionTitle) {
+      sectionTitle.textContent = `Reportes ${actividad}`;
+    }
 
     // ========================================
     // CREAR TARJETAS
@@ -182,7 +187,7 @@
     `).join("");
 
     // ========================================
-    // COMPROBAR Y CREAR DESCARGAS
+    // COMPROBAR Y CREAR BOTONES
     // ========================================
 
     for (const tema of listaTemas) {
@@ -206,20 +211,48 @@
 
       if (existe) {
 
-        // Documento disponible.
+        // ====================================
+        // DIRECCIÓN DEL LECTOR WORD
+        // ====================================
+
+        const parametrosLectura = new URLSearchParams({
+          archivo: ruta,
+          actividad: actividad,
+          unidad: unidad
+        });
+
+        const urlLectura =
+          `leer-word.html?${parametrosLectura.toString()}`;
+
+        // ====================================
+        // BOTONES DE LECTURA Y DESCARGA
+        // ====================================
+
         contenedor.innerHTML = `
+
+          <a
+            href="${urlLectura}"
+            class="project-file-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Leer reporte del tema ${tema.numero}"
+          >
+            LEER DOCUMENTO ↗
+          </a>
+
           <a
             href="${ruta}"
             class="project-file-link"
             download
+            aria-label="Descargar reporte del tema ${tema.numero}"
           >
             DESCARGAR REPORTE ↓
           </a>
+
         `;
 
       } else {
 
-        // Documento pendiente.
         contenedor.innerHTML = `
           <span class="project-file-pending">
             REPORTE PENDIENTE
