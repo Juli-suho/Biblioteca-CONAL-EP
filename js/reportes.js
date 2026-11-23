@@ -6,36 +6,37 @@
 
 (() => {
 
-  // ==========================================
   // PARÁMETROS DE LA PÁGINA
-  // ==========================================
 
   const parametros = new URLSearchParams(window.location.search);
 
   const actividad = parametros.get("actividad") || "Act.1";
   const unidad = parametros.get("unidad") || "1.2";
 
-  // ==========================================
   // TEMAS DE CADA ACTIVIDAD
-  // ==========================================
 
   const temas = {
+
     "Act.1": [
       {
         numero: 2,
-        titulo: "La Ilustración y las revoluciones atlánticas"
+        titulo: "La Ilustración y las revoluciones atlánticas",
+        portada: "recursos/portadas/tema-2-ilustracion-revoluciones-atlanticas.png"
       },
       {
         numero: 3,
-        titulo: "La desigualdad social y la exclusión política"
+        titulo: "La desigualdad social y la exclusión política",
+        portada: "recursos/portadas/tema-3-desigualdad-social-nueva-espana.png"
       },
       {
         numero: 4,
-        titulo: "Las Reformas Borbónicas"
+        titulo: "Las Reformas Borbónicas",
+        portada: "recursos/portadas/tema-4-reformas-borbonicas.png"
       },
       {
         numero: 5,
-        titulo: "La conspiración de Querétaro"
+        titulo: "La conspiración de Querétaro",
+        portada: "recursos/portadas/tema-5-conspiracion-queretaro.png"
       }
     ],
 
@@ -57,19 +58,16 @@
         titulo: "Tema 5"
       }
     ]
+
   };
 
-  // ==========================================
   // ELEMENTOS DE LA PÁGINA
-  // ==========================================
 
   const grid = document.querySelector("#reports-grid");
 
   const listaTemas = temas[actividad];
 
-  // ==========================================
   // COMPROBAR SI EXISTE UN DOCUMENTO
-  // ==========================================
 
   async function comprobarArchivo(ruta) {
 
@@ -103,9 +101,7 @@
     }
   }
 
-  // ==========================================
   // CARGAR REPORTES
-  // ==========================================
 
   async function cargarReportes() {
 
@@ -126,9 +122,7 @@
       return;
     }
 
-    // ========================================
     // ENCABEZADOS
-    // ========================================
 
     const pageTitle = document.querySelector("#page-title");
     const pageDescription = document.querySelector("#page-description");
@@ -147,12 +141,21 @@
       sectionTitle.textContent = `Reportes ${actividad}`;
     }
 
-    // ========================================
     // CREAR TARJETAS
-    // ========================================
 
     grid.innerHTML = listaTemas.map(tema => `
+
       <article class="project-team-card">
+
+        ${tema.portada ? `
+          <div class="topic-cover">
+            <img
+              src="${tema.portada}"
+              alt="Portada del tema ${tema.numero}: ${tema.titulo}"
+              loading="lazy"
+            >
+          </div>
+        ` : ""}
 
         <span class="project-team-number">
           TEMA ${String(tema.numero).padStart(2, "0")}
@@ -184,11 +187,10 @@
         </div>
 
       </article>
+
     `).join("");
 
-    // ========================================
     // COMPROBAR Y CREAR BOTONES
-    // ========================================
 
     for (const tema of listaTemas) {
 
@@ -211,9 +213,7 @@
 
       if (existe) {
 
-        // ====================================
         // DIRECCIÓN DEL LECTOR WORD
-        // ====================================
 
         const parametrosLectura = new URLSearchParams({
           archivo: ruta,
@@ -224,9 +224,7 @@
         const urlLectura =
           `leer-word.html?${parametrosLectura.toString()}`;
 
-        // ====================================
         // BOTONES DE LECTURA Y DESCARGA
-        // ====================================
 
         contenedor.innerHTML = `
 
@@ -267,9 +265,7 @@
     }
   }
 
-  // ==========================================
   // INICIAR CUANDO CARGUE EL DOCUMENTO
-  // ==========================================
 
   document.addEventListener(
     "DOMContentLoaded",
