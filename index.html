@@ -18,44 +18,120 @@
     /* IMÁGENES DE LAS ÁREAS DEL CONOCIMIENTO */
 
     .career-area-card .area-icon.area-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 155px;
-  margin: 12px 0;
-  font-size: 0;
-}
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 155px;
+      margin: 12px 0;
+      font-size: 0;
+    }
 
-.career-area-card .area-icon.area-image img {
-  display: block;
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  border-radius: 12px;
-  transition: transform .3s ease;
-}
+    .career-area-card .area-icon.area-image img {
+      display: block;
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      border-radius: 12px;
+      transition: transform .3s ease;
+    }
 
-.career-area-card:hover .area-icon.area-image img {
-  transform: scale(1.08);
-}
-
+    .career-area-card:hover .area-icon.area-image img {
+      transform: scale(1.08);
+    }
 
     /* ==========================================
-       CARRUSEL DE IMÁGENES - INTRODUCCIÓN
+       CARRUSEL DE IMÁGENES Y VIDEO
        BIBLIOTECA CONALEP
     ========================================== */
-    .intro-carousel-section { overflow: hidden; }
+
+    .intro-carousel-section {
+      overflow: hidden;
+    }
+
     .intro-carousel-grid {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
       align-items: center;
       gap: 55px;
     }
-    .intro-copy { min-width: 0; }
-    .intro-copy h2 { margin-top: 12px; }
-    .intro-copy p { max-width: 520px; line-height: 1.8; }
-    .study-carousel { width: 100%; min-width: 0; position: relative; }
+
+    .intro-copy {
+      min-width: 0;
+    }
+
+    .intro-copy h2 {
+      margin-top: 12px;
+    }
+
+    .intro-copy p {
+      max-width: 520px;
+      line-height: 1.8;
+    }
+
+    /* TÍTULO Y MARIPOSA */
+
+    .gallery-title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .study-video-sound-prompt {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 34px;
+      height: 34px;
+
+      padding: 0;
+      margin: 0;
+
+      border: none;
+      border-radius: 50%;
+
+      background: transparent;
+      color: #b3914d;
+
+      font-size: 23px;
+      line-height: 1;
+
+      cursor: pointer;
+      opacity: 0.75;
+
+      transition:
+        transform .3s ease,
+        opacity .3s ease,
+        filter .3s ease;
+    }
+
+    .study-video-sound-prompt:hover {
+      opacity: 1;
+      transform: scale(1.2) rotate(-10deg);
+      filter: drop-shadow(0 0 5px rgba(179, 145, 77, 0.45));
+    }
+
+    .study-video-sound-prompt:focus-visible {
+      outline: 2px solid #b3914d;
+      outline-offset: 4px;
+      border-radius: 50%;
+    }
+
+    .study-video-sound-prompt[hidden] {
+      display: none;
+    }
+
+    /* CONTENEDOR DEL CARRUSEL */
+
+    .study-carousel {
+      width: 100%;
+      min-width: 0;
+      position: relative;
+    }
+
     .study-carousel-track {
       position: relative;
       width: 100%;
@@ -65,6 +141,7 @@
       background: #183d32;
       box-shadow: 0 16px 38px rgba(0, 0, 0, 0.17);
     }
+
     .study-slide {
       position: absolute;
       inset: 0;
@@ -72,7 +149,13 @@
       visibility: hidden;
       transition: opacity 0.9s ease, visibility 0.9s ease;
     }
-    .study-slide.active { opacity: 1; visibility: visible; z-index: 1; }
+
+    .study-slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 1;
+    }
+
     .study-slide img {
       display: block;
       width: 100%;
@@ -81,7 +164,39 @@
       object-position: center;
       transition: transform 5s ease;
     }
-    .study-slide.active img { transform: scale(1.06); }
+
+    .study-slide.active img {
+      transform: scale(1.06);
+    }
+
+    /* VIDEO */
+
+    .study-video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #080b09;
+    }
+
+    .study-video-slide.active .study-video {
+      transform: none;
+    }
+
+    .study-caption-video {
+      inset: 0 0 auto;
+      padding: 25px 25px 48px;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        rgba(5, 24, 17, 0.86),
+        rgba(5, 24, 17, 0.35),
+        transparent
+      );
+    }
+
+    /* TEXTOS SOBRE LAS IMÁGENES */
+
     .study-caption {
       position: absolute;
       inset: auto 0 0;
@@ -90,20 +205,30 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      background: linear-gradient(to top, rgba(5, 24, 17, 0.92), rgba(5, 24, 17, 0.45), transparent);
+      background: linear-gradient(
+        to top,
+        rgba(5, 24, 17, 0.92),
+        rgba(5, 24, 17, 0.45),
+        transparent
+      );
     }
+
     .study-caption span {
       color: #e4c77d;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 2px;
     }
+
     .study-caption strong {
       font-family: 'Libre Baskerville', serif;
       font-size: clamp(15px, 1.7vw, 21px);
       line-height: 1.45;
       font-weight: 700;
     }
+
+    /* CONTROLES */
+
     .study-carousel-controls {
       display: flex;
       justify-content: center;
@@ -111,6 +236,7 @@
       gap: 22px;
       margin-top: 18px;
     }
+
     .study-carousel-controls > button {
       width: 38px;
       height: 38px;
@@ -122,8 +248,18 @@
       cursor: pointer;
       transition: 0.3s ease;
     }
-    .study-carousel-controls > button:hover { background: #183d32; color: #fff; }
-    .study-dots { display: flex; align-items: center; gap: 9px; }
+
+    .study-carousel-controls > button:hover {
+      background: #183d32;
+      color: #fff;
+    }
+
+    .study-dots {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
     .study-dots button {
       width: 9px;
       height: 9px;
@@ -134,16 +270,48 @@
       cursor: pointer;
       transition: 0.3s ease;
     }
-    .study-dots button.active { width: 25px; border-radius: 10px; background: #b3914d; }
-    @media (max-width: 850px) {
-      .intro-carousel-grid { grid-template-columns: 1fr; gap: 30px; }
-      .study-carousel { max-width: 650px; margin: 0 auto; }
+
+    .study-dots button.active {
+      width: 25px;
+      border-radius: 10px;
+      background: #b3914d;
     }
+
+    /* DISEÑO RESPONSIVO */
+
+    @media (max-width: 850px) {
+      .intro-carousel-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .study-carousel {
+        max-width: 650px;
+        margin: 0 auto;
+      }
+    }
+
     @media (max-width: 520px) {
-      .study-carousel-track { aspect-ratio: 4 / 3; border-radius: 13px; }
-      .study-caption { padding: 40px 17px 17px; }
-      .study-caption strong { font-size: 15px; }
-      .study-carousel-controls { margin-top: 13px; }
+      .study-carousel-track {
+        aspect-ratio: 4 / 3;
+        border-radius: 13px;
+      }
+
+      .study-caption {
+        padding: 40px 17px 17px;
+      }
+
+      .study-caption-video {
+        padding: 18px 17px 42px;
+      }
+
+      .study-caption strong {
+        font-size: 15px;
+      }
+
+      .study-carousel-controls {
+        margin-top: 13px;
+      }
     }
   </style>
 </head>
@@ -197,7 +365,7 @@
         </div>
 
         <h1>
-          El conocimiento  
+          El conocimiento
           está a tu alcance.<br>
           <em></em>
         </h1>
@@ -254,17 +422,50 @@
 
         <div class="intro-copy">
           <span class="section-kicker">EXPLORA · APRENDE · CRECE</span>
-          <h2> GALERIA DE PROYECTOS. <br></h2>
+
+          <h2 class="gallery-title">
+            <span>GALERÍA DE PROYECTOS.</span>
+
+            <button
+              class="study-video-sound-prompt"
+              id="study-video-sound-prompt"
+              type="button"
+              aria-label="Reproducir video con sonido"
+              title="Reproducir video"
+            >
+              🦋
+            </button>
+          </h2>
+
           <p>
             Encuentra materiales de consulta organizados por áreas de
-            conocimiento. 
+            conocimiento.
           </p>
         </div>
 
         <div class="study-carousel" id="study-carousel">
           <div class="study-carousel-track">
 
-            <div class="study-slide active">
+            <!-- PRIMERA DIAPOSITIVA: VIDEO -->
+            <div class="study-slide study-video-slide active">
+              <video
+                class="study-video"
+                playsinline
+                preload="metadata"
+                aria-label="Video destacado de la Galería de proyectos"
+              >
+                <source src="videos/VIDEO%20S.mp4" type="video/mp4">
+                Tu navegador no puede reproducir este video.
+              </video>
+
+              <div class="study-caption study-caption-video">
+                <span>VIDEO DESTACADO</span>
+                <strong>Proyectos y experiencias CONALEP</strong>
+              </div>
+            </div>
+
+            <!-- SEGUNDA DIAPOSITIVA -->
+            <div class="study-slide">
               <img
                 src="imagenes/carrusel/1.jpg"
                 alt="Estudiantes trabajando y aprendiendo en equipo"
@@ -276,6 +477,7 @@
               </div>
             </div>
 
+            <!-- TERCERA DIAPOSITIVA -->
             <div class="study-slide">
               <img
                 src="imagenes/carrusel/2.jpg"
@@ -284,10 +486,11 @@
               >
               <div class="study-caption">
                 <span>02 / TECNOLOGÍA</span>
-                <strong>Innovación y Mantenimiento </strong>
+                <strong>Innovación y Mantenimiento</strong>
               </div>
             </div>
 
+            <!-- CUARTA DIAPOSITIVA -->
             <div class="study-slide">
               <img
                 src="imagenes/carrusel/3.jpg"
@@ -296,10 +499,11 @@
               >
               <div class="study-caption">
                 <span>03 / RÓBOTICA</span>
-                <strong>Seguidor de Lineas. Sumo-Bot y Fútbol</strong>
+                <strong>Seguidor de Líneas. Sumo-Bot y Fútbol</strong>
               </div>
             </div>
 
+            <!-- QUINTA DIAPOSITIVA -->
             <div class="study-slide">
               <img
                 src="imagenes/carrusel/4.jpg"
@@ -307,22 +511,30 @@
                 loading="lazy"
               >
               <div class="study-caption">
-                <span>04 / SOLDADURA </span>
+                <span>04 / SOLDADURA</span>
                 <strong>Principios Básicos</strong>
               </div>
             </div>
 
           </div>
 
+          <!-- CONTROLES DEL CARRUSEL -->
           <div class="study-carousel-controls">
-            <button type="button" id="study-prev" aria-label="Imagen anterior">&#8592;</button>
+            <button type="button" id="study-prev" aria-label="Imagen anterior">
+              &#8592;
+            </button>
+
             <div class="study-dots" id="study-dots">
-              <button type="button" class="active" aria-label="Mostrar imagen 1"></button>
+              <button type="button" class="active" aria-label="Mostrar video"></button>
+              <button type="button" aria-label="Mostrar imagen 1"></button>
               <button type="button" aria-label="Mostrar imagen 2"></button>
               <button type="button" aria-label="Mostrar imagen 3"></button>
               <button type="button" aria-label="Mostrar imagen 4"></button>
             </div>
-            <button type="button" id="study-next" aria-label="Imagen siguiente">&#8594;</button>
+
+            <button type="button" id="study-next" aria-label="Imagen siguiente">
+              &#8594;
+            </button>
           </div>
         </div>
 
@@ -634,83 +846,267 @@
   <!-- FUNCIONAMIENTO DEL CARRUSEL -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+
       const carousel = document.getElementById('study-carousel');
+
       if (!carousel) return;
 
-      const slides = carousel.querySelectorAll('.study-slide');
-      const dots = carousel.querySelectorAll('.study-dots button');
+      const slides = Array.from(
+        carousel.querySelectorAll('.study-slide')
+      );
+
+      const dots = Array.from(
+        carousel.querySelectorAll('.study-dots button')
+      );
+
       const prev = document.getElementById('study-prev');
       const next = document.getElementById('study-next');
 
-      if (!slides.length || !prev || !next) return;
+      const video = carousel.querySelector('.study-video');
+
+      const playButton = document.getElementById(
+        'study-video-sound-prompt'
+      );
+
+      if (!slides.length || !prev || !next || !video || !playButton) {
+        return;
+      }
+
+      /*
+        ORDEN DEL CARRUSEL:
+
+        0 = VIDEO
+        1 = IMAGEN 1
+        2 = IMAGEN 2
+        3 = IMAGEN 3
+        4 = IMAGEN 4
+      */
+
+      const videoIndex = 0;
 
       let current = 0;
-      let autoplay;
+      let autoplay = null;
 
-      function showSlide(index) {
-        current = (index + slides.length) % slides.length;
-        slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      const intervalTime = 4500;
+
+      // DETENER EL CAMBIO AUTOMÁTICO
+      function stopAutoplay() {
+        if (autoplay !== null) {
+          clearInterval(autoplay);
+          autoplay = null;
+        }
       }
 
+      // INICIAR EL CAMBIO AUTOMÁTICO DE LAS IMÁGENES
       function startAutoplay() {
-        clearInterval(autoplay);
-        autoplay = setInterval(() => showSlide(current + 1), 4500);
+
+        stopAutoplay();
+
+        // El video no participa en el cambio automático.
+        if (current === videoIndex || document.hidden) {
+          return;
+        }
+
+        autoplay = setInterval(() => {
+
+          // Después de la última imagen, regresar a la primera imagen.
+          if (current >= slides.length - 1) {
+            showSlide(1);
+          } else {
+            showSlide(current + 1);
+          }
+
+        }, intervalTime);
       }
 
-      next.addEventListener('click', () => {
-        showSlide(current + 1);
+      // MOSTRAR UNA DIAPOSITIVA
+      function showSlide(index) {
+
+        stopAutoplay();
+
+        // El carrusel permite volver al video desde los controles.
+        current = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+
+          const active = i === current;
+
+          slide.classList.toggle('active', active);
+
+          slide.setAttribute(
+            'aria-hidden',
+            String(!active)
+          );
+
+        });
+
+        dots.forEach((dot, i) => {
+
+          const active = i === current;
+
+          dot.classList.toggle('active', active);
+
+          if (active) {
+            dot.setAttribute('aria-current', 'true');
+          } else {
+            dot.removeAttribute('aria-current');
+          }
+
+        });
+
+        // SI SE ABRE EL VIDEO
+        if (current === videoIndex) {
+
+          stopAutoplay();
+
+          // Mostrar la mariposa para permitir reproducirlo.
+          playButton.hidden = false;
+
+          // El video queda detenido hasta que se presione la mariposa.
+          video.pause();
+
+          return;
+        }
+
+        // SI SE CAMBIA A UNA IMAGEN, DETENER Y REINICIAR EL VIDEO.
+        video.pause();
+        video.currentTime = 0;
+
+        // El botón vuelve a aparecer solamente al regresar al video.
+        playButton.hidden = true;
+
+        // Las imágenes comienzan a cambiar automáticamente.
         startAutoplay();
+      }
+
+      // REPRODUCIR VIDEO CON SONIDO AL PRESIONAR LA MARIPOSA
+      playButton.addEventListener('click', async () => {
+
+        if (current !== videoIndex) {
+          showSlide(videoIndex);
+        }
+
+        stopAutoplay();
+
+        video.muted = false;
+        video.volume = 1;
+        video.controls = true;
+
+        try {
+
+          await video.play();
+
+          // Ocultar la mariposa mientras se reproduce el video.
+          playButton.hidden = true;
+
+        } catch (error) {
+
+          console.error(
+            'No fue posible reproducir el video:',
+            error
+          );
+
+          // Si ocurre un error, permitir volver a intentarlo.
+          playButton.hidden = false;
+
+        }
+
+      });
+
+      // AL TERMINAR EL VIDEO, MOSTRAR LA PRIMERA IMAGEN.
+      video.addEventListener('ended', () => {
+
+        video.controls = false;
+
+        // Comenzar el recorrido automático de las cuatro imágenes.
+        showSlide(1);
+
+      });
+
+      // CONTROLES DE ANTERIOR Y SIGUIENTE
+      next.addEventListener('click', () => {
+
+        if (current === videoIndex) {
+          showSlide(1);
+        } else if (current >= slides.length - 1) {
+          showSlide(1);
+        } else {
+          showSlide(current + 1);
+        }
+
       });
 
       prev.addEventListener('click', () => {
-        showSlide(current - 1);
-        startAutoplay();
+
+        if (current === 1) {
+          showSlide(slides.length - 1);
+        } else if (current === videoIndex) {
+          showSlide(slides.length - 1);
+        } else {
+          showSlide(current - 1);
+        }
+
       });
 
+      // CONTROLES DE LOS PUNTOS
       dots.forEach((dot, index) => {
+
         dot.addEventListener('click', () => {
+
           showSlide(index);
-          startAutoplay();
+
         });
+
       });
 
-      // El carrusel avanza automáticamente cada 3.5 segundos.
-      // No se detiene cuando el cursor está encima de las imágenes.
+      // EVITAR QUE EL CARRUSEL CAMBIE MIENTRAS SE USA.
+      carousel.addEventListener('mouseenter', stopAutoplay);
+
+      carousel.addEventListener('mouseleave', () => {
+
+        if (current !== videoIndex && !document.hidden) {
+          startAutoplay();
+        }
+
+      });
+
+      carousel.addEventListener('focusin', stopAutoplay);
+
+      carousel.addEventListener('focusout', event => {
+
+        if (
+          !carousel.contains(event.relatedTarget) &&
+          current !== videoIndex
+        ) {
+          startAutoplay();
+        }
+
+      });
+
+      // PAUSAR CUANDO SE CAMBIA DE PESTAÑA.
+      document.addEventListener('visibilitychange', () => {
+
+        if (document.hidden) {
+
+          stopAutoplay();
+
+          if (!video.paused) {
+            video.pause();
+          }
+
+        } else if (current !== videoIndex) {
+
+          startAutoplay();
+
+        }
+
+      });
+
+      // INICIAR MOSTRANDO EL VIDEO, SIN REPRODUCIRLO AUTOMÁTICAMENTE.
       showSlide(0);
-      startAutoplay();
+
     });
   </script>
 
 </body>
 </html>
-
-
-.topic-cover {
-    width: 100%;
-    height: 230px;
-    margin-bottom: 22px;
-    overflow: hidden;
-    border-radius: 9px;
-    background: #f0eee9;
-    border: 1px solid #e5e0d4;
-}
-
-.topic-cover img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.5s ease;
-}
-
-.topic-cover:hover img {
-    transform: scale(1.045);
-}
-
-@media (max-width: 650px) {
-    .topic-cover {
-        height: 200px;
-    }
-}
