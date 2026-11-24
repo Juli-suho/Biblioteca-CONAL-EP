@@ -24,6 +24,26 @@ const readerDialog = $("#reader-dialog");
 
 
 /* =========================================
+   NAVEGACIÓN AL CATÁLOGO
+========================================= */
+
+function goToCatalog(query = null) {
+
+  if (query !== null) {
+    catalogSearch.value = query;
+    categoryFilter.value = "Todos";
+    renderBooks();
+  }
+
+  if (typeof window.showLibraryPage === "function") {
+    window.showLibraryPage("catalogo");
+  } else {
+    location.hash = "catalogo";
+  }
+}
+
+
+/* =========================================
    FUNCIONES DEL CATÁLOGO
 ========================================= */
 
@@ -59,15 +79,6 @@ function getFilteredBooks(
       normalize(book.categoria) === normalize(category)
     )
   );
-}
-
-function goToCatalog() {
-  location.hash = "catalogo";
-
-  $("#catalogo").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
 }
 
 
@@ -341,6 +352,7 @@ function updateQuickResults(query) {
       button.append(title, category);
 
       button.addEventListener("click", () => {
+
         $("#main-search").value = book.titulo;
 
         catalogSearch.value = book.titulo;
@@ -349,6 +361,9 @@ function updateQuickResults(query) {
         renderBooks();
 
         panel.hidden = true;
+
+        // Cambiar a la pestaña Catálogo antes de mostrar el detalle.
+        goToCatalog();
 
         openDetails(book);
       });
@@ -464,21 +479,23 @@ $("#search-form").addEventListener("submit", event => {
 
   const query = $("#main-search").value.trim();
 
+  $("#quick-results").hidden = true;
+
   catalogSearch.value = query;
   categoryFilter.value = "Todos";
 
-  $("#quick-results").hidden = true;
+  renderBooks();
+
+  // El buscador principal siempre lleva a Catálogo.
+  goToCatalog();
 
   const matches = books.filter(book =>
     !query || bookMatches(book, query)
   );
 
-  renderBooks();
-
+  // Si solo existe una coincidencia, abrir directamente sus detalles.
   if (query && matches.length === 1) {
     openDetails(matches[0]);
-  } else {
-    goToCatalog();
   }
 });
 

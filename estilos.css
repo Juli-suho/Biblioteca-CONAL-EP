@@ -2188,3 +2188,233 @@ img {
   display: inline-block;
   text-decoration: none;
 }
+
+
+/* ==========================================
+   MATERIAL VISUAL
+   BIBLIOTECA VIRTUAL
+========================================== */
+
+.visual-page {
+    min-height: 100vh;
+    padding: 45px 20px;
+    background: linear-gradient(135deg, #edf1e9, #f8f5eb);
+    color: #173d32;
+}
+
+.visual-container {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+}
+
+.visual-back {
+    display: inline-block;
+    margin-bottom: 35px;
+    color: #315b48;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.visual-back:hover {
+    color: #b18a45;
+    transform: translateX(-4px);
+}
+
+.visual-heading {
+    max-width: 850px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.visual-eyebrow {
+    color: #a08045;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.visual-heading h1 {
+    margin: 18px 0;
+    color: #173d32;
+    font-family: Georgia, serif;
+    font-size: clamp(28px, 5vw, 46px);
+    line-height: 1.2;
+}
+
+.visual-heading p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #617066;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.visual-divider {
+    width: 90px;
+    height: 3px;
+    margin: 25px auto 0;
+    border-radius: 10px;
+    background: #b18a45;
+}
+
+.visual-player-section {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.visual-player-shell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 5px solid #fff;
+    border-radius: 18px;
+    background: #102b24;
+    box-shadow: 0 15px 45px rgba(20, 45, 34, 0.18);
+}
+
+.visual-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #102b24;
+}
+
+.visual-video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 25px;
+    text-align: center;
+    color: #f8f5eb;
+    background: linear-gradient(
+        135deg,
+        rgba(12, 39, 31, 0.94),
+        rgba(31, 68, 53, 0.88)
+    );
+    transition: opacity 0.4s;
+}
+
+.visual-video-icon {
+    font-size: 58px;
+}
+
+.visual-video-overlay p {
+    max-width: 520px;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.visual-video-overlay.video-ready {
+    background: rgba(12, 39, 31, 0.45);
+}
+
+.visual-video-overlay.video-playing {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.visual-play-control {
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    background: rgba(248, 245, 235, 0.9);
+    color: #173d32;
+    font-size: 23px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.visual-play-control:hover {
+    transform: scale(1.1);
+    background: #fff;
+}
+
+.visual-play-control[hidden] {
+    display: none;
+}
+
+.visual-player-caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 15px 5px;
+    color: #647268;
+    font-size: 12px;
+}
+
+.visual-caption-label {
+    color: #a08045;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.visual-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 65px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(23, 61, 50, 0.18);
+    color: #829087;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+@media (max-width: 600px) {
+
+    .visual-page {
+        padding: 25px 14px;
+    }
+
+    .visual-heading p {
+        font-size: 14px;
+    }
+
+    .visual-player-shell {
+        border-width: 3px;
+        border-radius: 12px;
+    }
+
+    .visual-play-control {
+        right: 12px;
+        bottom: 12px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .visual-player-caption {
+        flex-direction: column;
+    }
+
+    .visual-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+}

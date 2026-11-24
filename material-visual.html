@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#173d32">
+
+    <title>Material Visual | Biblioteca Virtual</title>
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <main class="visual-page">
+
+        <div class="visual-container">
+
+            <a href="#" class="visual-back" id="volver">
+                ← VOLVER A LAS PRESENTACIONES
+            </a>
+
+            <header class="visual-heading">
+
+                <span class="visual-eyebrow">
+                    BIBLIOTECA VIRTUAL · MATERIAL COMPLEMENTARIO
+                </span>
+
+                <h1 id="titulo-tema">
+                    MATERIAL VISUAL
+                </h1>
+
+                <p id="descripcion-tema">
+                    Este material audiovisual complementa los contenidos
+                    de aprendizaje y permite profundizar en el tema.
+                </p>
+
+                <div class="visual-divider"></div>
+
+            </header>
+
+            <section class="visual-player-section">
+
+                <div class="visual-player-shell">
+
+                    <video
+                        id="reproductor"
+                        class="visual-video"
+                        preload="metadata"
+                        playsinline
+                    >
+                    </video>
+
+                    <div class="visual-video-overlay" id="video-overlay">
+
+                        <div class="visual-video-icon">
+                            🎬
+                        </div>
+
+                        <p id="mensaje-video">
+                            El material audiovisual estará disponible próximamente.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="visual-play-control"
+                        id="control-video"
+                        aria-label="Reproducir video"
+                        title="Reproducir o pausar"
+                    >
+                        🎬
+                    </button>
+
+                </div>
+
+                <div class="visual-player-caption">
+
+                    <span class="visual-caption-label">
+                        MATERIAL DE APOYO
+                    </span>
+
+                    <span id="estado-video">
+                        Preparando material audiovisual...
+                    </span>
+
+                </div>
+
+            </section>
+
+            <footer class="visual-footer">
+                <span>BIBLIOTECA VIRTUAL</span>
+                <span>APRENDER · COMPRENDER · EXPLORAR</span>
+            </footer>
+
+        </div>
+
+    </main>
+
+    <script>
+    (() => {
+
+        const parametros = new URLSearchParams(window.location.search);
+
+        const actividad = parametros.get("actividad") || "Act.1";
+        const unidad = parametros.get("unidad") || "1.1";
+        const tema = parametros.get("tema") || "3";
+
+        const titulo = document.getElementById("titulo-tema");
+        const descripcion = document.getElementById("descripcion-tema");
+        const reproductor = document.getElementById("reproductor");
+        const control = document.getElementById("control-video");
+        const mensaje = document.getElementById("mensaje-video");
+        const overlay = document.getElementById("video-overlay");
+        const estado = document.getElementById("estado-video");
+        const volver = document.getElementById("volver");
+
+        const materiales = {
+            "Act.1": {
+                titulo: "La desigualdad social y la exclusión política",
+                descripcion:
+                    "Este material audiovisual complementa el estudio de la desigualdad social y la exclusión política durante la Nueva España.",
+                archivo: "videos/VIDEO DE DESIGUALDAD.mp4"
+            },
+
+            "Act.2": {
+                titulo: "Las Leyes de Reforma",
+                descripcion:
+                    "Este material audiovisual complementa el estudio de las Leyes de Reforma y su importancia en la historia de México.",
+                archivo: "videos/VIDEO DE REFORMAS LEYES.mp4"
+            }
+        };
+
+        const material = materiales[actividad];
+
+        volver.href =
+            `proyectos-alumnos.html?actividad=${encodeURIComponent(actividad)}&unidad=${encodeURIComponent(unidad)}`;
+
+        if (!material || tema !== "3") {
+
+            titulo.textContent = "MATERIAL NO DISPONIBLE";
+
+            descripcion.textContent =
+                "No se encontró un material audiovisual para esta presentación.";
+
+            estado.textContent = "Material no disponible";
+
+            control.hidden = true;
+            return;
+        }
+
+        titulo.textContent = material.titulo;
+        descripcion.textContent = material.descripcion;
+
+        reproductor.src = material.archivo;
+
+        reproductor.addEventListener("loadedmetadata", () => {
+
+            overlay.classList.add("video-ready");
+
+            mensaje.textContent = "Presiona el Botón para comenzar a reproducir.";
+
+            estado.textContent = "Video listo para reproducirse";
+
+        });
+
+        reproductor.addEventListener("error", () => {
+
+            overlay.classList.remove("video-ready");
+
+            mensaje.textContent =
+                `El video todavía no está disponible. Se espera el archivo: ${material.archivo.split("/").pop()}`;
+
+            estado.textContent = "Material audiovisual pendiente";
+
+        });
+
+        control.addEventListener("click", async () => {
+
+            if (reproductor.paused) {
+
+                try {
+
+                    await reproductor.play();
+
+                    control.textContent = "⏸";
+                    control.setAttribute("aria-label", "Pausar video");
+
+                    overlay.classList.add("video-playing");
+
+                    estado.textContent = "Reproduciendo material audiovisual";
+
+                } catch (error) {
+
+                    estado.textContent =
+                        "No fue posible reproducir el video. Comprueba que el archivo esté disponible.";
+
+                }
+
+            } else {
+
+                reproductor.pause();
+
+                control.textContent = "🎬";
+                control.setAttribute("aria-label", "Reproducir video");
+
+                overlay.classList.remove("video-playing");
+
+                estado.textContent = "Video en pausa";
+
+            }
+
+        });
+
+        reproductor.addEventListener("ended", () => {
+
+            control.textContent = "🦋";
+            control.setAttribute("aria-label", "Reproducir video");
+
+            overlay.classList.remove("video-playing");
+
+            estado.textContent = "Reproducción finalizada";
+
+        });
+
+        reproductor.addEventListener("pause", () => {
+
+            if (!reproductor.ended) {
+                control.textContent = "🦋";
+                control.setAttribute("aria-label", "Reproducir video");
+                overlay.classList.remove("video-playing");
+            }
+
+        });
+
+    })();
+    </script>
+
+</body>
+</html>

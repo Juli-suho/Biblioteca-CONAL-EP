@@ -188,6 +188,26 @@
 
           </div>
 
+          ${tema.numero === 3 ? `
+            <div class="topic-resource">
+
+              <strong>MATERIAL AUDIOVISUAL</strong>
+
+              <div class="topic-buttons">
+
+                <a
+                  href="material-visual.html?actividad=${encodeURIComponent(actividad)}&unidad=${encodeURIComponent(unidad)}&tema=3"
+                  class="project-file-link visual-material-link"
+                  aria-label="Ver material visual del tema 3, ${actividad}"
+                >
+                  🎬 VER MATERIAL VISUAL
+                </a>
+
+              </div>
+
+            </div>
+          ` : ""}
+
         </div>
 
       </article>
