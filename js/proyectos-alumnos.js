@@ -6,18 +6,24 @@
 
 (() => {
 
-  // PARÁMETROS DE LA PÁGINA
-
   const parametros = new URLSearchParams(window.location.search);
 
   const actividad = parametros.get("actividad") || "Act.1";
   const unidad = parametros.get("unidad") || "1.1";
 
-  // TEMAS DE CADA ACTIVIDAD
+  /* ==========================================
+     TEMAS DE CADA ACTIVIDAD
+  ========================================== */
 
   const temas = {
 
     "Act.1": [
+      {
+        numero: 1,
+        titulo: "La crisis de la monarquía española",
+        descripcion: "La crisis de la monarquía española y su relación con el inicio de la insurgencia.",
+        portada: "recursos/portadas/tema-1-crisis-monarquia-espanola.png"
+      },
       {
         numero: 2,
         titulo: "La Ilustración y las revoluciones atlánticas",
@@ -69,11 +75,15 @@
 
   };
 
-  // ELEMENTOS DE LA PÁGINA
+  /* ==========================================
+     ELEMENTOS DE LA PÁGINA
+  ========================================== */
 
   const grid = document.querySelector("#projects-grid");
 
-  // COMPROBAR EXISTENCIA DEL ARCHIVO
+  /* ==========================================
+     COMPROBAR EXISTENCIA DEL ARCHIVO
+  ========================================== */
 
   async function existeArchivo(ruta) {
 
@@ -105,7 +115,24 @@
     }
   }
 
-  // CARGAR PRESENTACIONES
+  /* ==========================================
+     OBTENER LA RUTA DE CADA PRESENTACIÓN
+  ========================================== */
+
+  function obtenerRutaPresentacion(tema) {
+
+    // Tema 1 de la Actividad 1
+    if (actividad === "Act.1" && tema.numero === 1) {
+      return "proyectos/unidad-1-1/tema-1-crisis-monarquia-espanola.pptx";
+    }
+
+    // Temas restantes
+    return `proyectos/${actividad}/tema-${tema.numero}-presentacion.pptx`;
+  }
+
+  /* ==========================================
+     CARGAR PRESENTACIONES
+  ========================================== */
 
   async function cargarPresentaciones() {
 
@@ -128,8 +155,6 @@
       return;
     }
 
-    // ENCABEZADOS
-
     const pageTitle = document.querySelector("#page-title");
     const pageDescription = document.querySelector("#page-description");
     const sectionTitle = document.querySelector("#section-title");
@@ -147,7 +172,9 @@
       sectionTitle.textContent = `Presentaciones ${actividad}`;
     }
 
-    // CREAR TARJETAS
+    /* ==========================================
+       CREAR TARJETAS
+    ========================================== */
 
     grid.innerHTML = lista.map(tema => `
 
@@ -214,12 +241,13 @@
 
     `).join("");
 
-    // COMPROBAR ARCHIVOS Y CREAR ENLACES
+    /* ==========================================
+       COMPROBAR ARCHIVOS Y CREAR ENLACES
+    ========================================== */
 
     for (const tema of lista) {
 
-      const ruta =
-        `proyectos/${actividad}/tema-${tema.numero}-presentacion.pptx`;
+      const ruta = obtenerRutaPresentacion(tema);
 
       const contenedor = document.querySelector(
         `#presentacion-${tema.numero}`
@@ -270,7 +298,9 @@
     }
   }
 
-  // INICIAR
+  /* ==========================================
+     INICIAR
+  ========================================== */
 
   document.addEventListener(
     "DOMContentLoaded",

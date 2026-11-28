@@ -2418,3 +2418,539 @@ img {
     }
 
 }
+
+
+/* =========================================
+   BIBLIOTECA DE MATERIAS
+========================================= */
+
+.subject-library-count {
+  margin: 25px 0;
+  color: #64746b;
+  font-weight: 700;
+}
+
+.subject-library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  gap: 22px;
+  margin: 30px 0;
+}
+
+.subject-library-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e2e8df;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(24, 61, 50, .08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.subject-library-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(24, 61, 50, .14);
+}
+
+.subject-library-icon {
+  min-height: 125px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #183d32, #315d4b);
+  color: white;
+  font-size: 55px;
+}
+
+.subject-library-information {
+  padding: 22px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.subject-library-career {
+  color: #a17b39;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.subject-library-information h3 {
+  margin: 12px 0 8px;
+  color: #183d32;
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.subject-library-information p {
+  color: #718078;
+  font-size: 13px;
+}
+
+.subject-library-button,
+.subject-back-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 8px;
+  background: #183d32;
+  color: white;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.subject-library-button:hover,
+.subject-back-button:hover {
+  background: #a17b39;
+}
+
+.subject-volume-area,
+.subject-volume-detail {
+  display: none;
+  margin: 35px 0;
+  padding: 30px;
+  background: #fff;
+  border: 1px solid #e2e8df;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(24, 61, 50, .07);
+}
+
+.subject-volume-area.active,
+.subject-volume-detail.active {
+  display: block;
+}
+
+.subject-volume-heading h3,
+.subject-volume-detail-heading h3 {
+  margin: 10px 0;
+  color: #183d32;
+  font-size: 27px;
+}
+
+.subject-volume-heading p {
+  color: #68776e;
+}
+
+.subject-volume-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 17px;
+  margin: 28px 0;
+}
+
+.subject-volume-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 15px;
+  border: 1px solid #e3e8df;
+  border-radius: 13px;
+  background: #f8f8f3;
+  color: #183d32;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.subject-volume-card:hover {
+  border-color: #a17b39;
+  background: #f1eee4;
+  transform: translateY(-3px);
+}
+
+.subject-volume-number {
+  display: grid;
+  place-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #183d32;
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.subject-volume-card strong {
+  font-size: 16px;
+}
+
+.subject-volume-card small {
+  color: #718078;
+}
+
+.subject-volume-detail-heading h4 {
+  color: #a17b39;
+  font-size: 19px;
+}
+
+.subject-volume-data {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.subject-volume-data > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 15px;
+  border-radius: 9px;
+  background: #f5f6f1;
+}
+
+.subject-volume-data span {
+  color: #718078;
+  font-size: 12px;
+}
+
+.subject-volume-data strong {
+  color: #183d32;
+  font-size: 14px;
+}
+
+.subject-volume-pending {
+  margin: 25px 0;
+  padding: 30px;
+  border: 1px dashed #b8c5b8;
+  border-radius: 12px;
+  background: #f8f8f3;
+  text-align: center;
+}
+
+.subject-volume-pending > span {
+  font-size: 38px;
+}
+
+.subject-volume-pending h4 {
+  color: #183d32;
+  margin: 12px 0;
+}
+
+.subject-volume-pending p {
+  max-width: 650px;
+  margin: auto;
+  color: #68776e;
+  line-height: 1.7;
+}
+
+.subject-back-button {
+  margin-top: 25px;
+}
+
+@media (max-width: 600px) {
+  .subject-volume-area,
+  .subject-volume-detail {
+    padding: 20px;
+  }
+
+  .subject-volume-heading h3,
+  .subject-volume-detail-heading h3 {
+    font-size: 22px;
+  }
+}
+
+
+
+
+/* =========================================
+   IMAGENES DE LAS ASIGNATURAS
+========================================= */
+
+.subject-library-icon {
+    width: 100%;
+    height: 190px;
+    overflow: hidden;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    background: #102a49;
+}
+
+.subject-library-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.subject-library-card:hover .subject-library-image {
+    transform: scale(1.06);
+}
+
+.subject-library-card {
+    overflow: hidden;
+}
+
+
+
+
+/* =====================================================
+   VISTAS DE MATERIAS Y VOLÚMENES A PANTALLA COMPLETA
+   Se limita a la sección de la biblioteca académica.
+===================================================== */
+
+body.subject-library-open {
+  overflow: hidden;
+}
+
+#areas.subject-library-screen-mode {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0;
+  background: #edf0e7;
+  scroll-margin-top: 0;
+}
+
+#areas.subject-library-screen-mode > .wrap.section {
+  width: min(1160px, calc(100% - 48px));
+  min-height: 100%;
+  padding-top: 34px;
+  padding-bottom: 55px;
+}
+
+#areas.subject-library-screen-mode > .wrap.section > .section-heading {
+  display: none;
+}
+
+#subject-library-grid[hidden],
+#subject-library-count[hidden] {
+  display: none !important;
+}
+
+#subject-volume-area.subject-volume-area,
+#subject-volume-detail.subject-volume-detail {
+  display: none;
+  width: 100%;
+  margin: 0;
+  padding: clamp(22px, 4vw, 46px);
+  border: 1px solid #dce4d9;
+  border-radius: 18px;
+  background: #fffefa;
+  box-shadow: 0 16px 42px rgba(24, 61, 50, .10);
+}
+
+#subject-volume-area.subject-volume-area.active,
+#subject-volume-detail.subject-volume-detail.active {
+  display: block;
+  animation: subjectViewEnter .28s ease both;
+}
+
+#subject-volume-area.is-hidden,
+#subject-volume-detail.is-hidden {
+  display: none !important;
+}
+
+@keyframes subjectViewEnter {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.subject-volume-heading {
+  max-width: 850px;
+  margin: 0 auto 30px;
+  text-align: center;
+}
+
+.subject-volume-heading h3,
+.subject-volume-detail-heading h3 {
+  font-family: var(--serif);
+  font-size: clamp(25px, 3.5vw, 36px);
+  line-height: 1.35;
+}
+
+.subject-volume-heading p {
+  max-width: 690px;
+  margin: 12px auto 0;
+  color: #68776e;
+  line-height: 1.8;
+}
+
+#subject-volume-area > h4 {
+  margin: 34px 0 16px;
+  color: var(--forest);
+  font: 700 19px var(--serif);
+}
+
+.subject-volume-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
+}
+
+.subject-volume-card {
+  min-height: 190px;
+  justify-content: center;
+  border: 1px solid #dce5d9;
+  background: linear-gradient(145deg, #fffefa, #f2f5ee);
+  box-shadow: 0 7px 20px rgba(24, 61, 50, .055);
+}
+
+.subject-volume-card:hover {
+  border-color: var(--gold);
+  background: #f5f1e5;
+  box-shadow: 0 12px 26px rgba(24, 61, 50, .11);
+}
+
+.subject-volume-number {
+  background: var(--forest);
+  box-shadow: 0 5px 14px rgba(16, 45, 37, .18);
+}
+
+.subject-volume-card strong {
+  text-align: center;
+  line-height: 1.4;
+}
+
+.subject-back-button {
+  min-height: 44px;
+  padding: 12px 19px;
+  border: 1px solid var(--forest);
+  border-radius: 7px;
+  background: var(--forest);
+  color: #fffefa;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.subject-back-button:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--forest-deep);
+  transform: translateY(-2px);
+}
+
+/* Botones visibles para material, proyectos y reportes. */
+
+.academic-support-table a.subject-button,
+.interactive-project-card a.subject-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  max-width: 100%;
+  padding: 11px 15px;
+  border: 1px solid #183d32;
+  border-radius: 7px;
+  background: #183d32;
+  color: #fffefa;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .055em;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  box-shadow: 0 4px 10px rgba(24, 61, 50, .10);
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.academic-support-table a.subject-button:hover,
+.interactive-project-card a.subject-button:hover {
+  border-color: #c5a66a;
+  background: #c5a66a;
+  color: #102d25;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(24, 61, 50, .16);
+}
+
+.academic-support-table a.subject-button:focus-visible,
+.subject-volume-card:focus-visible,
+.subject-back-button:focus-visible {
+  outline: 3px solid #c5a66a;
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  #areas.subject-library-screen-mode > .wrap.section {
+    width: min(100% - 28px, 1160px);
+    padding-top: 18px;
+    padding-bottom: 28px;
+  }
+
+  #subject-volume-area.subject-volume-area,
+  #subject-volume-detail.subject-volume-detail {
+    padding: 22px 17px;
+    border-radius: 13px;
+  }
+
+  .subject-volume-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .subject-volume-card {
+    min-height: 160px;
+    padding: 17px 10px;
+  }
+
+  .subject-volume-card strong {
+    font-size: 13px;
+  }
+
+  .academic-support-table a.subject-button {
+    min-width: 115px;
+    padding: 10px 9px;
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #subject-volume-area.subject-volume-area.active,
+  #subject-volume-detail.subject-volume-detail.active {
+    animation: none;
+  }
+}
+
+
+
+/* =========================================
+   NAVEGACIÓN POR PANTALLAS INDEPENDIENTES
+   BIBLIOTECA CONALEP
+========================================= */
+
+/* Ocultar las secciones que no están seleccionadas */
+main > section.library-page-hidden {
+    display: none !important;
+}
+
+/* Mostrar las secciones de la página seleccionada */
+main > section.library-page-visible {
+    display: block;
+}
+
+/* Transición visual de los enlaces del menú */
+.main-nav .nav-link {
+    transition: color .25s ease, background .25s ease;
+}
+
+/* Mantener visible la navegación al consultar materias */
+body.subject-library-open {
+    overflow-y: auto !important;
+}
+
+#areas.subject-library-screen-mode {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100vh;
+    max-height: none !important;
+    overflow: visible !important;
+    z-index: auto !important;
+}

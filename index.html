@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Biblioteca CONALEP: consulta y explora materiales educativos digitales.">
   <meta name="theme-color" content="#183d32">
+
   <title>Biblioteca CONALEP | Conocimiento abierto</title>
+
+  <link rel="icon" type="image/png" href="recursos/logo-aguila.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,35 +18,53 @@
   <link rel="stylesheet" href="estilos.css">
 
   <style>
-    /* IMÁGENES DE LAS ÁREAS DEL CONOCIMIENTO */
+    /* =========================================
+       NAVEGACIÓN POR PANTALLAS INDEPENDIENTES
+    ========================================= */
 
-    .career-area-card .area-icon.area-image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 155px;
-      margin: 12px 0;
-      font-size: 0;
+    main > section {
+      display: none !important;
     }
 
-    .career-area-card .area-icon.area-image img {
-      display: block;
-      width: 140px;
-      height: 140px;
+    body[data-library-page="inicio"] main > #inicio,
+    body[data-library-page="inicio"] main > .intro-carousel-section,
+    body[data-library-page="colecciones"] main > #colecciones,
+    body[data-library-page="areas"] main > #areas,
+    body[data-library-page="catalogo"] main > #catalogo,
+    body[data-library-page="acerca"] main > #acerca,
+    body[data-library-page="ayuda"] main > #ayuda {
+      display: block !important;
+    }
+
+    body[data-library-page="areas"] #areas.subject-library-screen-mode {
+      display: block !important;
+    }
+
+    /* =========================================
+       LOGOTIPOS
+    ========================================= */
+
+    .brand-logo,
+    .hero-logo {
       object-fit: contain;
-      border-radius: 12px;
-      transition: transform .3s ease;
+      border-radius: 0 !important;
+      background: transparent;
     }
 
-    .career-area-card:hover .area-icon.area-image img {
-      transform: scale(1.08);
+    .brand-logo {
+      display: block;
+      flex-shrink: 0;
     }
 
-    /* ==========================================
-       CARRUSEL DE IMÁGENES Y VIDEO
-       BIBLIOTECA CONALEP
-    ========================================== */
+    .hero-logo {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* =========================================
+       GALERÍA DE PROYECTOS
+    ========================================= */
 
     .intro-carousel-section {
       overflow: hidden;
@@ -69,8 +90,6 @@
       line-height: 1.8;
     }
 
-    /* TÍTULO Y MARIPOSA */
-
     .gallery-title {
       display: flex;
       align-items: center;
@@ -83,29 +102,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-
       width: 34px;
       height: 34px;
-
       padding: 0;
       margin: 0;
-
       border: none;
       border-radius: 50%;
-
       background: transparent;
       color: #b3914d;
-
       font-size: 23px;
       line-height: 1;
-
       cursor: pointer;
       opacity: 0.75;
-
-      transition:
-        transform .3s ease,
-        opacity .3s ease,
-        filter .3s ease;
+      transition: transform .3s ease, opacity .3s ease, filter .3s ease;
     }
 
     .study-video-sound-prompt:hover {
@@ -117,14 +126,11 @@
     .study-video-sound-prompt:focus-visible {
       outline: 2px solid #b3914d;
       outline-offset: 4px;
-      border-radius: 50%;
     }
 
     .study-video-sound-prompt[hidden] {
       display: none;
     }
-
-    /* CONTENEDOR DEL CARRUSEL */
 
     .study-carousel {
       width: 100%;
@@ -163,13 +169,12 @@
       object-fit: cover;
       object-position: center;
       transition: transform 5s ease;
+      cursor: pointer;
     }
 
     .study-slide.active img {
       transform: scale(1.06);
     }
-
-    /* VIDEO */
 
     .study-video {
       display: block;
@@ -183,6 +188,66 @@
       transform: none;
     }
 
+    /* Videos individuales de los proyectos */
+
+    .study-project-video {
+      display: none;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #080b09;
+      z-index: 2;
+    }
+
+    .study-slide.project-video-playing .study-project-video {
+      display: block;
+    }
+
+    .study-slide.project-video-playing img {
+      visibility: hidden;
+    }
+
+    /* Botón de reproducción cuando el navegador bloquea el sonido */
+
+    .project-video-play {
+      display: none;
+      position: absolute;
+      z-index: 5;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 14px 24px;
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 30px;
+      background: rgba(24, 61, 50, 0.94);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: background .3s ease, transform .3s ease;
+    }
+
+    .project-video-play:hover {
+      background: #b3914d;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .study-slide.project-video-blocked .project-video-play {
+      display: block;
+    }
+
+    .study-slide.project-video-playing .project-video-play {
+      display: none;
+    }
+
+    .project-video-play[hidden] {
+      display: none !important;
+    }
+
     .study-caption-video {
       inset: 0 0 auto;
       padding: 25px 25px 48px;
@@ -194,8 +259,6 @@
         transparent
       );
     }
-
-    /* TEXTOS SOBRE LAS IMÁGENES */
 
     .study-caption {
       position: absolute;
@@ -211,6 +274,8 @@
         rgba(5, 24, 17, 0.45),
         transparent
       );
+      z-index: 3;
+      pointer-events: none;
     }
 
     .study-caption span {
@@ -226,8 +291,6 @@
       line-height: 1.45;
       font-weight: 700;
     }
-
-    /* CONTROLES */
 
     .study-carousel-controls {
       display: flex;
@@ -277,7 +340,25 @@
       background: #b3914d;
     }
 
-    /* DISEÑO RESPONSIVO */
+    /* =========================================
+       MATERIAS
+    ========================================= */
+
+    .areas-band {
+      scroll-margin-top: 25px;
+    }
+
+    #areas .section-heading {
+      margin-bottom: 30px;
+    }
+
+    #areas .section-heading p {
+      max-width: 750px;
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
 
     @media (max-width: 850px) {
       .intro-carousel-grid {
@@ -312,11 +393,18 @@
       .study-carousel-controls {
         margin-top: 13px;
       }
+
+      .project-video-play {
+        padding: 12px 18px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
 
-<body>
+<body data-library-page="inicio">
+
+  <!-- BARRA SUPERIOR -->
 
   <div class="utility-bar">
     <div class="wrap utility-inner">
@@ -328,9 +416,15 @@
     </div>
   </div>
 
+  <!-- ENCABEZADO -->
+
   <header class="masthead wrap">
     <a class="brand" href="#inicio" aria-label="Biblioteca CONALEP, inicio">
-      <img class="brand-logo" src="recursos/logo.png" alt="Logotipo de la Biblioteca CONALEP">
+      <img
+        class="brand-logo"
+        src="recursos/logo-aguila.png"
+        alt="Logotipo de la Biblioteca CONALEP"
+      >
       <span class="brand-copy">
         <strong>CONALEP</strong>
         <small>BIBLIOTECA DIGITAL</small>
@@ -343,11 +437,14 @@
     </div>
   </header>
 
+  <!-- MENÚ DE NAVEGACIÓN -->
+
   <nav class="main-nav" aria-label="Navegación principal">
     <div class="wrap nav-inner">
       <a class="nav-link active" href="#inicio">Inicio</a>
       <a class="nav-link" href="#colecciones">Bibliocarreras</a>
-      <a class="nav-link" href="#areas">Áreas del conocimiento</a>
+      <a class="nav-link" href="#areas">Materias</a>
+      <a class="nav-link" href="#catalogo">Catálogo</a>
       <a class="nav-link" href="#acerca">La biblioteca</a>
       <a class="nav-link" href="#ayuda">Ayuda</a>
     </div>
@@ -355,7 +452,10 @@
 
   <main>
 
-    <!-- PORTADA -->
+    <!-- =========================================
+         PANTALLA 1: INICIO
+    ========================================= -->
+
     <section class="hero" id="inicio">
       <div class="wrap hero-content">
 
@@ -405,18 +505,20 @@
           <span class="meta-line"></span>
           <span>CONSULTA Y APRENDIZAJE</span>
         </div>
+
       </div>
 
       <div class="hero-ornament">
         <img
           class="hero-logo"
-          src="recursos/logo.png"
+          src="recursos/logo-aguila.png"
           alt="Emblema de la Biblioteca Virtual CONALEP"
         >
       </div>
     </section>
 
-    <!-- INTRODUCCIÓN CON CARRUSEL -->
+    <!-- GALERÍA DE PROYECTOS -->
+
     <section class="intro-strip intro-carousel-section">
       <div class="wrap intro-grid intro-carousel-grid">
 
@@ -444,9 +546,11 @@
         </div>
 
         <div class="study-carousel" id="study-carousel">
+
           <div class="study-carousel-track">
 
-            <!-- PRIMERA DIAPOSITIVA: VIDEO -->
+            <!-- VIDEO INTRODUCTORIO -->
+
             <div class="study-slide study-video-slide active">
               <video
                 class="study-video"
@@ -464,62 +568,124 @@
               </div>
             </div>
 
-            <!-- SEGUNDA DIAPOSITIVA -->
-            <div class="study-slide">
+            <!-- PROYECTO 1 -->
+
+            <div class="study-slide project-slide">
               <img
-                src="imagenes/carrusel/1.jpg"
-                alt="Estudiantes trabajando y aprendiendo en equipo"
+                src="imagenes/carrusel/7.jpg"
+                alt="Proyecto Fungi. Detector de Emociones"
                 fetchpriority="high"
               >
+
+              <video
+                class="study-project-video"
+                playsinline
+                preload="metadata"
+                aria-label="Video del proyecto Fungi. Detector de Emociones"
+              >
+                <source src="videos/fungi.mp4" type="video/mp4">
+              </video>
+
+              <button class="project-video-play" type="button">
+                ▶ Reproducir video
+              </button>
+
               <div class="study-caption">
                 <span>01 / APRENDIZAJE</span>
                 <strong>Fungi. Detector de Emociones</strong>
               </div>
             </div>
 
-            <!-- TERCERA DIAPOSITIVA -->
-            <div class="study-slide">
+            <!-- PROYECTO 2 -->
+
+            <div class="study-slide project-slide">
               <img
-                src="imagenes/carrusel/2.jpg"
-                alt="Estudiantes trabajando con tecnología"
+                src="imagenes/carrusel/6.jpg"
+                alt="Proyecto Innovación y Mantenimiento"
                 loading="lazy"
               >
+
+              <video
+                class="study-project-video"
+                playsinline
+                preload="metadata"
+                aria-label="Video del proyecto Innovación y Mantenimiento"
+              >
+                <source src="videos/innovacion.mp4" type="video/mp4">
+              </video>
+
+              <button class="project-video-play" type="button">
+                ▶ Reproducir video
+              </button>
+
               <div class="study-caption">
                 <span>02 / TECNOLOGÍA</span>
                 <strong>Innovación y Mantenimiento</strong>
               </div>
             </div>
 
-            <!-- CUARTA DIAPOSITIVA -->
-            <div class="study-slide">
+            <!-- PROYECTO 3 -->
+
+            <div class="study-slide project-slide">
               <img
                 src="imagenes/carrusel/3.jpg"
-                alt="Equipo colaborando en un proyecto"
+                alt="Proyecto Seguidor de Líneas, Sumo-Bot y Fútbol"
                 loading="lazy"
               >
+
+              <video
+                class="study-project-video"
+                playsinline
+                preload="metadata"
+                aria-label="Video del proyecto de Robótica"
+              >
+                <source src="videos/robotica.mp4" type="video/mp4">
+              </video>
+
+              <button class="project-video-play" type="button">
+                ▶ Reproducir video
+              </button>
+
               <div class="study-caption">
-                <span>03 / RÓBOTICA</span>
+                <span>03 / ROBÓTICA</span>
                 <strong>Seguidor de Líneas. Sumo-Bot y Fútbol</strong>
               </div>
             </div>
 
-            <!-- QUINTA DIAPOSITIVA -->
-            <div class="study-slide">
+            <!-- PROYECTO 4 -->
+
+            <div class="study-slide project-slide">
               <img
-                src="imagenes/carrusel/4.jpg"
-                alt="Comunidad estudiantil en un entorno académico"
+                src="imagenes/carrusel/5.jpg"
+                alt="Capacitación y Mejoras al Plantel"
                 loading="lazy"
               >
+
+              <video
+                class="study-project-video"
+                playsinline
+                preload="metadata"
+                aria-label="Video del proyecto de Soldadura"
+              >
+                <source src="videos/soldadura.mp4" type="video/mp4">
+              </video>
+
+              <button class="project-video-play" type="button">
+                ▶ Reproducir video
+              </button>
+
               <div class="study-caption">
-                <span>04 / SOLDADURA</span>
-                <strong>Principios Básicos</strong>
+                <span>04 / CAPACITACIÓN</span>
+                <strong>Mejoras al Plantel</strong>
               </div>
             </div>
 
           </div>
 
           <!-- CONTROLES DEL CARRUSEL -->
+
           <div class="study-carousel-controls">
+
             <button type="button" id="study-prev" aria-label="Imagen anterior">
               &#8592;
             </button>
@@ -535,15 +701,18 @@
             <button type="button" id="study-next" aria-label="Imagen siguiente">
               &#8594;
             </button>
-          </div>
-        </div>
 
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- BIBLIOCARRERAS -->
-    <section class="section wrap bibliocarreras-section" id="colecciones">
+    <!-- =========================================
+         PANTALLA 2: BIBLIOCARRERAS
+    ========================================= -->
 
+    <section class="section wrap bibliocarreras-section" id="colecciones">
       <div class="section-heading">
         <div>
           <span class="section-kicker">CONALEP · ESPECIALIDADES</span>
@@ -574,112 +743,46 @@
           IR AL SITIO <span aria-hidden="true">↗</span>
         </a>
       </div>
-
     </section>
 
-    <!-- ÁREAS DEL CONOCIMIENTO -->
+    <!-- =========================================
+         PANTALLA 3: MATERIAS
+    ========================================= -->
+
     <section class="areas-band" id="areas">
       <div class="wrap section">
 
         <div class="section-heading">
           <div>
-            <span class="section-kicker">CONOCE TU ESPECIALIDAD</span>
-            <h2>Áreas del conocimiento</h2>
+            <span class="section-kicker">BIBLIOTECA ACADÉMICA · CONALEP</span>
+            <h2>Materias y volúmenes</h2>
             <p>
-              Selecciona una carrera para conocer su descripción,
-              plan de estudios y materiales académicos.
+              Explora las materias de las cuatro carreras del plantel.
+              Cada asignatura cuenta con seis volúmenes para organizar
+              sus contenidos, actividades y materiales de aprendizaje.
             </p>
           </div>
         </div>
 
-        <div class="area-grid career-area-grid">
-
-          <!-- INTELIGENCIA ARTIFICIAL -->
-          <a class="area-card career-area-card" href="areas.html?carrera=inteligencia-artificial">
-            <span class="area-number">01</span>
-
-            <span class="area-icon area-image">
-              <img
-                src="imagenes/inteligencia-artificial.png"
-                alt="Imagen de Inteligencia Artificial"
-                loading="lazy"
-              >
-            </span>
-
-            <strong>Inteligencia Artificial</strong>
-            <small>Innovación, automatización y tecnología</small>
-            <span class="area-arrow">↗</span>
-          </a>
-
-          <!-- INFORMÁTICA -->
-          <a class="area-card career-area-card" href="areas.html?carrera=informatica">
-            <span class="area-number">02</span>
-
-            <span class="area-icon area-image">
-              <img
-                src="imagenes/informatica.png"
-                alt="Imagen de Informática"
-                loading="lazy"
-              >
-            </span>
-
-            <strong>Informática</strong>
-            <small>Desarrollo de sistemas y aplicaciones</small>
-            <span class="area-arrow">↗</span>
-          </a>
-
-          <!-- ELECTRICIDAD INDUSTRIAL -->
-          <a class="area-card career-area-card" href="areas.html?carrera=electricidad-industrial">
-            <span class="area-number">03</span>
-
-            <span class="area-icon area-image">
-              <img
-                src="imagenes/electricidad-industrial.png"
-                alt="Imagen de Electricidad Industrial"
-                loading="lazy"
-              >
-            </span>
-
-            <strong>Electricidad Industrial</strong>
-            <small>Instalaciones y sistemas eléctricos</small>
-            <span class="area-arrow">↗</span>
-          </a>
-
-          <!-- REFRIGERACIÓN -->
-          <a class="area-card career-area-card" href="areas.html?carrera=refrigeracion">
-            <span class="area-number">04</span>
-
-            <span class="area-icon area-image">
-              <img
-                src="imagenes/refrigeracion.png"
-                alt="Imagen de Refrigeración"
-                loading="lazy"
-              >
-            </span>
-
-            <strong>Refrigeración</strong>
-            <small>Climatización y mantenimiento</small>
-            <span class="area-arrow">↗</span>
-          </a>
-
+        <div class="area-grid career-area-grid" id="subject-library-grid">
+          <div class="subject-loading">
+            <span>📚</span>
+            <h3>Preparando biblioteca académica...</h3>
+            <p>Se están organizando las materias y sus volúmenes.</p>
+          </div>
         </div>
 
-        <div class="areas-more">
-          <p>
-            Consulta la información de cada carrera, sus semestres,
-            materias y recursos académicos.
-          </p>
-          <a href="areas.html" class="areas-more-link">
-            EXPLORAR TODAS LAS CARRERAS <span>→</span>
-          </a>
-        </div>
+        <div id="subject-volume-area" class="subject-volume-area"></div>
+        <div id="subject-volume-detail" class="subject-volume-detail"></div>
 
       </div>
     </section>
 
-    <!-- CATÁLOGO -->
-    <section class="section wrap catalog-section" id="catalogo">
+    <!-- =========================================
+         PANTALLA 4: CATÁLOGO
+    ========================================= -->
 
+    <section class="section wrap catalog-section" id="catalogo">
       <div class="section-heading">
         <div>
           <span class="section-kicker">BIBLIOTECA CONALEP</span>
@@ -691,7 +794,6 @@
       </div>
 
       <div class="catalog-tools">
-
         <label class="catalog-search">
           <span>⌕</span>
           <input
@@ -703,12 +805,10 @@
 
         <label class="filter-label">
           Filtrar por área
-
           <select id="category-filter">
             <option value="Todos">Todas las áreas</option>
           </select>
         </label>
-
       </div>
 
       <div class="results-line">
@@ -717,13 +817,14 @@
       </div>
 
       <div class="book-grid" id="book-grid" aria-live="polite"></div>
-
     </section>
 
-    <!-- ACERCA DE -->
+    <!-- =========================================
+         PANTALLA 5: LA BIBLIOTECA
+    ========================================= -->
+
     <section class="about-band" id="acerca">
       <div class="wrap about-grid">
-
         <div>
           <span class="section-kicker">Biblioteca</span>
           <h2>Aprender también<br>es descubrir.</h2>
@@ -735,20 +836,20 @@
             reúne materiales educativos para apoyar el aprendizaje,
             la investigación y el desarrollo académico.
           </p>
-
           <p>
             Su propósito es facilitar el acceso organizado a recursos
             de distintas áreas del conocimiento y promover el hábito
             de la lectura y la búsqueda de información.
           </p>
         </div>
-
       </div>
     </section>
 
-    <!-- AYUDA -->
-    <section class="section wrap help-section" id="ayuda">
+    <!-- =========================================
+         PANTALLA 6: AYUDA
+    ========================================= -->
 
+    <section class="section wrap help-section" id="ayuda">
       <div class="section-heading">
         <div>
           <span class="section-kicker">¿NECESITAS ORIENTACIÓN?</span>
@@ -757,39 +858,31 @@
       </div>
 
       <div class="help-grid">
-
         <article>
           <span>01</span>
           <h3>Busca</h3>
-          <p>
-            Escribe el título, autor, tema o palabra clave en el buscador.
-          </p>
+          <p>Escribe el título, autor, tema o palabra clave en el buscador.</p>
         </article>
 
         <article>
           <span>02</span>
           <h3>Explora</h3>
-          <p>
-            Revisa los resultados y selecciona el material que te interese.
-          </p>
+          <p>Revisa los resultados y selecciona el material que te interese.</p>
         </article>
 
         <article>
           <span>03</span>
           <h3>Consulta</h3>
-          <p>
-            Abre el documento disponible o descarga el archivo para leerlo.
-          </p>
+          <p>Abre el documento disponible o descarga el archivo para leerlo.</p>
         </article>
-
       </div>
     </section>
 
   </main>
 
   <!-- PIE DE PÁGINA -->
-  <footer class="footer">
 
+  <footer class="footer">
     <div class="wrap footer-main">
 
       <div class="footer-brand">
@@ -801,7 +894,7 @@
       <div>
         <b>Explora</b>
         <a href="#colecciones">Bibliocarreras</a>
-        <a href="#areas">Áreas del conocimiento</a>
+        <a href="#areas">Materias</a>
         <a href="#catalogo">Catálogo</a>
       </div>
 
@@ -820,215 +913,686 @@
         <span>Conocimiento que transforma</span>
       </div>
     </div>
-
   </footer>
 
-  <!-- VENTANA DE DETALLES DE LIBROS -->
+  <!-- VENTANA DE DETALLES -->
+
   <dialog class="detail-dialog" id="detail-dialog">
     <button class="dialog-close" id="dialog-close" aria-label="Cerrar">×</button>
     <div id="detail-content"></div>
   </dialog>
 
   <!-- LECTOR PDF -->
-  <dialog class="reader-dialog" id="reader-dialog">
 
+  <dialog class="reader-dialog" id="reader-dialog">
     <div class="reader-top">
       <strong id="reader-title">Lector digital</strong>
       <button id="reader-close" aria-label="Cerrar lector">Cerrar ×</button>
     </div>
-
     <iframe id="pdf-frame" title="Visor de documento PDF"></iframe>
-
   </dialog>
 
+  <!-- ARCHIVOS JAVASCRIPT: CONSERVAR EL ORDEN -->
+
   <script src="js/catalogo.js" defer></script>
+  <script src="js/areas.js" defer></script>
+  <script src="js/materias.js" defer></script>
 
-  <!-- FUNCIONAMIENTO DEL CARRUSEL -->
+  <!-- ==========================================
+       NAVEGACIÓN ENTRE PANTALLAS
+  ========================================== -->
+
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (() => {
 
-      const carousel = document.getElementById('study-carousel');
+      const paginasValidas = [
+        "inicio",
+        "colecciones",
+        "areas",
+        "catalogo",
+        "acerca",
+        "ayuda"
+      ];
+
+      const nombres = {
+        inicio: "Inicio",
+        colecciones: "Bibliocarreras",
+        areas: "Materias",
+        catalogo: "Catálogo",
+        acerca: "La biblioteca",
+        ayuda: "Ayuda"
+      };
+
+      function limpiarVistaMaterias() {
+
+        const librarySection = document.getElementById("areas");
+        const subjectGrid = document.getElementById("subject-library-grid");
+        const volumeArea = document.getElementById("subject-volume-area");
+        const detailArea = document.getElementById("subject-volume-detail");
+        const count = document.getElementById("subject-library-count");
+
+        if (librarySection) {
+          librarySection.classList.remove("subject-library-screen-mode");
+        }
+
+        document.body.classList.remove("subject-library-open");
+
+        if (subjectGrid) {
+          subjectGrid.hidden = false;
+        }
+
+        if (count) {
+          count.hidden = false;
+        }
+
+        if (volumeArea) {
+          volumeArea.classList.remove("active", "is-hidden");
+          volumeArea.innerHTML = "";
+        }
+
+        if (detailArea) {
+          detailArea.classList.remove("active", "is-hidden");
+          detailArea.innerHTML = "";
+        }
+      }
+
+      function mostrarPagina(pagina, actualizarURL = true) {
+
+        if (!paginasValidas.includes(pagina)) {
+          pagina = "inicio";
+        }
+
+        const paginaAnterior = document.body.dataset.libraryPage;
+
+        if (paginaAnterior === "areas" && pagina !== "areas") {
+          limpiarVistaMaterias();
+        }
+
+        document.body.dataset.libraryPage = pagina;
+
+        document.querySelectorAll(".nav-link").forEach(link => {
+
+          const destino = link.getAttribute("href");
+          const activo = destino === "#" + pagina;
+
+          link.classList.toggle("active", activo);
+
+          if (activo) {
+            link.setAttribute("aria-current", "page");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+
+        });
+
+        if (actualizarURL) {
+          history.pushState(
+            { pagina },
+            "",
+            "#" + pagina
+          );
+        }
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+        document.title =
+          nombres[pagina] + " | Biblioteca CONALEP";
+      }
+
+      window.showLibraryPage = mostrarPagina;
+
+      document.addEventListener("click", event => {
+
+        const link = event.target.closest('a[href^="#"]');
+
+        if (!link) return;
+
+        const destino = link.getAttribute("href").slice(1);
+
+        if (!paginasValidas.includes(destino)) return;
+
+        event.preventDefault();
+
+        mostrarPagina(destino);
+
+      });
+
+      window.addEventListener("popstate", () => {
+
+        const pagina = location.hash.replace("#", "") || "inicio";
+
+        mostrarPagina(pagina, false);
+
+      });
+
+      window.addEventListener("DOMContentLoaded", () => {
+
+        const paginaInicial =
+          location.hash.replace("#", "") || "inicio";
+
+        mostrarPagina(paginaInicial, false);
+
+      });
+
+    })();
+  </script>
+
+  <!-- ==========================================
+       CARRUSEL AUTOMÁTICO CON VIDEOS DE PROYECTOS
+  ========================================== -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const carousel = document.getElementById("study-carousel");
 
       if (!carousel) return;
 
       const slides = Array.from(
-        carousel.querySelectorAll('.study-slide')
+        carousel.querySelectorAll(".study-slide")
       );
 
       const dots = Array.from(
-        carousel.querySelectorAll('.study-dots button')
+        carousel.querySelectorAll(".study-dots button")
       );
 
-      const prev = document.getElementById('study-prev');
-      const next = document.getElementById('study-next');
+      const prev = document.getElementById("study-prev");
+      const next = document.getElementById("study-next");
 
-      const video = carousel.querySelector('.study-video');
+      const introVideo = carousel.querySelector(".study-video");
 
-      const playButton = document.getElementById(
-        'study-video-sound-prompt'
+      const introButton = document.getElementById(
+        "study-video-sound-prompt"
       );
 
-      if (!slides.length || !prev || !next || !video || !playButton) {
-        return;
-      }
-
-      /*
-        ORDEN DEL CARRUSEL:
-
-        0 = VIDEO
-        1 = IMAGEN 1
-        2 = IMAGEN 2
-        3 = IMAGEN 3
-        4 = IMAGEN 4
-      */
-
-      const videoIndex = 0;
-
-      let current = 0;
-      let autoplay = null;
+      const projectSlides = slides.slice(1);
 
       const intervalTime = 4500;
 
-      // DETENER EL CAMBIO AUTOMÁTICO
-      function stopAutoplay() {
-        if (autoplay !== null) {
-          clearInterval(autoplay);
-          autoplay = null;
-        }
+      let current = 0;
+      let timer = null;
+
+      // Guarda los proyectos cuyos videos ya terminaron.
+      const playedVideos = new Set();
+
+      // Indica si los cuatro videos ya terminaron.
+      let allVideosDone = false;
+
+      // Evita iniciar dos veces el mismo video.
+      let playingProjectIndex = null;
+
+      if (
+        !slides.length ||
+        !prev ||
+        !next ||
+        !introVideo ||
+        !introButton
+      ) {
+        return;
       }
 
-      // INICIAR EL CAMBIO AUTOMÁTICO DE LAS IMÁGENES
-      function startAutoplay() {
+      function stopTimer() {
 
-        stopAutoplay();
-
-        // El video no participa en el cambio automático.
-        if (current === videoIndex || document.hidden) {
-          return;
+        if (timer !== null) {
+          clearTimeout(timer);
+          timer = null;
         }
 
-        autoplay = setInterval(() => {
-
-          // Después de la última imagen, regresar a la primera imagen.
-          if (current >= slides.length - 1) {
-            showSlide(1);
-          } else {
-            showSlide(current + 1);
-          }
-
-        }, intervalTime);
       }
 
-      // MOSTRAR UNA DIAPOSITIVA
-      function showSlide(index) {
+      function stopProjectVideos() {
 
-        stopAutoplay();
+        projectSlides.forEach(slide => {
 
-        // El carrusel permite volver al video desde los controles.
-        current = (index + slides.length) % slides.length;
+          const video = slide.querySelector(".study-project-video");
 
-        slides.forEach((slide, i) => {
+          if (!video) return;
 
-          const active = i === current;
-
-          slide.classList.toggle('active', active);
-
-          slide.setAttribute(
-            'aria-hidden',
-            String(!active)
-          );
-
-        });
-
-        dots.forEach((dot, i) => {
-
-          const active = i === current;
-
-          dot.classList.toggle('active', active);
-
-          if (active) {
-            dot.setAttribute('aria-current', 'true');
-          } else {
-            dot.removeAttribute('aria-current');
-          }
-
-        });
-
-        // SI SE ABRE EL VIDEO
-        if (current === videoIndex) {
-
-          stopAutoplay();
-
-          // Mostrar la mariposa para permitir reproducirlo.
-          playButton.hidden = false;
-
-          // El video queda detenido hasta que se presione la mariposa.
           video.pause();
 
+          try {
+            video.currentTime = 0;
+          } catch (error) {
+            // El video todavía puede no tener metadatos.
+          }
+
+          slide.classList.remove(
+            "project-video-playing",
+            "project-video-blocked"
+          );
+
+          const button = slide.querySelector(".project-video-play");
+
+          if (button) {
+            button.hidden = false;
+          }
+
+        });
+
+        playingProjectIndex = null;
+
+      }
+
+      function actualizarControles() {
+
+        slides.forEach((slide, index) => {
+
+          const active = index === current;
+
+          slide.classList.toggle("active", active);
+          slide.setAttribute("aria-hidden", String(!active));
+
+        });
+
+        dots.forEach((dot, index) => {
+
+          const active = index === current;
+
+          dot.classList.toggle("active", active);
+
+          if (active) {
+            dot.setAttribute("aria-current", "true");
+          } else {
+            dot.removeAttribute("aria-current");
+          }
+
+        });
+
+      }
+
+      function siguienteImagen() {
+
+        if (current >= slides.length - 1) {
+          showSlide(1);
+        } else {
+          showSlide(current + 1);
+        }
+
+      }
+
+      function programarSiguiente() {
+
+        stopTimer();
+
+        timer = setTimeout(() => {
+
+          timer = null;
+          siguienteImagen();
+
+        }, intervalTime);
+
+      }
+
+      function actualizarEstadoVideos() {
+
+        allVideosDone = playedVideos.size === projectSlides.length;
+
+      }
+
+      /*
+        Muestra la imagen de un proyecto y espera
+        4.5 segundos antes de reproducir su video.
+      */
+
+      function mostrarImagenYProgramar(index) {
+
+        const slide = slides[index];
+
+        const video = slide.querySelector(".study-project-video");
+
+        if (!video) return;
+
+        slide.classList.remove(
+          "project-video-playing",
+          "project-video-blocked"
+        );
+
+        const button = slide.querySelector(".project-video-play");
+
+        if (button) {
+          button.hidden = false;
+        }
+
+        // Si ya se reprodujo el video, solamente se muestra la imagen.
+        if (playedVideos.has(index) || allVideosDone) {
+          programarSiguiente();
           return;
         }
 
-        // SI SE CAMBIA A UNA IMAGEN, DETENER Y REINICIAR EL VIDEO.
-        video.pause();
-        video.currentTime = 0;
+        // Primero permanece visible la imagen durante 4.5 segundos.
+        stopTimer();
 
-        // El botón vuelve a aparecer solamente al regresar al video.
-        playButton.hidden = true;
+        timer = setTimeout(() => {
 
-        // Las imágenes comienzan a cambiar automáticamente.
-        startAutoplay();
+          timer = null;
+
+          if (current !== index) return;
+
+          reproducirVideoProyecto(index);
+
+        }, intervalTime);
+
       }
 
-      // REPRODUCIR VIDEO CON SONIDO AL PRESIONAR LA MARIPOSA
-      playButton.addEventListener('click', async () => {
+      /*
+        Reproduce el video correspondiente al proyecto.
+      */
 
-        if (current !== videoIndex) {
-          showSlide(videoIndex);
+      async function reproducirVideoProyecto(index) {
+
+        if (current !== index) return;
+
+        if (playedVideos.has(index) || allVideosDone) {
+          programarSiguiente();
+          return;
         }
 
-        stopAutoplay();
+        const slide = slides[index];
 
+        const video = slide.querySelector(".study-project-video");
+
+        const button = slide.querySelector(".project-video-play");
+
+        if (!video) return;
+
+        stopTimer();
+
+        playingProjectIndex = index;
+
+        video.pause();
         video.muted = false;
         video.volume = 1;
         video.controls = true;
 
         try {
 
+          video.currentTime = 0;
+
+        } catch (error) {
+          // El navegador ajustará la posición cuando cargue el video.
+        }
+
+        try {
+
           await video.play();
 
-          // Ocultar la mariposa mientras se reproduce el video.
-          playButton.hidden = true;
+          if (current !== index) {
+            video.pause();
+            return;
+          }
+
+          slide.classList.add("project-video-playing");
+          slide.classList.remove("project-video-blocked");
+
+          if (button) {
+            button.hidden = true;
+          }
+
+        } catch (error) {
+
+          console.warn(
+            "El navegador necesita que el visitante inicie el video:",
+            error
+          );
+
+          if (current !== index) return;
+
+          slide.classList.remove("project-video-playing");
+          slide.classList.add("project-video-blocked");
+
+          if (button) {
+            button.hidden = false;
+            button.textContent = "▶ Reproducir video";
+          }
+
+        }
+
+      }
+
+      /*
+        Cuando un video termina, vuelve a mostrarse
+        su imagen durante 4.5 segundos.
+      */
+
+      function terminarVideoProyecto(index) {
+
+        if (current !== index) return;
+
+        const slide = slides[index];
+
+        const video = slide.querySelector(".study-project-video");
+
+        if (!video) return;
+
+        video.pause();
+        video.controls = false;
+
+        slide.classList.remove(
+          "project-video-playing",
+          "project-video-blocked"
+        );
+
+        const button = slide.querySelector(".project-video-play");
+
+        if (button) {
+          button.hidden = false;
+        }
+
+        playedVideos.add(index);
+
+        playingProjectIndex = null;
+
+        actualizarEstadoVideos();
+
+        // Regresa a la imagen original del proyecto.
+        // Después de 4.5 segundos avanza al siguiente.
+        programarSiguiente();
+
+      }
+
+      /*
+        Si un video no existe o no puede cargarse,
+        se evita detener todo el carrusel.
+      */
+
+      function errorVideoProyecto(index) {
+
+        if (current !== index) return;
+
+        const slide = slides[index];
+
+        const video = slide.querySelector(".study-project-video");
+
+        if (!video) return;
+
+        console.error(
+          "No se pudo cargar el video del proyecto:",
+          index
+        );
+
+        video.pause();
+        video.controls = false;
+
+        slide.classList.remove(
+          "project-video-playing",
+          "project-video-blocked"
+        );
+
+        const button = slide.querySelector(".project-video-play");
+
+        if (button) {
+          button.hidden = true;
+        }
+
+        playedVideos.add(index);
+
+        playingProjectIndex = null;
+
+        actualizarEstadoVideos();
+
+        programarSiguiente();
+
+      }
+
+      /*
+        Cambia de diapositiva.
+        La posición 0 corresponde al video introductorio.
+        Las posiciones 1 a 4 corresponden a los proyectos.
+      */
+
+      function showSlide(index) {
+
+        stopTimer();
+
+        // Detener el video que se esté reproduciendo.
+        introVideo.pause();
+        stopProjectVideos();
+
+        current = (index + slides.length) % slides.length;
+
+        actualizarControles();
+
+        if (current === 0) {
+
+          introButton.hidden = false;
+
+          introVideo.controls = false;
+
+          try {
+            introVideo.currentTime = 0;
+          } catch (error) {
+            // Se ajustará cuando el video esté cargado.
+          }
+
+          return;
+
+        }
+
+        introButton.hidden = true;
+
+        introVideo.controls = false;
+
+        // Si todos los videos ya terminaron, solo se muestran imágenes.
+        actualizarEstadoVideos();
+
+        mostrarImagenYProgramar(current);
+
+      }
+
+      /*
+        Reproducción manual del video introductorio.
+      */
+
+      introButton.addEventListener("click", async () => {
+
+        stopTimer();
+
+        current = 0;
+
+        actualizarControles();
+
+        introVideo.muted = false;
+        introVideo.volume = 1;
+        introVideo.controls = true;
+
+        try {
+
+          await introVideo.play();
+
+          introButton.hidden = true;
 
         } catch (error) {
 
           console.error(
-            'No fue posible reproducir el video:',
+            "No fue posible reproducir el video introductorio:",
             error
           );
 
-          // Si ocurre un error, permitir volver a intentarlo.
-          playButton.hidden = false;
+          introButton.hidden = false;
 
         }
 
       });
 
-      // AL TERMINAR EL VIDEO, MOSTRAR LA PRIMERA IMAGEN.
-      video.addEventListener('ended', () => {
+      /*
+        Cuando termina el video introductorio,
+        comienza automáticamente el primer proyecto.
+      */
 
-        video.controls = false;
+      introVideo.addEventListener("ended", () => {
 
-        // Comenzar el recorrido automático de las cuatro imágenes.
+        introVideo.controls = false;
+
         showSlide(1);
 
       });
 
-      // CONTROLES DE ANTERIOR Y SIGUIENTE
-      next.addEventListener('click', () => {
+      /*
+        Configurar los cuatro videos de los proyectos.
+      */
 
-        if (current === videoIndex) {
-          showSlide(1);
-        } else if (current >= slides.length - 1) {
+      projectSlides.forEach((slide, position) => {
+
+        const index = position + 1;
+
+        const video = slide.querySelector(".study-project-video");
+
+        const button = slide.querySelector(".project-video-play");
+
+        const image = slide.querySelector("img");
+
+        if (!video || !button) return;
+
+        // Al terminar el video, volver a la imagen y continuar.
+        video.addEventListener("ended", () => {
+
+          terminarVideoProyecto(index);
+
+        });
+
+        // Si ocurre un error, continuar con el carrusel.
+        video.addEventListener("error", () => {
+
+          errorVideoProyecto(index);
+
+        });
+
+        // Botón para iniciar manualmente si el navegador bloquea el sonido.
+        button.addEventListener("click", () => {
+
+          reproducirVideoProyecto(index);
+
+        });
+
+        // También se puede pulsar directamente sobre la imagen.
+        if (image) {
+
+          image.addEventListener("click", () => {
+
+            if (
+              current === index &&
+              !playedVideos.has(index) &&
+              !allVideosDone
+            ) {
+              reproducirVideoProyecto(index);
+            }
+
+          });
+
+        }
+
+      });
+
+      /*
+        Botón siguiente.
+      */
+
+      next.addEventListener("click", () => {
+
+        if (current === 0 || current >= slides.length - 1) {
           showSlide(1);
         } else {
           showSlide(current + 1);
@@ -1036,11 +1600,13 @@
 
       });
 
-      prev.addEventListener('click', () => {
+      /*
+        Botón anterior.
+      */
 
-        if (current === 1) {
-          showSlide(slides.length - 1);
-        } else if (current === videoIndex) {
+      prev.addEventListener("click", () => {
+
+        if (current <= 1) {
           showSlide(slides.length - 1);
         } else {
           showSlide(current - 1);
@@ -1048,10 +1614,13 @@
 
       });
 
-      // CONTROLES DE LOS PUNTOS
+      /*
+        Indicadores inferiores.
+      */
+
       dots.forEach((dot, index) => {
 
-        dot.addEventListener('click', () => {
+        dot.addEventListener("click", () => {
 
           showSlide(index);
 
@@ -1059,50 +1628,71 @@
 
       });
 
-      // EVITAR QUE EL CARRUSEL CAMBIE MIENTRAS SE USA.
-      carousel.addEventListener('mouseenter', stopAutoplay);
+      /*
+        Si se cambia de pestaña, detener los videos
+        para evitar que sigan reproduciéndose en segundo plano.
+      */
 
-      carousel.addEventListener('mouseleave', () => {
-
-        if (current !== videoIndex && !document.hidden) {
-          startAutoplay();
-        }
-
-      });
-
-      carousel.addEventListener('focusin', stopAutoplay);
-
-      carousel.addEventListener('focusout', event => {
-
-        if (
-          !carousel.contains(event.relatedTarget) &&
-          current !== videoIndex
-        ) {
-          startAutoplay();
-        }
-
-      });
-
-      // PAUSAR CUANDO SE CAMBIA DE PESTAÑA.
-      document.addEventListener('visibilitychange', () => {
+      document.addEventListener("visibilitychange", () => {
 
         if (document.hidden) {
 
-          stopAutoplay();
+          stopTimer();
 
-          if (!video.paused) {
-            video.pause();
+          introVideo.pause();
+
+          projectSlides.forEach(slide => {
+
+            const video = slide.querySelector(".study-project-video");
+
+            if (video) {
+              video.pause();
+            }
+
+          });
+
+        } else if (current !== 0) {
+
+          const activeSlide = slides[current];
+
+          const activeVideo = activeSlide.querySelector(
+            ".study-project-video"
+          );
+
+          if (
+            activeVideo &&
+            !playedVideos.has(current) &&
+            !allVideosDone &&
+            activeVideo.paused
+          ) {
+
+            // Si estaba reproduciéndose, se ofrece el botón manual.
+            activeSlide.classList.remove("project-video-playing");
+            activeSlide.classList.add("project-video-blocked");
+
+            const button = activeSlide.querySelector(
+              ".project-video-play"
+            );
+
+            if (button) {
+              button.hidden = false;
+            }
+
+          } else if (activeVideo && activeVideo.paused) {
+
+            if (
+              !activeSlide.classList.contains("project-video-blocked")
+            ) {
+              programarSiguiente();
+            }
+
           }
-
-        } else if (current !== videoIndex) {
-
-          startAutoplay();
 
         }
 
       });
 
-      // INICIAR MOSTRANDO EL VIDEO, SIN REPRODUCIRLO AUTOMÁTICAMENTE.
+      // Iniciar mostrando el video introductorio.
       showSlide(0);
 
     });
