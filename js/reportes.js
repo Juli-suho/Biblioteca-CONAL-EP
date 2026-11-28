@@ -1,4 +1,4 @@
-
+﻿
 /* ==========================================
    REPORTES DE LOS ALUMNOS
    BIBLIOTECA DIGITAL CONALEP
@@ -6,18 +6,23 @@
 
 (() => {
 
-  // PARÁMETROS DE LA PÁGINA
-
   const parametros = new URLSearchParams(window.location.search);
 
   const actividad = parametros.get("actividad") || "Act.1";
   const unidad = parametros.get("unidad") || "1.2";
 
-  // TEMAS DE CADA ACTIVIDAD
+  /* ==========================================
+     TEMAS DE CADA ACTIVIDAD
+  ========================================== */
 
   const temas = {
 
     "Act.1": [
+      {
+        numero: 1,
+        titulo: "La crisis de la monarquía española",
+        portada: "recursos/portadas/tema-1-crisis-monarquia-espanola.png"
+      },
       {
         numero: 2,
         titulo: "La Ilustración y las revoluciones atlánticas",
@@ -61,13 +66,25 @@
 
   };
 
-  // ELEMENTOS DE LA PÁGINA
+  /* ==========================================
+     ELEMENTOS DE LA PÁGINA
+  ========================================== */
 
   const grid = document.querySelector("#reports-grid");
 
   const listaTemas = temas[actividad];
 
-  // COMPROBAR SI EXISTE UN DOCUMENTO
+  /* ==========================================
+     OBTENER RUTA DEL DOCUMENTO WORD
+  ========================================== */
+
+  function obtenerRutaReporte(tema) {
+    return `reportes/${actividad}/tema-${tema.numero}-reporte.docx`;
+  }
+
+  /* ==========================================
+     COMPROBAR SI EXISTE UN DOCUMENTO
+  ========================================== */
 
   async function comprobarArchivo(ruta) {
 
@@ -101,7 +118,9 @@
     }
   }
 
-  // CARGAR REPORTES
+  /* ==========================================
+     CARGAR REPORTES
+  ========================================== */
 
   async function cargarReportes() {
 
@@ -122,8 +141,6 @@
       return;
     }
 
-    // ENCABEZADOS
-
     const pageTitle = document.querySelector("#page-title");
     const pageDescription = document.querySelector("#page-description");
     const sectionTitle = document.querySelector("#section-title");
@@ -141,7 +158,9 @@
       sectionTitle.textContent = `Reportes ${actividad}`;
     }
 
-    // CREAR TARJETAS
+    /* ==========================================
+       CREAR TARJETAS
+    ========================================== */
 
     grid.innerHTML = listaTemas.map(tema => `
 
@@ -190,12 +209,13 @@
 
     `).join("");
 
-    // COMPROBAR Y CREAR BOTONES
+    /* ==========================================
+       COMPROBAR Y CREAR BOTONES
+    ========================================== */
 
     for (const tema of listaTemas) {
 
-      const ruta =
-        `reportes/${actividad}/tema-${tema.numero}-reporte.docx`;
+      const ruta = obtenerRutaReporte(tema);
 
       const contenedor = document.querySelector(
         `#reporte-${tema.numero}`
@@ -213,8 +233,6 @@
 
       if (existe) {
 
-        // DIRECCIÓN DEL LECTOR WORD
-
         const parametrosLectura = new URLSearchParams({
           archivo: ruta,
           actividad: actividad,
@@ -223,8 +241,6 @@
 
         const urlLectura =
           `leer-word.html?${parametrosLectura.toString()}`;
-
-        // BOTONES DE LECTURA Y DESCARGA
 
         contenedor.innerHTML = `
 
@@ -235,7 +251,7 @@
             rel="noopener noreferrer"
             aria-label="Leer reporte del tema ${tema.numero}"
           >
-            LEER DOCUMENTO ↗
+            LEER DOCUMENTO →
           </a>
 
           <a
@@ -265,7 +281,9 @@
     }
   }
 
-  // INICIAR CUANDO CARGUE EL DOCUMENTO
+  /* ==========================================
+     INICIAR CUANDO CARGUE EL DOCUMENTO
+  ========================================== */
 
   document.addEventListener(
     "DOMContentLoaded",
